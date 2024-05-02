@@ -19,7 +19,7 @@ export type DropdownItemsProps = {
 export type DropdownTriggerProps = {
   isOpen: boolean
   selectedOption: string | null
-  clickCallback: () => void
+  clickCallback: VoidFunction
 }
 
 export type GetUrlkeyByOptionFunc = (input: { option: Option }) => string
