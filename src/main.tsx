@@ -1,3 +1,4 @@
+import "@/libs/tailwind-css/global.css"
 import { QueryClientProvider } from "@tanstack/react-query"
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools"
 import React from "react"
@@ -14,4 +15,3 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
     </QueryClientProvider>
   </React.StrictMode>,
 )
-
