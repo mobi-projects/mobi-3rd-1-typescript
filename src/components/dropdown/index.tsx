@@ -1,8 +1,9 @@
 import { SORT_PAGE } from "@/constants/url-keys"
 import { useDropDown } from "./dropdown.hooks"
+
 import type { FC } from "react"
 import type {
-  DropdownItemProps,
+  DropdownItemsProps,
   DropdownProps,
   DropdownTriggerProps,
 } from "./dropdown.types"
@@ -39,7 +40,7 @@ export const Dropdown: FC<DropdownProps> = ({ items, option }) => {
   )
 }
 
-const DropdownItems: FC<DropdownItemProps> = ({
+const DropdownItems: FC<DropdownItemsProps> = ({
   clickCallback,
   items,
   option,

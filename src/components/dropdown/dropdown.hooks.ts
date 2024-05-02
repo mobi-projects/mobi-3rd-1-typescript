@@ -2,7 +2,7 @@ import { useState, useRef } from "react"
 import { useSearchParams } from "react-router-dom"
 import { getUrlkeyByOption } from "./dropdown.func"
 
-import type { ClickItemFuncProps } from "./dropdown.types"
+import type { ClickCallbackFunc } from "./dropdown.types"
 
 export const useDropDown = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false)
@@ -13,7 +13,7 @@ export const useDropDown = () => {
     setIsOpen((prev) => !prev)
   }
 
-  const onClickItems: ClickItemFuncProps = ({ item, option }) => {
+  const onClickItems: ClickCallbackFunc = ({ item, option }) => {
     const urlKey = getUrlkeyByOption({ option: option })
     urlParams.set(urlKey, item)
     setUrlParams(urlParams)

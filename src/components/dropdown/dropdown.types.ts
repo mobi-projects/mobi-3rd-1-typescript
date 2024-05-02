@@ -1,18 +1,19 @@
-type option = "perPage" | string // sort에사용될 키값들을 추가해주세요
+type Option = "perPage" | string // sort에사용될 키값들을 추가해주세요 sort옵션이 다정해지고나면 string은삭제 합니다.
 
 export type DropdownProps = {
   items: Array<string>
-  option: option
+  option: Option
 }
 
-export type ClickItemFuncProps = {
-  ({ item, option }: { item: string; option: option }): void
-}
+export type ClickCallbackFunc = (input: {
+  item: string
+  option: Option
+}) => void
 
-export type DropdownItemProps = {
-  clickCallback: ClickItemFuncProps
+export type DropdownItemsProps = {
+  clickCallback: ClickCallbackFunc
   items: Array<string>
-  option: option
+  option: Option
 }
 
 export type DropdownTriggerProps = {
@@ -21,6 +22,4 @@ export type DropdownTriggerProps = {
   clickCallback: () => void
 }
 
-export type GetKeyFuncProps = {
-  ({ option }: { option: option }): string
-}
+export type GetUrlkeyByOptionFunc = (input: { option: Option }) => string
