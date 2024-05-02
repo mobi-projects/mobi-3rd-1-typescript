@@ -5,7 +5,7 @@ import { getUrlkeyByOption } from "./dropdown.func"
 import type { ClickCallbackFunc } from "./dropdown.types"
 
 export const useDropDown = () => {
-  const [isOpen, setIsOpen] = useState<boolean>(false)
+  const [isOpen, setIsOpen] = useState(false)
   const [urlParams, setUrlParams] = useSearchParams()
 
   const boxRef = useRef<HTMLDivElement>(null)
