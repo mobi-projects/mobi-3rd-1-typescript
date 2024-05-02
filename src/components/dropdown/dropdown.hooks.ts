@@ -1,15 +1,8 @@
-import { SORT_OPTION } from "@/constants/url-keys"
 import { useState, useRef } from "react"
 import { useSearchParams } from "react-router-dom"
+import { getUrlkeyByOption } from "./dropdown.func"
 
-export type DropDown = {
-  isOpen: boolean
-  boxRef: HTMLDivElement
-  onClickTrigger: () => void
-  onClickItems: () => void
-  onClickWrapper: () => void
-  urlParams: URLSearchParams
-}
+import type { ClickItemFuncProps } from "./dropdown.types"
 
 export const useDropDown = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false)
@@ -20,8 +13,9 @@ export const useDropDown = () => {
     setIsOpen((prev) => !prev)
   }
 
-  const onClickItems = ({ item }: { item: string }) => {
-    urlParams.set(SORT_OPTION, item)
+  const onClickItems: ClickItemFuncProps = ({ item, option }) => {
+    const urlKey = getUrlkeyByOption({ option: option })
+    urlParams.set(urlKey, item)
     setUrlParams(urlParams)
     setIsOpen(false)
   }
