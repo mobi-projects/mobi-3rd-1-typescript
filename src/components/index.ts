@@ -1,5 +1,5 @@
 export * from "./button"
-export * from "./dropdown/dropdown"
+export * from "./dropdown"
 export * from "./pagination"
 
 /** [공용컴포넌트 관리 폴더]
