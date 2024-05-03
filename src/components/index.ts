@@ -1,4 +1,6 @@
 export * from "./button"
+export * from "./deferable-img"
+export * from "./dialog"
 export * from "./dropdown"
 export * from "./pagination"
 
