@@ -1,6 +1,7 @@
-import { PATH_SIGN_UP } from "@/constants"
+import { PATH_HOME, PATH_SIGN_UP } from "@/constants"
 import { useForm } from "react-hook-form"
 import { useNavigate } from "react-router-dom"
+import { postUserSignin } from "./sign-in.func"
 
 export const SignIn = () => {
   type SignupDataType = Record<"userId" | "password", string>
@@ -16,8 +17,15 @@ export const SignIn = () => {
 
   type onSubmitLoginDataFT = (input: SignupDataType) => void
 
-  const onSubmitLoginData: onSubmitLoginDataFT = (data) => {
-    console.log(data)
+  const onSubmitLoginData: onSubmitLoginDataFT = async (data) => {
+    try {
+      const response = await postUserSignin(data)
+      if (response) {
+        navi(PATH_HOME)
+      }
+    } catch {
+      alert("로그인실패 후에 다른 액션으로 수정하자")
+    }
   }
 
   return (
