@@ -1,5 +1,5 @@
 import { PATH_SIGN_IN } from "@/constants"
-import { AUTH_KEY, AUTH_PAIR_NUM, AUTH_TOKEN } from "@/constants/auth-key"
+import { AUTH_TOKEN } from "@/constants/auth-key"
 import { getUserRefreshToken } from "@/pages/sign-in/sign-in.func"
 import axios, { type AxiosRequestConfig, type AxiosResponse } from "axios"
 
@@ -9,8 +9,8 @@ const axiosConfig: AxiosRequestConfig = {
     "Content-Type": "application/json",
   },
   params: {
-    apiKey: AUTH_KEY,
-    pair: AUTH_PAIR_NUM,
+    apiKey: import.meta.env.VITE_API_MOBI_AUTH_KEY,
+    pair: import.meta.env.VITE_API_MOBI_AUTH_NUM,
   },
   withCredentials: true,
 }
