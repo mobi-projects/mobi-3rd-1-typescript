@@ -1,22 +1,22 @@
 import { PATH_SIGN_IN } from "@/constants"
 import {
-  API_SIGNIN,
-  API_SIGNOUT,
+  API_SIGN_IN,
+  API_SIGN_OUT,
   AUTH_REFRESH,
   AUTH_TOKEN,
 } from "@/constants/auth-key"
 import { baseAxiosInstance } from "@/libs/axios"
 
-type SigninDataType = Record<"userId" | "password", string>
+type SignInDataType = Record<"userId" | "password", string>
 type SignInDataReturnType = { info: object; token: string; userId: string }
-type postUserSigninFT = (input: SigninDataType) => Promise<SignInDataReturnType>
+type postUserSignInFT = (input: SignInDataType) => Promise<SignInDataReturnType>
 
-export const postUserSignin: postUserSigninFT = async ({
+export const postUserSignIn: postUserSignInFT = async ({
   password,
   userId,
 }) => {
   try {
-    const response = await baseAxiosInstance.post(API_SIGNIN, {
+    const response = await baseAxiosInstance.post(API_SIGN_IN, {
       password,
       userId,
     })
@@ -37,9 +37,9 @@ export const getUserRefreshToken = async (): Promise<string> => {
   }
 }
 
-export const postUserSignout = async () => {
+export const postUserSignOut = async () => {
   try {
-    const response = await baseAxiosInstance.post(API_SIGNOUT)
+    const response = await baseAxiosInstance.post(API_SIGN_OUT)
     if (response.status === 200) {
       localStorage.clear()
       window.location.href = PATH_SIGN_IN
