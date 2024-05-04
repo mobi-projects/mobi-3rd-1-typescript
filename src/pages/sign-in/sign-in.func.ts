@@ -1,10 +1,6 @@
 import { PATH_SIGN_IN } from "@/constants"
-import {
-  API_SIGN_IN,
-  API_SIGN_OUT,
-  AUTH_REFRESH,
-  AUTH_TOKEN,
-} from "@/constants/auth-key"
+import { AUTH_REFRESH, AUTH_TOKEN } from "@/constants/auth-key"
+import { API_SIGN_IN, API_SIGN_OUT } from "@/constants/server-endpoint"
 import { baseAxiosInstance } from "@/libs/axios"
 
 type SignInDataType = Record<"userId" | "password", string>
