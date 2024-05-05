@@ -67,5 +67,16 @@ baseAxiosInstance.interceptors.response.use(
   },
 )
 
-/** kakao api */
-export const kakaoAxiosInstance = () => axios.create()
+/** aladin api */
+export const aladinAxiosInstance = () =>
+  axios.create({
+    baseURL: "/aladin/ttb/api/ItemList.aspx",
+    params: {
+      ttbkey: import.meta.env.VITE_API_ALADIN_SERVICE_KEY,
+      Output: "JS",
+      Version: 20131101,
+      MaxResults: 15,
+      SearchTarget: "Book",
+      Cover: "Big",
+    },
+  })
