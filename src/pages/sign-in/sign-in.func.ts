@@ -1,4 +1,3 @@
-import { PATH_SIGN_IN } from "@/constants"
 import { AUTH_REFRESH, AUTH_TOKEN } from "@/constants/auth-key"
 import { API_SIGN_IN, API_SIGN_OUT } from "@/constants/server-endpoint"
 import { baseAxiosInstance } from "@/libs/axios"
@@ -46,5 +45,6 @@ export const postUserSignOut = async () => {
     return result
   } catch (err) {
     console.log(err)
+    return result
   }
 }
