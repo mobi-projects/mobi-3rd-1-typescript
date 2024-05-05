@@ -34,14 +34,16 @@ export const getUserRefreshToken = async (): Promise<string> => {
 }
 
 export const postUserSignOut = async () => {
+  let result = false
   try {
     const response = await baseAxiosInstance.post(API_SIGN_OUT)
     if (response.status === 200) {
       localStorage.clear()
-      window.location.href = PATH_SIGN_IN
+      result = true
     } else {
       alert("로그아웃 실패 refactor에서 다루자")
     }
+    return result
   } catch (err) {
     console.log(err)
   }
