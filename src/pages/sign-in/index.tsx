@@ -1,7 +1,7 @@
 import { PATH_HOME, PATH_SIGN_UP } from "@/constants"
 import { useForm } from "react-hook-form"
 import { useNavigate } from "react-router-dom"
-import { postUserSignin } from "./sign-in.func"
+import { postUserSignIn } from "./sign-in.func"
 
 export const SignIn = () => {
   type SignupDataType = Record<"userId" | "password", string>
@@ -15,11 +15,11 @@ export const SignIn = () => {
     formState: { errors },
   } = useForm<SignupDataType>()
 
-  type onSubmitLoginDataFT = (input: SignupDataType) => void
+  type onSubmitLogInDataFT = (input: SignupDataType) => void
 
-  const onSubmitLoginData: onSubmitLoginDataFT = async (data) => {
+  const onSubmitLogInData: onSubmitLogInDataFT = async (data) => {
     try {
-      const response = await postUserSignin(data)
+      const response = await postUserSignIn(data)
       if (response) {
         navi(PATH_HOME)
       }
@@ -30,7 +30,7 @@ export const SignIn = () => {
 
   return (
     <form
-      onSubmit={handleSubmit(onSubmitLoginData)}
+      onSubmit={handleSubmit(onSubmitLogInData)}
       className="h-dvh w-[50rem] px-8"
     >
       <h1 className="h-[8rem] w-full text-7xl font-extrabold">Loginddd</h1>
