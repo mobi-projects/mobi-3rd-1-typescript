@@ -16,5 +16,5 @@ export type DialogContextType = {
 export type onOpenDialogFT = (input: DialogPT) => void
 
 export type onAlertFT = (
-  input: PropsWithChildren & Pick<DialogPT, "onConfirm">,
+  input: PropsWithChildren & Partial<Pick<DialogPT, "onConfirm">>,
 ) => void
