@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form"
 import { useNavigate } from "react-router-dom"
 
 export const SignUp = () => {
-  type SignupDataType = Record<
+  type SignUpDataType = Record<
     "userId" | "password" | "passwordConfirm",
     string
   >
@@ -15,17 +15,18 @@ export const SignUp = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<SignupDataType>()
+  } = useForm<SignUpDataType>()
 
-  type onSubmitSignupDataFT = (input: SignupDataType) => void
+  type onSubmitSignUpDataFT = (input: SignUpDataType) => void
 
-  const onSubmitSignupData: onSubmitSignupDataFT = (data) => {
+  const onSubmitSignUpData: onSubmitSignUpDataFT = (data) => {
+    alert(data)
     console.log(data)
   }
 
   return (
     <form
-      onSubmit={handleSubmit(onSubmitSignupData)}
+      onSubmit={handleSubmit(onSubmitSignUpData)}
       className="h-dvh w-[50rem] px-8"
     >
       <h1 className="h-[8rem] w-full text-5xl font-extrabold">
@@ -62,5 +63,3 @@ export const SignUp = () => {
     </form>
   )
 }
-
-
