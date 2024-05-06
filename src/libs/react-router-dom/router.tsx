@@ -8,28 +8,39 @@ import {
 } from "@/constants"
 import { Detail, Home, My, NotFound, SignIn, SignUp } from "@/pages"
 
-import { createBrowserRouter } from "react-router-dom"
+import { Outlet, createBrowserRouter } from "react-router-dom"
+import { AuthRoute } from "./auth-route"
 
 export const Router = createBrowserRouter([
   {
-    path: PATH_HOME,
-    element: <Home />,
+    element: <Outlet />,
+    children: [
+      {
+        path: PATH_HOME,
+        element: <Home />,
+      },
+      {
+        path: PATH_SIGN_IN,
+        element: <SignIn />,
+      },
+      {
+        path: PATH_SIGN_UP,
+        element: <SignUp />,
+      },
+    ],
   },
   {
-    path: PATH_DETAIL,
-    element: <Detail />,
-  },
-  {
-    path: PATH_SIGN_IN,
-    element: <SignIn />,
-  },
-  {
-    path: PATH_SIGN_UP,
-    element: <SignUp />,
-  },
-  {
-    path: PATH_MY,
-    element: <My />,
+    element: <AuthRoute />,
+    children: [
+      {
+        path: PATH_MY,
+        element: <My />,
+      },
+      {
+        path: PATH_DETAIL,
+        element: <Detail />,
+      },
+    ],
   },
   {
     path: PATH_NOT_FOUND,
