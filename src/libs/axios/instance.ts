@@ -70,7 +70,7 @@ baseAxiosInstance.interceptors.response.use(
 /** aladin api */
 export const aladinAxiosInstance = () =>
   axios.create({
-    baseURL: "/aladin/ttb/api/ItemList.aspx",
+    baseURL: "/aladin/ttb/api",
     params: {
       ttbkey: import.meta.env.VITE_API_ALADIN_SERVICE_KEY,
       Output: "JS",

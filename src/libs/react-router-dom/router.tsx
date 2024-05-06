@@ -37,7 +37,7 @@ export const Router = createBrowserRouter([
         element: <My />,
       },
       {
-        path: PATH_DETAIL,
+        path: PATH_DETAIL + "/:bookId",
         element: <Detail />,
       },
     ],
