@@ -1,63 +1,64 @@
-import { PATH_HOME } from "@/constants"
+import { useDialog } from "@/components/dialog/dialog.hook"
+import { FORM_EMAIL, FORM_PW, FORM_PW_CONFIRM } from "@/constants"
 import { useForm } from "react-hook-form"
-import { useNavigate } from "react-router-dom"
+import { useMutationSignUp } from "./sign-up.hook"
+import type { SignUpFormType } from "./sign-up.type"
 
 export const SignUp = () => {
-  type SignUpDataType = Record<
-    "userId" | "password" | "passwordConfirm",
-    string
-  >
-  const navi = useNavigate()
-  /**
-   * @notice {{ mode: 'onChange', resolver: yupResolver(schema) }} 유효성검사활성화할때 추가하면됨
-   */
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<SignUpDataType>()
+  const { mutate } = useMutationSignUp()
+  const { onAlert } = useDialog()
+  const { register, handleSubmit } = useForm<SignUpFormType>()
 
-  type onSubmitSignUpDataFT = (input: SignUpDataType) => void
-
-  const onSubmitSignUpData: onSubmitSignUpDataFT = (data) => {
-    alert(data)
-    console.log(data)
+  const onSubmit = (data: SignUpFormType) => {
+    /** @notice yup schema 적용시, 👇 아래 분기 삭제 */
+    if (!!!data[FORM_EMAIL]) {
+      onAlert({
+        children: "이메일이 입력되지 않았습니다.",
+        onConfirm: () => {},
+      })
+      return
+    }
+    /** @notice yup schema 적용시, 👇 아래 분기 삭제 */
+    if (data[FORM_PW] !== data[FORM_PW_CONFIRM]) {
+      onAlert({
+        children: "비밀번호를 다시 확인해주세요.",
+        onConfirm: () => {},
+      })
+      return
+    }
+    mutate({
+      email: data.email,
+      password: data.password,
+    })
   }
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmitSignUpData)}
-      className="h-dvh w-[50rem] px-8"
-    >
+    <form onSubmit={handleSubmit(onSubmit)} className="h-dvh w-[50rem] px-8">
       <h1 className="h-[8rem] w-full text-5xl font-extrabold">
         회원가입페이지입니다.
       </h1>
       <div className="flex w-full flex-col">
         <div className="h-full w-full">
-          <p>email</p>
+          <label>email</label>
           <input
             className="h-12 w-full border-2 border-black "
-            {...register("userId")}
+            {...register(FORM_EMAIL)}
           />
-          <p>password</p>
+          <label>password</label>
           <input
             type="password"
             className="h-12 w-full border-2 border-black"
-            {...register("password")}
+            {...register(FORM_PW)}
           />
           <p>Confirm Password</p>
           <input
             type="password"
             className="h-12 w-full border-2 border-black"
-            {...register("passwordConfirm")}
+            {...register(FORM_PW_CONFIRM)}
           />
         </div>
       </div>
-      <button
-        onClick={() => navi(PATH_HOME)}
-        type="submit"
-        className="w-full rounded-md border-2 bg-slate-300"
-      >
+      <button type="submit" className="w-full rounded-md border-2 bg-slate-300">
         JoinNow
       </button>
     </form>

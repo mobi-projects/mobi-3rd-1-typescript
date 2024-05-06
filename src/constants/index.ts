@@ -1,5 +1,6 @@
 export * from "./form-key"
 export * from "./pages-path"
+export * from "./server-endpoint"
 
 /** [상수 함수 관리 폴더]
 ---------------------------------------------------------------------------
