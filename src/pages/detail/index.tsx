@@ -1,6 +1,6 @@
 import { DeferableImg } from "@/components"
 import { useParams } from "react-router-dom"
-import { BookDetailExtractor } from "./detail.func"
+import { bookDetailExtractor } from "./detail.func"
 import { useBookDetail } from "./detail.hook"
 
 export const Detail = () => {
@@ -11,7 +11,7 @@ export const Detail = () => {
     return <div>잠시만 기다려주세요...</div>
   }
 
-  const bookDetail = BookDetailExtractor({ responseData: data })
+  const bookDetail = bookDetailExtractor({ responseData: data })
 
   return (
     <div>

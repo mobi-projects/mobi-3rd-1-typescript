@@ -34,7 +34,7 @@ const isBookDetailResponse = (
 /**
  * 반환 결과 중, 책에 대한 상세정보만 추출합니다
  */
-export const BookDetailExtractor: BookDetailExtractorFT = ({
+export const bookDetailExtractor: BookDetailExtractorFT = ({
   responseData,
 }) => {
   if (!isBookDetailResponse(responseData))
