@@ -12,7 +12,7 @@ import type {
 } from "./sign.type"
 
 export const useSignIn = () => {
-  const navi = useNavigate()
+  const navigate = useNavigate()
   const {
     register,
     handleSubmit,
@@ -23,7 +23,7 @@ export const useSignIn = () => {
     try {
       const response = await postUserSignIn(data)
       if (response) {
-        navi(PATH_HOME)
+        navigate(PATH_HOME)
       }
     } catch {
       alert("로그인실패 후에 다른 액션으로 수정하자")
