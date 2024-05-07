@@ -4,10 +4,10 @@ import { Input } from "@/components/ui/input"
 import { FORM_EMAIL, FORM_PW, FORM_PW_CONFIRM } from "@/constants"
 import { Label } from "@radix-ui/react-label"
 import { useForm } from "react-hook-form"
-import { useMutationSignUp } from "./sign.hooks"
-import { SignUpFormType } from "./sign.type"
+import { useMutationSignUp } from "../sign.hooks"
+import { SignUpFormType } from "../sign.type"
 
-export const SignUp = () => {
+export const SignUpForm = () => {
   const { mutate } = useMutationSignUp()
   const { onAlert } = useDialog()
   const { register, handleSubmit } = useForm<SignUpFormType>()
@@ -63,7 +63,7 @@ export const SignUp = () => {
         <Input
           {...register("password-confirm")}
           type="password"
-          placeholder="Password"
+          placeholder="Confirm Password"
           autoComplete="off"
         />
       </div>

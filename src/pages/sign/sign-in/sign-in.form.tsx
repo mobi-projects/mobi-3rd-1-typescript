@@ -1,8 +1,8 @@
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@radix-ui/react-label"
-import { useSignIn } from "./sign.hooks"
-export const SignIn = () => {
+import { useSignIn } from "../sign.hooks"
+export const SignInForm = () => {
   /**
    * @notice {{ mode: 'onChange', resolver: yupResolver(schema) }} 유효성검사활성화할때 추가하면됨
    */
