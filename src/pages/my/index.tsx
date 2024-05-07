@@ -51,10 +51,7 @@ export const My = () => {
         <p className="h-[3rem] w-fit bg-green-300">
           {data?.data.nickName || "닉네임입력좀"}
         </p>
-        <p className="h-[3rem]  bg-blue-300">
-          {data?.data.location || "주소입력좀"}
-        </p>
-        <p className="h-[3rem]  bg-slate-300">{data?.userId || "loginId"}</p>
+        <p className="h-[3rem]  bg-slate-300">{data?.userId}</p>
       </div>
       <button
         onClick={() =>
