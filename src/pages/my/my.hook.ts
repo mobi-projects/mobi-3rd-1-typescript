@@ -1,9 +1,10 @@
 import { useForm } from "react-hook-form"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { QUERY_KEY_USER_INFO } from "@/constants/query-key"
-import { patchUserInfo, patchUserUpdateInfo } from "./my.func"
+import { patchUserImage, patchUserInfo, patchUserUpdateInfo } from "./my.func"
 
 import type { UpdataDataType, UserDataType } from "./my.type"
+
 /**
  *@description user정보를 `조회`하기위한 hook입니다.
  */
@@ -46,4 +47,26 @@ export const useSubmitUpdateData = () => {
     // formState: { errors, isValid },
   } = useForm<UpdataDataType>({ mode: "onChange" })
   return { register, handleSubmit }
+}
+
+/**
+ * @description
+ * - 유저 프로필이미지 업데이트 hook입니다.
+ * - patchUserImage() 함수를 실행하면 서버로 이미지업로드 patch요청이 진행됩니다.
+ * - 서버요청을 성공하면 onSuccess() 를실행해서  queryKey: [QUERY_KEY_USER_INFO] 를 재조회해서 현재 패칭된 data정보를 갱신합니다.
+ */
+export const useUpdateUserImage = () => {
+  const queryClient = useQueryClient()
+  const { mutate } = useMutation({
+    mutationFn: (data: FormData) => patchUserImage(data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: [QUERY_KEY_USER_INFO] })
+    },
+    onError: (err) => {
+      console.log("뮤테이션실패")
+      console.log(err)
+    },
+  })
+
+  return { mutate }
 }
