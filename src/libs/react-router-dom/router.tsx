@@ -3,10 +3,9 @@ import {
   PATH_HOME,
   PATH_MY,
   PATH_NOT_FOUND,
-  PATH_SIGN_IN,
-  PATH_SIGN_UP,
+  PATH_SIGN,
 } from "@/constants"
-import { Detail, Home, My, NotFound, SignIn, SignUp } from "@/pages"
+import { Detail, Home, My, NotFound, Sign } from "@/pages"
 
 import { Outlet, createBrowserRouter } from "react-router-dom"
 import { AuthRoute } from "./auth-route"
@@ -20,12 +19,8 @@ export const Router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: PATH_SIGN_IN,
-        element: <SignIn />,
-      },
-      {
-        path: PATH_SIGN_UP,
-        element: <SignUp />,
+        path: PATH_SIGN,
+        element: <Sign />,
       },
     ],
   },
