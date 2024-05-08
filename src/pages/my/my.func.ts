@@ -5,7 +5,6 @@ import {
 import { baseAxiosInstance } from "@/libs/axios"
 
 import type { PatchUserInfoFT, PatchUserUpdateInfoFT } from "./my.type"
-import type { AxiosResponse } from "axios"
 
 export const patchUserInfo: PatchUserInfoFT = async () => {
   try {
@@ -28,11 +27,7 @@ export const patchUserUpdateInfo: PatchUserUpdateInfoFT = async (newData) => {
 }
 
 export const patchUserImage = async (formData: FormData) => {
-  await baseAxiosInstance.patch<AxiosResponse>(
-    API_UPDATE_USER_IMAGE,
-    formData,
-    {
-      headers: { "content-type": "multipart/form-data" },
-    },
-  )
+  await baseAxiosInstance.patch(API_UPDATE_USER_IMAGE, formData, {
+    headers: { "content-type": "multipart/form-data" },
+  })
 }
