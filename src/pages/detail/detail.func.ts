@@ -1,12 +1,39 @@
-import { ALADIN_POINT_BOOK_DETAIL } from "@/constants"
-import { aladinAxiosInstance } from "@/libs/axios"
-import { BookDetailExtractorFT, BookDetailResponseType } from "./detail.type"
+import { ALADIN_POINT_BOOK_DETAIL, API_BOOK } from "@/constants"
+import { aladinAxiosInstance, baseAxiosInstance } from "@/libs/axios"
+import { BOOK_DETAIL_TEMPLATE } from "./detail.constant"
+import type {
+  BookDetailType,
+  GetBookDetailFT,
+  GetBookDetailFromApiFT,
+  ResponseConverterFT,
+} from "./detail.type"
 
-type GetBookDetailFT = (input: {
-  isbn13: string
-}) => Promise<BookDetailResponseType>
-
+/**
+ * [도서상세정보] 에 대하여, api 호출 후 결과 반환하기
+ * - isbn13 으로 peanut 서버에 있는지 먼저 조회합니다.
+ * - 있다면 그 결과를 반환하고, 없을 경우 아래절차를 따릅니다.
+ * - 서드파티 api 를 호출하고 반환된 결과를 peanut 서버로 전달 후, 반환합니다.
+ */
 export const getBookDetail: GetBookDetailFT = async ({ isbn13 }) => {
+  const bookDetailFromPeanut = await getBookDetailFromPeanut({ isbn13 })
+  if (isBookDetail(bookDetailFromPeanut)) return bookDetailFromPeanut
+
+  const bookDetailFromThirdParty = await getBookDetailFromAladin({ isbn13 })
+  if (isBookDetail(bookDetailFromThirdParty)) {
+    await postBookDetailOnPeanut({
+      isbn13,
+      bookDetail: bookDetailFromThirdParty,
+    })
+  }
+  return bookDetailFromThirdParty
+}
+
+/**
+ * 알라딘 api 통해서, [도서상세정보] 조회하기
+ */
+export const getBookDetailFromAladin: GetBookDetailFromApiFT = async ({
+  isbn13,
+}) => {
   try {
     const response = await aladinAxiosInstance().get(ALADIN_POINT_BOOK_DETAIL, {
       params: {
@@ -15,31 +42,94 @@ export const getBookDetail: GetBookDetailFT = async ({ isbn13 }) => {
         OptResult: ["story", "reviewList", "cardReviewImgList"],
       },
     })
-    return response.data
+    const bookDetail = responseConverterForAladin({ response })
+    return bookDetail
   } catch (e) {
-    throw new Error("상세 도서 정보를 불러오지 못했습니다.")
+    throw new Error(
+      "third-party-server 로부터 [도서상세정보] 를 불러오지 못했습니다.",
+    )
   }
 }
-
 /**
- * BookDetailExtractor() input 에 대한 Type Guard
+ * peanut api 통해서, isbn13 에 대한 [도서상세정보] 조회하기
  */
-const isBookDetailResponse = (
-  input: BookDetailResponseType | undefined,
-): input is BookDetailResponseType => {
-  if (typeof input !== "undefined") return true
-  return false
+export const getBookDetailFromPeanut: GetBookDetailFromApiFT = async ({
+  isbn13,
+}) => {
+  try {
+    const response = await baseAxiosInstance.get(API_BOOK, {
+      params: {
+        key: isbn13,
+        page: 1,
+      },
+    })
+    const bookDetail = responseConverterForPeanut({ response })
+    return bookDetail
+  } catch (e) {
+    throw new Error("main-server 로부터 [도서상세정보] 를 불러오지 못했습니다.")
+  }
+}
+/**
+ * peanut api 통해서, [도서상세정보] 저장하기
+ */
+export const postBookDetailOnPeanut = async ({
+  isbn13,
+  bookDetail,
+}: {
+  isbn13: string
+  bookDetail: BookDetailType
+}) => {
+  try {
+    await baseAxiosInstance.post(API_BOOK, {
+      key: isbn13,
+      book: bookDetail,
+    })
+  } catch (e) {
+    throw new Error("main-server 에 [도서상세정보] 를 저장하지 못했습니다.")
+  }
+}
+/**
+ * axios response 를 우리 서비스의 "도서" 관리 형태로 변환
+ * - peanut api 전용
+ */
+const responseConverterForPeanut: ResponseConverterFT = ({ response }) => {
+  if (!!!response.data.data.length) return undefined
+  return response.data.data[0].data.book
 }
 
 /**
- * 반환 결과 중, 책에 대한 상세정보만 추출합니다
+ * axios response 를 우리 서비스의 "도서" 관리 형태로 변환
+ * - aladin api 전용
  */
-export const BookDetailExtractor: BookDetailExtractorFT = ({
-  responseData,
-}) => {
-  if (!isBookDetailResponse(responseData))
-    throw new Error("해당 도서에 대한 정보가 확인되지 않았습니다.")
-  const _responseData = { ...responseData }
-  const result = _responseData.item[0]
-  return result
+const responseConverterForAladin: ResponseConverterFT = ({ response }) => {
+  const responseData = response?.data.item[0]
+  if (typeof response === "undefined") return responseData
+  const bookDetail: BookDetailType = { ...BOOK_DETAIL_TEMPLATE }
+  bookDetail.isbn13 = responseData.isbn13
+  bookDetail.title = responseData.title
+  bookDetail.description = responseData.description
+  bookDetail.author = responseData.author
+  bookDetail.publisher = responseData.publisher
+  bookDetail.cover = responseData.cover
+  bookDetail.priceSales = responseData.priceSales
+  bookDetail.priceStandard = responseData.priceStandard
+  bookDetail.adult = responseData.adult
+  bookDetail.itemId = responseData.itemId
+  bookDetail.link = responseData.link
+  bookDetail.customerReviewRank = responseData.customerReviewRank
+  bookDetail.categoryName = responseData.categoryName
+  bookDetail.subInfo.itemPage = responseData.subInfo.itemPage
+  bookDetail.subInfo.originalTitle = responseData.subInfo.originalTitle
+  bookDetail.subInfo.subTitle = responseData.subInfo.subTitle
+  return bookDetail
+}
+
+/**
+ * 전달된 파라미터의 타입이 BookDetailType 인지를 위한 타입가드
+ */
+export const isBookDetail = (
+  input: BookDetailType | undefined,
+): input is BookDetailType => {
+  if (typeof input !== "undefined") return true
+  return false
 }
