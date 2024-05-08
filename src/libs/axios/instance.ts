@@ -1,6 +1,7 @@
-import { PATH_SIGN_IN } from "@/constants"
+import { PATH_SIGN } from "@/constants"
 import { AUTH_TOKEN } from "@/constants/auth-key"
-import { getUserRefreshToken } from "@/pages/sign-in/sign-in.func"
+import { getUserRefreshToken } from "@/pages/sign/sign.func"
+
 import axios, { type AxiosRequestConfig, type AxiosResponse } from "axios"
 
 const axiosConfig: AxiosRequestConfig = {
@@ -58,7 +59,7 @@ baseAxiosInstance.interceptors.response.use(
       } catch (refreshError) {
         // 토큰 새로고침에 실패 시 로그인 페이지로 이동
         alert("권한이없습니다")
-        window.location.href = PATH_SIGN_IN
+        window.location.href = PATH_SIGN
         return Promise.reject(refreshError) // 오류 반환
       }
     }

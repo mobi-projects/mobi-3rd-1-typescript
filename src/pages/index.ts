@@ -2,9 +2,7 @@ export * from "./detail"
 export * from "./home"
 export * from "./my"
 export * from "./not-found"
-export * from "./sign-in"
-export * from "./sign-up"
-
+export * from "./sign"
 /** [pages 폴더]
 ---------------------------------------------------------------------------
 ## 각 폴더의 내부구성

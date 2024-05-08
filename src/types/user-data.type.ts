@@ -1,5 +1,5 @@
 export type UserDataType = {
-  data: Record<"nickName" | "location", string>
+  data: Record<"nickName", string>
   profileUrl?: string
   userId: string
 }
