@@ -1,3 +1,4 @@
+import { Header } from "@/components/header"
 import { PATH_SIGN } from "@/constants"
 import { AUTH_TOKEN } from "@/constants/auth-key"
 import { useEffect } from "react"
@@ -12,5 +13,10 @@ export const AuthRoute = () => {
       navigate(PATH_SIGN)
     }
   }, [])
-  return <Outlet />
+  return (
+    <>
+      <Header />
+      <Outlet />
+    </>
+  )
 }
