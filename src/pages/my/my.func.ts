@@ -1,4 +1,7 @@
-import { API_UPDATE_USER_INFO } from "@/constants/server-endpoint"
+import {
+  API_UPDATE_USER_IMAGE,
+  API_UPDATE_USER_INFO,
+} from "@/constants/server-endpoint"
 import { baseAxiosInstance } from "@/libs/axios"
 
 import type { PatchUserInfoFT, PatchUserUpdateInfoFT } from "./my.type"
@@ -21,4 +24,10 @@ export const patchUserUpdateInfo: PatchUserUpdateInfoFT = async (newData) => {
   } catch (err) {
     console.log(err)
   }
+}
+
+export const patchUserImage = async (formData: FormData) => {
+  await baseAxiosInstance.patch(API_UPDATE_USER_IMAGE, formData, {
+    headers: { "content-type": "multipart/form-data" },
+  })
 }

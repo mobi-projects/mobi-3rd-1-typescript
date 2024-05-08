@@ -18,10 +18,6 @@ export const UpadateUserInfoModal = () => {
     >
       <h3 className="py-5 font-bold">정보수정 모달</h3>
       <div>
-        <span className="text-sm">Password</span>
-        <input className="border-2 border-blue-500" {...register("password")} />
-      </div>
-      <div>
         <span className="text-sm">NickName</span>
         <input className="border-2 border-blue-500" {...register("nickName")} />
       </div>

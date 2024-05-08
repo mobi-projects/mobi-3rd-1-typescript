@@ -1,7 +1,6 @@
-import { DeferableImg } from "@/components"
 import { useDialog } from "@/components/dialog/dialog.hook"
 import { Header } from "@/components/header"
-import { useFetchingUserInfo } from "./my.hook"
+import { useFetchingUserInfo, useUpdateUserImage } from "./my.hook"
 import { UpadateUserInfoModal } from "./my.modal"
 
 /**
@@ -11,25 +10,48 @@ import { UpadateUserInfoModal } from "./my.modal"
 export const My = () => {
   const { onModal } = useDialog()
   const { data, isLoading } = useFetchingUserInfo()
+  const { mutate } = useUpdateUserImage()
+
   const onClickConfirm = () => {
     // 확인누르면 실행할 로직작성
     console.log("실행")
   }
+  const onChangeProfileImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const formData = new FormData()
+    if (e.currentTarget.files) {
+      formData.append("image", e.currentTarget.files[0])
+      mutate(formData)
+    }
+  }
+
   if (isLoading) return <h1>Loading중....</h1>
   return (
     <div className=" h-full  w-full ">
       <Header />
       <div className="h-full w-[40rem]">
-        <DeferableImg
-          src={data?.profileUrl || "https://source.unsplash.com/random/?man"}
-        />
+        <div className="bg-slate-300">
+          <div className="relative h-36 w-36  cursor-pointer rounded-full ">
+            <img
+              src={
+                data?.profileUrl || "https://source.unsplash.com/random/?man"
+              }
+              className="absolute h-36 w-36 rounded-full"
+            />
+            <input
+              onChange={onChangeProfileImage}
+              type="file"
+              accept="image/*"
+              className=" peer absolute z-20 flex h-36 w-36 items-center justify-center rounded-full opacity-0 "
+            />
+            <div className="absolute flex h-36 w-36 items-center justify-center  rounded-full bg-red-300 font-bold opacity-0 peer-hover:opacity-70">
+              프로필 등록!
+            </div>
+          </div>
+        </div>
         <p className="h-[3rem] w-fit bg-green-300">
           {data?.data.nickName || "닉네임입력좀"}
         </p>
-        <p className="h-[3rem]  bg-blue-300">
-          {data?.data.location || "주소입력좀"}
-        </p>
-        <p className="h-[3rem]  bg-slate-300">{data?.userId || "loginId"}</p>
+        <p className="h-[3rem]  bg-slate-300">{data?.userId}</p>
       </div>
       <button
         onClick={() =>
