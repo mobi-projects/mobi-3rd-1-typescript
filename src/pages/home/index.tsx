@@ -1,5 +1,4 @@
 import { PageNationBtn } from "@/components"
-import { Header } from "@/components/header"
 import { usePagination } from "@/components/pagination/pagination.hook"
 import { PATH_DETAIL } from "@/constants"
 import { useNavigate } from "react-router-dom"
@@ -12,7 +11,6 @@ export const Home = () => {
   const navigate = useNavigate()
   return (
     <div>
-      <Header />
       <ul>
         {data?.item.map((book) => {
           if (!!!book.isbn13) {

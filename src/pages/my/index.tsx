@@ -1,5 +1,4 @@
 import { useDialog } from "@/components/dialog/dialog.hook"
-import { Header } from "@/components/header"
 import { useFetchingUserInfo, useUpdateUserImage } from "./my.hook"
 import { UpadateUserInfoModal } from "./my.modal"
 
@@ -27,8 +26,7 @@ export const My = () => {
   if (isLoading) return <h1>Loading중....</h1>
   return (
     <div className=" h-full  w-full ">
-      <Header />
-      <div className="h-full w-[40rem]">
+      <div className="h-full w-full">
         <div className="bg-slate-300">
           <div className="relative h-36 w-36  cursor-pointer rounded-full ">
             <img
