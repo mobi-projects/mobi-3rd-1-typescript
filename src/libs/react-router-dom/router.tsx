@@ -15,10 +15,6 @@ export const Router = createBrowserRouter([
     element: <Outlet />,
     children: [
       {
-        path: PATH_HOME,
-        element: <Home />,
-      },
-      {
         path: PATH_SIGN,
         element: <Sign />,
       },
@@ -27,6 +23,10 @@ export const Router = createBrowserRouter([
   {
     element: <AuthRoute />,
     children: [
+      {
+        path: PATH_HOME,
+        element: <Home />,
+      },
       {
         path: PATH_MY,
         element: <My />,
