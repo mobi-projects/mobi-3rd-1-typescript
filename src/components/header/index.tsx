@@ -3,12 +3,11 @@ import { useNavigate } from "react-router-dom"
 import { Button } from "../ui/button"
 import { PATH_HOME, PATH_MY, PATH_SIGN } from "@/constants"
 import { postUserSignOut } from "@/pages/sign/sign.func"
+import { BUTTON_STYLE, BUTTON_VARIANT } from "./header.constant"
 
 export const Header = () => {
   const navigate = useNavigate()
-  const BUTTON_VARIANT = "ghost"
-  const BUTTON_STYLE =
-    "IPHON_XR:max-w-full flex h-full w-full max-w-[10rem] items-center justify-evenly border-none p-0"
+
   return (
     <div className=" flex h-[6rem] w-full flex-col justify-center border-b-2">
       <div className="flex h-1/2 w-full items-center justify-center font-extrabold">
