@@ -1,9 +1,11 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { D_LOGIN, D_SIGN_UP } from "@/constants/design-key"
-import { SignInForm } from "./sign-in/sign-in.form"
-import { SignUpForm } from "./sign-up/sign-up.form"
-import { SignInHeader } from "./sign-in/sign-in.header"
-import { SignUpHeader } from "./sign-up/sign-up.header"
+import {
+  SignUpForm,
+  SignInForm,
+  SignInHeader,
+  SignUpHeader,
+} from "./components"
 
 export const Sign = () => {
   return (
