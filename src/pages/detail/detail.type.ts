@@ -1,6 +1,6 @@
 import type { BookItemType } from "@/types"
 import type { UseQueryResult } from "@tanstack/react-query"
-import { AxiosResponse } from "axios"
+import type { AxiosResponse } from "axios"
 
 /* -------------------[객체 타입]---------------------- */
 export type BookDetailType = BookItemType & {
@@ -9,7 +9,7 @@ export type BookDetailType = BookItemType & {
     originalTitle: string
     subTitle: string
   }
-  reviews?: Array<ReviewType>
+  reviews: Array<ReviewType>
 }
 
 export type ReviewType = {
@@ -18,6 +18,11 @@ export type ReviewType = {
   profileUrl: string
   comment: string
   rating: number
+}
+
+export type ReviewFormType = {
+  rating: number
+  comment: string
 }
 
 /* -------------------[호출 시그니처]---------------------- */
@@ -44,3 +49,14 @@ export type BookDetailResponseType = {
 export type ResponseConverterFT = (input: {
   response: AxiosResponse<any, any>
 }) => BookDetailType | undefined
+
+export type AddBookReviewsFT = (input: {
+  bookDetail: BookDetailType
+  review: ReviewType
+}) => BookDetailType
+
+export type PostReviewOnPeanutFT = (input: {
+  isbn13: string
+  bookDetail: BookDetailType
+  review: ReviewType
+}) => Promise<BookDetailType | undefined>

@@ -2,9 +2,11 @@ import { ALADIN_POINT_BOOK_DETAIL, API_BOOK } from "@/constants"
 import { aladinAxiosInstance, baseAxiosInstance } from "@/libs/axios"
 import { BOOK_DETAIL_TEMPLATE } from "./detail.constant"
 import type {
+  AddBookReviewsFT,
   BookDetailType,
   GetBookDetailFT,
   GetBookDetailFromApiFT,
+  PostReviewOnPeanutFT,
   ResponseConverterFT,
 } from "./detail.type"
 
@@ -26,6 +28,43 @@ export const getBookDetail: GetBookDetailFT = async ({ isbn13 }) => {
     })
   }
   return bookDetailFromThirdParty
+}
+
+/**
+ * 새 리뷰 등록하기
+ * - BookDetail 객체의 속성 중, reviews 배열에 새로운 Review 객체를 추가합니다.
+ * - 위의 결과로 만들어진 BookDetail 객체를 서버로 전송합니다.
+ * - 응답 결과의 형태를 적절히 변형하여 반환합니다.
+ */
+export const postReviewOnPeanut: PostReviewOnPeanutFT = async ({
+  isbn13,
+  bookDetail,
+  review,
+}) => {
+  try {
+    const updatedBookDetail = addBookReviews({
+      bookDetail,
+      review,
+    })
+    const response = await baseAxiosInstance.post(API_BOOK, {
+      key: isbn13,
+      book: updatedBookDetail,
+    })
+    const result = postReviewResConverter({ response })
+    return result
+  } catch {
+    throw new Error("댓글 수정이 완료되지 않았습니다.")
+  }
+}
+
+/**
+ * BookDetail 객체의 속성 중, reviews 배열에 새로운 Review 객체를 추가합니다.
+ */
+const addBookReviews: AddBookReviewsFT = ({ bookDetail, review }) => {
+  const _bookDetail = { ...bookDetail }
+  const _review = { ...review }
+  _bookDetail.reviews = [...bookDetail.reviews, _review]
+  return _bookDetail
 }
 
 /**
@@ -95,6 +134,13 @@ export const postBookDetailOnPeanut = async ({
 const responseConverterForPeanut: ResponseConverterFT = ({ response }) => {
   if (!!!response.data.data.length) return undefined
   return response.data.data[0].data.book
+}
+/**
+ * axios response 를 우리 서비스의 "도서" 관리 형태로 변환
+ * - 리뷰 게시 결과를 변환
+ */
+const postReviewResConverter: ResponseConverterFT = ({ response }) => {
+  return response.data.data.book
 }
 
 /**
