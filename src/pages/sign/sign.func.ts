@@ -4,22 +4,26 @@ import {
   API_SIGN_OUT,
   API_SIGN_UP,
 } from "@/constants/server-endpoint"
+import { removeFromLocalStorage, saveToLocalStorage } from "@/funcs"
 import { baseAxiosInstance } from "@/libs/axios"
-
+import { UserDataType } from "@/types"
 import type {
+  ExtractAccessTokenFT,
   GenerateNewUserDataFT,
+  GetRefreshTokenFT,
   PostSignUpFT,
   PostUserSignInFT,
 } from "./sign.type"
-import { UserDataType } from "@/types"
 
-export const getUserRefreshToken = async (): Promise<string> => {
+export const getUserRefreshToken: GetRefreshTokenFT = async () => {
   try {
     const response = await baseAxiosInstance.get(AUTH_REFRESH)
-    localStorage.setItem(AUTH_TOKEN, response.data.token) // 성공시스토리지에 token저장
-    return response.data.token
-  } catch (err) {
-    throw console.log(err)
+    const accessToken = extractAccessToken({ response })
+    saveToLocalStorage({ key: AUTH_TOKEN, value: accessToken })
+    return accessToken
+  } catch (e) {
+    removeFromLocalStorage({ key: AUTH_TOKEN })
+    throw new Error("accessToken 갱신에 실패했습니다.")
   }
 }
 
@@ -81,4 +85,11 @@ const generateNewUserData: GenerateNewUserDataFT = ({ email, password }) => {
     },
   }
   return newUserData
+}
+
+/**
+ * axios response 에서 accessToken 을 분리합니다.
+ */
+export const extractAccessToken: ExtractAccessTokenFT = ({ response }) => {
+  return response.data.token
 }

@@ -1,5 +1,6 @@
 import { FORM_EMAIL, FORM_PW, FORM_PW_CONFIRM } from "@/constants"
 import type { UserDataType } from "@/types"
+import { AxiosResponse } from "axios"
 
 export type SignInDataType = Record<"userId" | "password", string>
 export type OnSubmitLogInDataFT = (input: SignInDataType) => void
@@ -20,3 +21,7 @@ export type SignUpFormType = {
 export type SignUpInputType = Omit<SignUpFormType, typeof FORM_PW_CONFIRM>
 export type PostSignUpFT = (input: SignUpInputType) => Promise<UserDataType>
 export type GenerateNewUserDataFT = (input: SignUpInputType) => UserDataType
+export type GetRefreshTokenFT = () => Promise<string>
+export type ExtractAccessTokenFT = (input: {
+  response: AxiosResponse
+}) => string
