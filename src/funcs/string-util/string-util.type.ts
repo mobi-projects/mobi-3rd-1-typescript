@@ -1,7 +1,7 @@
 export type ReplaceMidSubstringToStar = (input: {
   origin: string
-  excludeFront: number
-  excludeBack: number
+  excludeFront?: number
+  excludeBack?: number
 }) => string
 
 export type SpliceStringFT = (input: {

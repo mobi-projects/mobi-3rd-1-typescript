@@ -16,12 +16,8 @@ export const replaceMidSubstringToStar: ReplaceMidSubstringToStar = ({
   const originLength = origin.length
   if (originLength <= excludeFront + excludeBack)
     throw new Error("입력된 문자열의 길이가 너무 짧습니다.")
-  const frontString = spliceString({ origin, length: excludeFront })
-  const backString = spliceString({
-    origin,
-    length: excludeBack,
-    startIndex: originLength - excludeBack - 1,
-  })
+  const frontString = origin.substring(0, excludeFront)
+  const backString = origin.substring(originLength - excludeBack)
   const middleStringSize = originLength - excludeFront - excludeBack
   const middleString = Array.from({ length: middleStringSize })
     .fill("*")
