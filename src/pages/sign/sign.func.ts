@@ -4,7 +4,11 @@ import {
   API_SIGN_OUT,
   API_SIGN_UP,
 } from "@/constants/server-endpoint"
-import { removeFromLocalStorage, saveToLocalStorage } from "@/funcs"
+import {
+  getFromLocalStorage,
+  removeFromLocalStorage,
+  saveToLocalStorage,
+} from "@/funcs"
 import { baseAxiosInstance } from "@/libs/axios"
 import { UserDataType, UserType } from "@/types"
 import type {
@@ -16,6 +20,9 @@ import type {
   PostUserSignInFT,
 } from "./sign.type"
 
+/**
+ * accessToken 을 갱신합니다.
+ */
 export const getUserRefreshToken: GetRefreshTokenFT = async () => {
   try {
     const response = await baseAxiosInstance.get(AUTH_REFRESH)
@@ -27,7 +34,6 @@ export const getUserRefreshToken: GetRefreshTokenFT = async () => {
     throw new Error("accessToken 갱신에 실패했습니다.")
   }
 }
-
 /**
  * 로그인
  * - accessToken 은 로컬스토리지에 등록합니다.
@@ -44,28 +50,25 @@ export const postUserSignIn: PostUserSignInFT = async ({
     })
     const accessToken = extractAccessToken({ response })
     saveToLocalStorage({ key: AUTH_TOKEN, value: accessToken })
-
     const user = convertSignInResToUser({ response })
     return user
   } catch (err) {
     throw new Error("로그인에 실패했습니다.")
   }
 }
-
+/**
+ * 로그아웃
+ * - 성공 시, accessToken 을 제거합니다.
+ * - 오류 발생 시, accessToken 을 원복합니다.
+ */
 export const postUserSignOut = async () => {
-  let result = false
+  const accessToken = getFromLocalStorage({ key: AUTH_TOKEN })
   try {
-    const response = await baseAxiosInstance.post(API_SIGN_OUT)
-    if (response.status === 200) {
-      localStorage.clear()
-      result = true
-    } else {
-      alert("로그아웃 실패 refactor에서 다루자")
-    }
-    return result
-  } catch (err) {
-    console.log(err)
-    return result
+    await baseAxiosInstance.post(API_SIGN_OUT)
+    removeFromLocalStorage({ key: AUTH_TOKEN })
+  } catch {
+    saveToLocalStorage({ key: AUTH_TOKEN, value: accessToken })
+    throw new Error("로그 아웃에 실패했습니다.")
   }
 }
 
