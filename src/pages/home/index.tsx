@@ -4,7 +4,7 @@ import { PATH_DETAIL } from "@/constants"
 import { useNavigate } from "react-router-dom"
 import { BOOK_LIST_TOT } from "./home.constant"
 import { useBookList } from "./home.hook"
-import { CantFoundISBN13, Card } from "./components/home.card"
+import { CantFoundISBN13, Card } from "./components"
 
 export const Home = () => {
   const { page } = usePagination({ totalPageLength: BOOK_LIST_TOT })
