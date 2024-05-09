@@ -1,3 +1,5 @@
+export * from "./manage-storage"
+export * from "./type-guard"
 /** [공용 일반함수 관리 폴더]
 ---------------------------------------------------------------------------
 ## description
