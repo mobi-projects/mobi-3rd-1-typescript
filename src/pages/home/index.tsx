@@ -22,7 +22,7 @@ export const Home = () => {
           return (
             <Card
               key={book.isbn13}
-              data={book} // 여기서 data props를 book으로 전달합니다.
+              data={book} 
               onClick={() => {
                 navigate(PATH_DETAIL + "/" + book.isbn13)
               }}
