@@ -27,7 +27,6 @@ export const useMutateUserInfo = () => {
     mutationFn: (data: UpdataDataType) => patchUserUpdateInfo(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY_USER_INFO] })
-      alert("성공")
     },
     onError: () => {
       alert("실패")
@@ -44,9 +43,10 @@ export const useSubmitUpdateData = () => {
   const {
     register,
     handleSubmit,
+    reset,
     // formState: { errors, isValid },
   } = useForm<UpdataDataType>({ mode: "onChange" })
-  return { register, handleSubmit }
+  return { register, handleSubmit, reset }
 }
 
 /**

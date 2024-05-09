@@ -40,7 +40,7 @@ const DialogContent: FC<DialogPT> = ({
       onClick={(e: React.MouseEvent<HTMLDivElement>) => {
         e.stopPropagation()
       }}
-      className="flex h-52 w-52 flex-col items-center justify-between border-2 border-black bg-white"
+      className="flex h-40 w-96 flex-col items-center justify-between border-2 border-black bg-white"
     >
       <div
         className="flex h-10 w-full items-center justify-end pr-3"
