@@ -6,8 +6,9 @@ import {
 } from "@/constants/server-endpoint"
 import { removeFromLocalStorage, saveToLocalStorage } from "@/funcs"
 import { baseAxiosInstance } from "@/libs/axios"
-import { UserDataType } from "@/types"
+import { UserDataType, UserType } from "@/types"
 import type {
+  ConvertSignInResToUserFT,
   ExtractAccessTokenFT,
   GenerateNewUserDataFT,
   GetRefreshTokenFT,
@@ -27,6 +28,11 @@ export const getUserRefreshToken: GetRefreshTokenFT = async () => {
   }
 }
 
+/**
+ * 로그인
+ * - accessToken 은 로컬스토리지에 등록합니다.
+ * - 유저 객체를 반환합니다.
+ */
 export const postUserSignIn: PostUserSignInFT = async ({
   password,
   userId,
@@ -36,10 +42,13 @@ export const postUserSignIn: PostUserSignInFT = async ({
       password,
       userId,
     })
-    localStorage.setItem(AUTH_TOKEN, response.data.token) // 로그인성공시 스토리지에 token저장
-    return response.data
+    const accessToken = extractAccessToken({ response })
+    saveToLocalStorage({ key: AUTH_TOKEN, value: accessToken })
+
+    const user = convertSignInResToUser({ response })
+    return user
   } catch (err) {
-    throw console.log(err)
+    throw new Error("로그인에 실패했습니다.")
   }
 }
 
@@ -92,4 +101,18 @@ const generateNewUserData: GenerateNewUserDataFT = ({ email, password }) => {
  */
 export const extractAccessToken: ExtractAccessTokenFT = ({ response }) => {
   return response.data.token
+}
+
+/**
+ * signIn 의 response 를 User 객체 변환합니다.
+ */
+export const convertSignInResToUser: ConvertSignInResToUserFT = ({
+  response,
+}) => {
+  const user: UserType = {
+    email: response.data.userId,
+    nickname: response.data.info.nickname,
+    profileUrl: response.data.info.profile,
+  }
+  return user
 }

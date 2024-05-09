@@ -1,5 +1,5 @@
 import { FORM_EMAIL, FORM_PW, FORM_PW_CONFIRM } from "@/constants"
-import type { UserDataType } from "@/types"
+import type { UserDataType, UserType } from "@/types"
 import { AxiosResponse } from "axios"
 
 export type SignInDataType = Record<"userId" | "password", string>
@@ -9,9 +9,11 @@ export type SignInDataReturnType = {
   token: string
   userId: string
 }
-export type PostUserSignInFT = (
-  input: SignInDataType,
-) => Promise<SignInDataReturnType>
+export type PostUserSignInFT = (input: SignInDataType) => Promise<UserType>
+
+export type ConvertSignInResToUserFT = (input: {
+  response: AxiosResponse
+}) => UserType
 
 export type SignUpFormType = {
   [FORM_EMAIL]: string
