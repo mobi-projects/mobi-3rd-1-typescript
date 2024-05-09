@@ -10,8 +10,8 @@ import type {
  */
 export const replaceMidSubstringToStar: ReplaceMidSubstringToStar = ({
   origin,
-  excludeFront,
-  excludeBack,
+  excludeFront = 0,
+  excludeBack = 0,
 }) => {
   const originLength = origin.length
   if (originLength <= excludeFront + excludeBack)
@@ -20,7 +20,7 @@ export const replaceMidSubstringToStar: ReplaceMidSubstringToStar = ({
   const backString = spliceString({
     origin,
     length: excludeBack,
-    startIndex: originLength - excludeBack,
+    startIndex: originLength - excludeBack - 1,
   })
   const middleStringSize = originLength - excludeFront - excludeBack
   const middleString = Array.from({ length: middleStringSize })
@@ -33,7 +33,6 @@ export const replaceMidSubstringToStar: ReplaceMidSubstringToStar = ({
  * @param input 원본 문자열
  * @param startIndex 시작 위치
  * @param length 잘라낼 길이
- * @returns 잘라진 문자열 또는 오류 메시지
  */
 export const spliceString: SpliceStringFT = ({
   origin,

@@ -7,17 +7,21 @@ import {
 import {
   getFromLocalStorage,
   removeFromLocalStorage,
+  replaceMidSubstringToStar,
   saveToLocalStorage,
+  spliceString,
 } from "@/funcs"
 import { baseAxiosInstance } from "@/libs/axios"
-import { UserDataType, UserType } from "@/types"
+import { UserType } from "@/types"
 import type {
-  ConvertSignInResToUserFT,
+  ConvertSignResToUserFT,
   ExtractAccessTokenFT,
   GenerateNewUserDataFT,
+  GenerateTempNicknameByEmailFT,
   GetRefreshTokenFT,
   PostSignUpFT,
   PostUserSignInFT,
+  SignUpRequestType,
 } from "./sign.type"
 
 /**
@@ -68,17 +72,21 @@ export const postUserSignOut = async () => {
     removeFromLocalStorage({ key: AUTH_TOKEN })
   } catch {
     saveToLocalStorage({ key: AUTH_TOKEN, value: accessToken })
-    throw new Error("로그 아웃에 실패했습니다.")
+    throw new Error("로그아웃에 실패했습니다.")
   }
 }
-
+/**
+ * 회원가입
+ */
 export const postSignUp: PostSignUpFT = async ({ email, password }) => {
-  const newUserData = generateNewUserData({ email, password })
+  const initNickname = generateTempNicknameByEmail({ email })
+  const newUserData = generateNewUserData({
+    email,
+    password,
+    nickName: initNickname,
+  })
   try {
-    const response = await baseAxiosInstance.post<UserDataType>(
-      API_SIGN_UP,
-      newUserData,
-    )
+    const response = await baseAxiosInstance.post(API_SIGN_UP, newUserData)
     return response.data
   } catch (e) {
     throw new Error("네트워크 문제로 인하여, 회원가입에 실패했습니다.")
@@ -88,15 +96,34 @@ export const postSignUp: PostSignUpFT = async ({ email, password }) => {
 /**
  * 새로 가입할 사용자의 데이터를 객체화하여 반환합니다.
  */
-const generateNewUserData: GenerateNewUserDataFT = ({ email, password }) => {
-  const newUserData = {
+const generateNewUserData: GenerateNewUserDataFT = ({
+  email,
+  password,
+  nickName,
+}) => {
+  const newUserData: SignUpRequestType = {
     userId: email,
     password: password,
     data: {
-      nickName: ".",
+      nickName,
     },
   }
   return newUserData
+}
+/**
+ * 이메일을 기반으로 nickname 을 임시로 생성합니다.
+ * - 이메일을 8 자리로 문자열로 자릅니다. (이메일이 8자 미만이라면, 자르지 않습니다.)
+ * - 가장 앞의 2 자리를 제외하고 모두 '*' 로 대체합니다.
+ */
+const generateTempNicknameByEmail: GenerateTempNicknameByEmailFT = ({
+  email,
+}) => {
+  const resizedEmail = spliceString({ origin: email, length: 8 })
+  const tempNickname = replaceMidSubstringToStar({
+    origin: resizedEmail,
+    excludeFront: 2,
+  })
+  return tempNickname
 }
 
 /**
@@ -109,13 +136,27 @@ export const extractAccessToken: ExtractAccessTokenFT = ({ response }) => {
 /**
  * signIn 의 response 를 User 객체 변환합니다.
  */
-export const convertSignInResToUser: ConvertSignInResToUserFT = ({
+export const convertSignInResToUser: ConvertSignResToUserFT = ({
   response,
 }) => {
   const user: UserType = {
     email: response.data.userId,
     nickname: response.data.info.nickname,
     profileUrl: response.data.info.profile,
+  }
+  return user
+}
+
+/**
+ * signIn 의 response 를 User 객체 변환합니다.
+ */
+export const convertSignUpResToUser: ConvertSignResToUserFT = ({
+  response,
+}) => {
+  const user: UserType = {
+    email: response.data.userId,
+    nickname: response.data.data.nickname,
+    profileUrl: ".",
   }
   return user
 }
