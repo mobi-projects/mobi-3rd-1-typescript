@@ -11,12 +11,6 @@ import { postSignUp, postUserSignIn } from "./sign.func"
 
 import type { SignFormType } from "./sign.type"
 
-import type {
-  OnSubmitLogInDataFT,
-  SignInDataType,
-  SignUpInputType,
-} from "./sign.type"
-
 export const useSignInForm = () => {
   const {
     register,
