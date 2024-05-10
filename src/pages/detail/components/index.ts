@@ -1,4 +1,6 @@
-export * from "./" // 여기서부터 작성해주세요. (작성 후, 이 줄은 지워주세요.!)
+export * from "./detail.content"
+export * from "./detail.review"
+export * from "./detail.title"
 
 /** ["detail" 의 자식 컴포넌트 관리]
 ---------------------------------------------------------------------------
