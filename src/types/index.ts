@@ -1,5 +1,5 @@
 export * from "./book-item.type"
-export * from "./user-data.type"
+export * from "./user.type"
 
 export * from "./convert-axios-res-ft"
 
