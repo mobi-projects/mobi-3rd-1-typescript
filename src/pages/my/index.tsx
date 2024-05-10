@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button"
 import {
   useFetchingUserInfo,
   useMutateUserInfo,
@@ -5,16 +6,10 @@ import {
   useUpdateUserImage,
 } from "./my.hook"
 
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTrigger,
-} from "@/components/ui/dialog"
 import { UpdataDataType } from "./my.type"
-import { DialogClose } from "@radix-ui/react-dialog"
-import { Button } from "@/components"
+
 import { Input } from "@/components/ui/input"
+import { DialogModal } from "@/components/dialog"
 
 /**
  * @notice
@@ -38,6 +33,31 @@ export const My = () => {
   }
 
   if (isLoading) return <h1>Loading중....</h1>
+  const modalForm = (
+    <form
+      onSubmit={handleSubmit(onSubmitUpdateData)}
+      className="flex h-[10rem]  flex-col items-center gap-3 "
+    >
+      <h3 className="py-5 font-bold">New Nick Name</h3>
+      <div>
+        <Input
+          className="border-2"
+          placeholder={data?.data.nickName || "닉네임입력좀"}
+          {...register("nickName")}
+        />
+      </div>
+    </form>
+  )
+
+  const modalBtn = (
+    <Button
+      type="submit"
+      className="boreder-2 w-[10rem] rounded-full bg-blue-400 p-3 hover:bg-blue-50"
+      // disabled={!isValid} //스키마 정의 후 사용 예정
+    >
+      Apply
+    </Button>
+  )
 
   return (
     <div className=" h-full  w-full ">
@@ -67,37 +87,7 @@ export const My = () => {
         </p>
         <p className="h-[3rem]  bg-slate-300">{data?.userId}</p>
       </div>
-      <Dialog>
-        <DialogTrigger className="h-fit w-fit rounded-3xl bg-slate-200 p-4 hover:bg-slate-400">
-          Open
-        </DialogTrigger>
-        <DialogContent className="w-[20rem] rounded-3xl">
-          <DialogHeader>
-            <form
-              onSubmit={handleSubmit(onSubmitUpdateData)}
-              className="flex h-[10rem]  flex-col items-center gap-3 "
-            >
-              <h3 className="py-5 font-bold">New Nick Name</h3>
-              <div>
-                <Input
-                  className="border-2"
-                  placeholder={data?.data.nickName || "닉네임입력좀"}
-                  {...register("nickName")}
-                />
-              </div>
-              <DialogClose>
-                <Button
-                  type="submit"
-                  className="boreder-2 w-[10rem] rounded-full bg-blue-400 p-3 hover:bg-blue-50"
-                  // disabled={!isValid} //스키마 정의 후 사용 예정
-                >
-                  Apply
-                </Button>
-              </DialogClose>
-            </form>
-          </DialogHeader>
-        </DialogContent>
-      </Dialog>
+      <DialogModal modalForm={modalForm} modalBtn={modalBtn} />
     </div>
   )
 }
