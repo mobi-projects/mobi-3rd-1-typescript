@@ -1,9 +1,8 @@
 import { Button } from "@/components/ui/button"
 import { Hand } from "lucide-react"
+import { BookDetailType } from "../detail.type"
 
-import type { DetailPT } from "../detail.type"
-
-export const DetailContent = ({ data }: DetailPT) => {
+export const DetailContent = (data: BookDetailType) => {
   return (
     <div className=" flex h-[43rem] w-full pt-4 IPHON_XR:h-full IPHON_XR:flex-col IPHON_XR:items-center">
       <img

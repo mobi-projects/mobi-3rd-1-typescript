@@ -4,12 +4,12 @@ import { Textarea } from "@/components/ui/textarea"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 
-import type { DetailPT, ReviewFormType, ReviewType } from "../detail.type"
+import type { BookDetailType, ReviewFormType, ReviewType } from "../detail.type"
 
 export const Review = ({
-  data,
   bookId,
-}: DetailPT & { bookId: string | undefined }) => {
+  ...data
+}: BookDetailType & { bookId: string | undefined }) => {
   const { register, handleSubmit } = useForm<ReviewFormType>()
   const { mutate } = useMutateReview()
   const onSubmitReview = (reviewFormData: ReviewFormType) => {

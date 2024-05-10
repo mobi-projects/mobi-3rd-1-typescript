@@ -14,9 +14,9 @@ export const Detail = () => {
     <div className="flex w-full items-center justify-center px-2 ">
       <div className=" flex w-[70rem] items-center justify-center IPHON_XR:w-full">
         <div className="flex h-fit w-full flex-col items-start">
-          <DetailTitle data={data} />
-          <DetailContent data={data} />
-          <Review data={data} bookId={bookId} />
+          <DetailTitle {...data} />
+          <DetailContent {...data} />
+          <Review bookId={bookId} {...data} />
         </div>
       </div>
     </div>

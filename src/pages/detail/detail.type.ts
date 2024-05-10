@@ -2,9 +2,6 @@ import type { BookItemType } from "@/types"
 import type { UseQueryResult } from "@tanstack/react-query"
 import type { AxiosResponse } from "axios"
 
-export type DetailPT = {
-  data: BookDetailType
-}
 /* -------------------[객체 타입]---------------------- */
 export type BookDetailType = BookItemType & {
   subInfo: {
