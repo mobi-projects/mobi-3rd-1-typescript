@@ -12,15 +12,16 @@ import {
   spliceString,
 } from "@/funcs"
 import { baseAxiosInstance } from "@/libs/axios"
-import { UserType } from "@/types"
+import { ConvertAxiosResFT, UserType } from "@/types"
 import type {
   ConvertSignResToUserFT,
-  ExtractAccessTokenFT,
+  CreateSignInReqBodyFT,
   GenerateNewUserDataFT,
   GenerateTempNicknameByEmailFT,
   GetRefreshTokenFT,
   PostSignUpFT,
   PostUserSignInFT,
+  SignInReqBodyType,
   SignUpRequestType,
 } from "./sign.type"
 
@@ -43,20 +44,15 @@ export const getUserRefreshToken: GetRefreshTokenFT = async () => {
  * - accessToken 은 로컬스토리지에 등록합니다.
  * - 유저 객체를 반환합니다.
  */
-export const postUserSignIn: PostUserSignInFT = async ({
-  password,
-  userId,
-}) => {
+export const postUserSignIn: PostUserSignInFT = async ({ password, email }) => {
   try {
-    const response = await baseAxiosInstance.post(API_SIGN_IN, {
-      password,
-      userId,
-    })
+    const reqBody = createSignInReqBody({ email, password })
+    const response = await baseAxiosInstance.post(API_SIGN_IN, reqBody)
     const accessToken = extractAccessToken({ response })
     saveToLocalStorage({ key: AUTH_TOKEN, value: accessToken })
     const user = convertSignInResToUser({ response })
     return user
-  } catch (err) {
+  } catch {
     throw new Error("로그인에 실패했습니다.")
   }
 }
@@ -129,20 +125,24 @@ const generateTempNicknameByEmail: GenerateTempNicknameByEmailFT = ({
 /**
  * axios response 에서 accessToken 을 분리합니다.
  */
-export const extractAccessToken: ExtractAccessTokenFT = ({ response }) => {
-  return response.data.token
+export const extractAccessToken: ConvertAxiosResFT<string> = ({ response }) => {
+  return response.data.token as string
 }
 
 /**
  * signIn 의 response 를 User 객체 변환합니다.
  */
-export const convertSignInResToUser: ConvertSignResToUserFT = ({
+export const convertSignInResToUser: ConvertAxiosResFT<UserType> = ({
   response,
 }) => {
+  const email = response.data.userId
+  const nickName = response.data.info.nickName
+  const profileUrl = response.data.info.profile
+
   const user: UserType = {
-    email: response.data.userId,
-    nickname: response.data.info.nickname,
-    profileUrl: response.data.info.profile,
+    email: email,
+    nickname: nickName,
+    profileUrl: profileUrl,
   }
   return user
 }
@@ -159,4 +159,15 @@ export const convertSignUpResToUser: ConvertSignResToUserFT = ({
     profileUrl: ".",
   }
   return user
+}
+
+export const createSignInReqBody: CreateSignInReqBodyFT = ({
+  email,
+  password,
+}) => {
+  const reqBody: SignInReqBodyType = {
+    userId: email,
+    password: password,
+  }
+  return reqBody
 }
