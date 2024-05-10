@@ -1,5 +1,5 @@
-export type UserDataType = {
-  data: Record<"nickName", string>
-  profileUrl?: string
-  userId: string
+export type UserType = {
+  email: string
+  nickname: string
+  profileUrl: string | null
 }
