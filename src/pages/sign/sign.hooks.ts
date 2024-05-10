@@ -1,35 +1,42 @@
-import { useForm } from "react-hook-form"
-import { postSignUp, postUserSignIn } from "./sign.func"
-import { useNavigate } from "react-router-dom"
-import { PATH_HOME, PATH_SIGN } from "@/constants"
 import { useDialog } from "@/components/dialog/dialog.hook"
-import { useMutation } from "@tanstack/react-query"
+import {
+  MUTATION_KEY_SIGN_IN,
+  PATH_HOME,
+  PATH_SIGN,
+  QUERY_KEY_USER,
+} from "@/constants"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
+import { useForm } from "react-hook-form"
+import { useNavigate } from "react-router-dom"
+import { postSignUp, postUserSignIn } from "./sign.func"
 
-import type {
-  OnSubmitLogInDataFT,
-  SignInDataType,
-  SignUpInputType,
-} from "./sign.type"
+import type { SignFormType } from "./sign.type"
 
-export const useSignIn = () => {
-  const navigate = useNavigate()
+export const useSignInForm = () => {
   const {
     register,
     handleSubmit,
     formState: { errors, isValid },
-  } = useForm<SignInDataType>()
+  } = useForm<SignFormType>()
 
-  const onSubmitLogInData: OnSubmitLogInDataFT = async (data) => {
-    try {
-      const response = await postUserSignIn(data)
-      if (response) {
-        navigate(PATH_HOME)
-      }
-    } catch {
-      alert("로그인실패 후에 다른 액션으로 수정하자")
-    }
-  }
-  return { register, handleSubmit, onSubmitLogInData, errors, isValid }
+  return { register, handleSubmit, errors, isValid }
+}
+
+export const useMutationSignIn = () => {
+  const queryClient = useQueryClient()
+  const navigate = useNavigate()
+  return useMutation({
+    mutationKey: [MUTATION_KEY_SIGN_IN],
+    mutationFn: ({ email, password }: SignFormType) =>
+      postUserSignIn({ email, password }),
+    onSuccess: (data) => {
+      const user = { ...data }
+      alert(`${user.nickname} 님, 환영합니다.`)
+      queryClient.setQueryData([QUERY_KEY_USER], user)
+      navigate(PATH_HOME)
+    },
+    onError: (error) => alert(error.message),
+  })
 }
 
 export const useMutationSignUp = () => {
@@ -37,7 +44,7 @@ export const useMutationSignUp = () => {
   const { onAlert } = useDialog()
   return useMutation({
     mutationKey: [],
-    mutationFn: (signUpInput: SignUpInputType) => postSignUp(signUpInput),
+    mutationFn: (signUpInput: SignFormType) => postSignUp(signUpInput),
     onError: (error) => {
       console.error(error)
       onAlert({
