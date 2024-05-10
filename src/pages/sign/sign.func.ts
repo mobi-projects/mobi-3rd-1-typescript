@@ -1,11 +1,6 @@
 import { AUTH_REFRESH, AUTH_TOKEN } from "@/constants/auth-key"
+import { API_SIGN_IN, API_SIGN_UP } from "@/constants/server-endpoint"
 import {
-  API_SIGN_IN,
-  API_SIGN_OUT,
-  API_SIGN_UP,
-} from "@/constants/server-endpoint"
-import {
-  getFromLocalStorage,
   removeFromLocalStorage,
   replaceMidSubstringToStar,
   saveToLocalStorage,
@@ -57,21 +52,6 @@ export const postUserSignIn: PostUserSignInFT = async ({ password, email }) => {
   }
 }
 /**
- * 로그아웃
- * - 성공 시, accessToken 을 제거합니다.
- * - 오류 발생 시, accessToken 을 원복합니다.
- */
-export const postUserSignOut = async () => {
-  const accessToken = getFromLocalStorage({ key: AUTH_TOKEN })
-  try {
-    await baseAxiosInstance.post(API_SIGN_OUT)
-    removeFromLocalStorage({ key: AUTH_TOKEN })
-  } catch {
-    saveToLocalStorage({ key: AUTH_TOKEN, value: accessToken })
-    throw new Error("로그아웃에 실패했습니다.")
-  }
-}
-/**
  * 회원가입
  */
 export const postSignUp: PostSignUpFT = async ({ email, password }) => {
@@ -88,7 +68,6 @@ export const postSignUp: PostSignUpFT = async ({ email, password }) => {
     throw new Error("네트워크 문제로 인하여, 회원가입에 실패했습니다.")
   }
 }
-
 /**
  * 새로 가입할 사용자의 데이터를 객체화하여 반환합니다.
  */
