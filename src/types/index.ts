@@ -1,6 +1,8 @@
 export * from "./book-item.type"
 export * from "./user-data.type"
 
+export * from "./convert-axios-res-ft"
+
 /** [공용 타입 관리 폴더]
 ---------------------------------------------------------------------------
 ## description
