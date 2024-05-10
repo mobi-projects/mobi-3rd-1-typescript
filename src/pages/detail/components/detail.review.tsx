@@ -33,7 +33,7 @@ export const Review = ({
       <h1 className="py-2 text-lg font-bold">후기 남기기</h1>
       <div className="w-full">
         <Textarea
-          className="resize-none  border-2 border-slate-500 IPHON_XR:w-[21rem] IPAD_PRO:w-[45rem] "
+          className="resize-none  border-2 border-slate-500 IPHON_XR:w-[21rem] SF_DUO:w-[25rem] IPAD_PRO:w-[45rem] "
           {...register("comment")}
           placeholder="후기를 남겨주세요!"
         />
