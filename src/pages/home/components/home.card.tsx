@@ -10,7 +10,7 @@ export const Card = ({
   return (
     <div
       {...rest}
-      className="flex h-[15rem] w-full max-w-[45rem] cursor-pointer flex-col rounded-md border-2 border-x-2 border-slate-300 drop-shadow-md"
+      className="flex h-[15rem] w-full max-w-[35rem] cursor-pointer flex-col rounded-md border-2 border-x-2 border-slate-300 drop-shadow-md"
     >
       <CardTitle data={data} />
       <CardContent data={data} />

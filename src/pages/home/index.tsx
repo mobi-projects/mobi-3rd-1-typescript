@@ -14,7 +14,7 @@ export const Home = () => {
 
   return (
     <div className="flex w-full flex-col items-center justify-center IPHON_XR:w-full">
-      <div className="flex h-full w-full flex-col gap-4 px-2 ">
+      <div className="flex h-full w-[80rem] flex-wrap justify-between gap-4 px-10 IPHON_XR:flex IPHON_XR:w-full IPHON_XR:flex-col IPHON_XR:px-0">
         {data?.item.map((book) => {
           if (!!!book.isbn13) {
             return <CantFoundISBN13 key={book.itemId} />
@@ -22,7 +22,7 @@ export const Home = () => {
           return (
             <Card
               key={book.isbn13}
-              data={book} 
+              data={book}
               onClick={() => {
                 navigate(PATH_DETAIL + "/" + book.isbn13)
               }}
