@@ -62,7 +62,7 @@ export const PageNationBtn = () => {
   }
   const ARROW_SIZE = "30px"
   return (
-    <div className="flex max-w-[35rem] items-center gap-2">
+    <div className="IPAD_PRO:gap-3 flex max-w-[35rem] items-center gap-[1px] px-2 py-3">
       <ChevronsLeft size={ARROW_SIZE} onClick={onClickStartBtn} />
       <ChevronLeft size={ARROW_SIZE} onClick={onClickPrevBtn} />
       <>{creatNumberBtn()}</>
