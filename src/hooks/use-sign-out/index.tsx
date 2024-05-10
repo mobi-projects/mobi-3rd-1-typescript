@@ -1,4 +1,9 @@
-import { AUTH_TOKEN, PATH_SIGN, QUERY_KEY_USER } from "@/constants"
+import {
+  AUTH_TOKEN,
+  MUTATION_KEY_SIGN_OUT,
+  PATH_SIGN,
+  QUERY_KEY_USER,
+} from "@/constants"
 import { removeFromLocalStorage } from "@/funcs"
 import { QueryClient, useMutation } from "@tanstack/react-query"
 import { useNavigate } from "react-router-dom"
@@ -9,7 +14,7 @@ export const useSignOut = () => {
   const navigate = useNavigate()
 
   const { mutate: logout } = useMutation({
-    mutationKey: ["mutation-sign-out"],
+    mutationKey: [MUTATION_KEY_SIGN_OUT],
     mutationFn: () => postUserSignOut(),
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY_USER] })
