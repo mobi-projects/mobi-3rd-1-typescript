@@ -1,4 +1,3 @@
-import { useDialog } from "@/components/dialog/dialog.hook"
 import {
   MUTATION_KEY_SIGN_IN,
   PATH_HOME,
@@ -11,6 +10,12 @@ import { useNavigate } from "react-router-dom"
 import { postSignUp, postUserSignIn } from "./sign.func"
 
 import type { SignFormType } from "./sign.type"
+
+import type {
+  OnSubmitLogInDataFT,
+  SignInDataType,
+  SignUpInputType,
+} from "./sign.type"
 
 export const useSignInForm = () => {
   const {
@@ -41,22 +46,14 @@ export const useMutationSignIn = () => {
 
 export const useMutationSignUp = () => {
   const navigate = useNavigate()
-  const { onAlert } = useDialog()
+
   return useMutation({
     mutationKey: [],
     mutationFn: (signUpInput: SignFormType) => postSignUp(signUpInput),
     onError: (error) => {
       console.error(error)
-      onAlert({
-        children: "다시 시도해주세요.",
-        onConfirm: () => {},
-      })
     },
     onSuccess: () => {
-      onAlert({
-        children: "축하합니다. 회원가입에 성공하셨습니다.",
-        onConfirm: () => {},
-      })
       navigate(PATH_SIGN)
     },
   })

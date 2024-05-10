@@ -1,4 +1,3 @@
-import { useDialog } from "@/components/dialog/dialog.hook"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { FORM_EMAIL, FORM_PW, FORM_PW_CONFIRM } from "@/constants"
@@ -9,24 +8,16 @@ import { SignUpFormType } from "../sign.type"
 
 export const SignUpForm = () => {
   const { mutate } = useMutationSignUp()
-  const { onAlert } = useDialog()
+
   const { register, handleSubmit } = useForm<SignUpFormType>()
 
   const onSubmitSignInData = (data: SignUpFormType) => {
     /** @notice yup schema 적용시, 👇 아래 분기 삭제 */
     if (!!!data[FORM_EMAIL]) {
-      onAlert({
-        children: "이메일이 입력되지 않았습니다.",
-        onConfirm: () => {},
-      })
       return
     }
     /** @notice yup schema 적용시, 👇 아래 분기 삭제 */
     if (data[FORM_PW] !== data[FORM_PW_CONFIRM]) {
-      onAlert({
-        children: "비밀번호를 다시 확인해주세요.",
-        onConfirm: () => {},
-      })
       return
     }
     mutate({
