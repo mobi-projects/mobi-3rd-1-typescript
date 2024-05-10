@@ -14,3 +14,7 @@ export type GetBookListFT = (input: {
 export type UseBookListFT = (input: {
   page: number
 }) => UseQueryResult<BookListResponseType, Error>
+
+export type CardPropsType = {
+  data: BookItemType
+}

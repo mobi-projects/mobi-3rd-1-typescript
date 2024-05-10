@@ -1,7 +1,13 @@
 import { SORT_PAGE } from "@/constants/url-keys"
-import { Button } from "../button"
-import { usePagination } from "./pagination.hook"
 
+import { usePagination } from "./pagination.hook"
+import {
+  ChevronLeft,
+  ChevronRight,
+  ChevronsLeft,
+  ChevronsRight,
+} from "lucide-react"
+import { Button } from "../ui/button"
 /**
  * @notice
  * - props로 서버데이터의 길이값을 받아야합니다
@@ -43,8 +49,7 @@ export const PageNationBtn = () => {
     const endNum = Math.min(startNum + pagenationBtnLength - 1, totalPage)
     return Array.from({ length: endNum - startNum + 1 }, (_, idx) => (
       <Button
-        intent={"primary"}
-        size={"medium"}
+        variant={"outline"}
         key={idx}
         id={`${idx + startNum}`}
         onClick={(e) => {
@@ -55,14 +60,14 @@ export const PageNationBtn = () => {
       </Button>
     ))
   }
-
+  const ARROW_SIZE = "30px"
   return (
-    <div className="flex w-[30rem] gap-3">
-      <button onClick={onClickStartBtn}>{"<<"}</button>
-      <button onClick={onClickPrevBtn}>{"<"}</button>
+    <div className="flex max-w-[35rem] items-center gap-2">
+      <ChevronsLeft size={ARROW_SIZE} onClick={onClickStartBtn} />
+      <ChevronLeft size={ARROW_SIZE} onClick={onClickPrevBtn} />
       <>{creatNumberBtn()}</>
-      <button onClick={onClickNextBtn}>{">"}</button>
-      <button onClick={onClickEndBtn}>{">>"}</button>
+      <ChevronRight size={ARROW_SIZE} onClick={onClickNextBtn} />
+      <ChevronsRight size={ARROW_SIZE} onClick={onClickEndBtn} />
     </div>
   )
 }
