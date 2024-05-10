@@ -83,7 +83,6 @@ export const My = () => {
         </div>
         <p className="h-[3rem] w-fit bg-green-300">
           {data?.data.nickName || "닉네임입력좀"}
-          {/* 이부분을 데이터를 받는걸로 하고 주는부분에서 alert로 막는게 좋지않을까요 ?? 그리고 닉네임 중복도 막아야 할거같아서 같이 막는김에 useSuspend */}
         </p>
         <p className="h-[3rem]  bg-slate-300">{data?.userId}</p>
       </div>
