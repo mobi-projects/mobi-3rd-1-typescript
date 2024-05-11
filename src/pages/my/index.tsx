@@ -1,5 +1,6 @@
 import { useDialog } from "@/components/dialog/dialog.hook"
-import { useFetchingUserInfo, useUpdateUserImage } from "./my.hook"
+import { useUser } from "@/hooks"
+import { useUpdateUserImage } from "./my.hook"
 import { UpadateUserInfoModal } from "./my.modal"
 
 /**
@@ -8,7 +9,7 @@ import { UpadateUserInfoModal } from "./my.modal"
  */
 export const My = () => {
   const { onModal } = useDialog()
-  const { data, isLoading } = useFetchingUserInfo()
+  const { user, isLoading } = useUser()
   const { mutate } = useUpdateUserImage()
 
   const onClickConfirm = () => {
@@ -31,7 +32,7 @@ export const My = () => {
           <div className="relative h-36 w-36  cursor-pointer rounded-full ">
             <img
               src={
-                data?.profileUrl || "https://source.unsplash.com/random/?man"
+                user?.profileUrl || "https://source.unsplash.com/random/?man"
               }
               className="absolute h-36 w-36 rounded-full"
             />
@@ -47,9 +48,9 @@ export const My = () => {
           </div>
         </div>
         <p className="h-[3rem] w-fit bg-green-300">
-          {data?.data.nickName || "닉네임입력좀"}
+          {user?.nickname || "닉네임입력좀"}
         </p>
-        <p className="h-[3rem]  bg-slate-300">{data?.userId}</p>
+        <p className="h-[3rem]  bg-slate-300">{user?.email}</p>
       </div>
       <button
         onClick={() =>

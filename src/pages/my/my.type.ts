@@ -6,8 +6,6 @@ export type UserDataType = {
   userId: string
 }
 
-export type PatchUserInfoFT = () => Promise<UserDataType>
-
 export type PatchUserUpdateInfoFT = (
   data: UpdataDataType,
 ) => Promise<UserDataType>
