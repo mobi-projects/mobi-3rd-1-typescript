@@ -1,27 +1,28 @@
-import { QUERY_KEY_USER_INFO } from "@/constants/query-key"
+import { QUERY_KEY_USER, QUERY_KEY_USER_INFO } from "@/constants/query-key"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { useForm } from "react-hook-form"
-import { patchUserImage, patchUserUpdateInfo } from "./my.func"
+import {
+  convertPatchUserRes,
+  patchUserImage,
+  patchUserOnPeanut,
+} from "./my.func"
+import type { UpdataDataType, UpdateUserFormType } from "./my.type"
 
-import type { UpdataDataType } from "./my.type"
-
-/**
- * @description modal에 입력한 정보를 서버로 업데이트하기 위한 mutation입니다.
- * @notice 아직 입력양식 , 실패시로직은 추가안된 상태입니다. 후에 수정해야합니다.
- */
-export const useMutateUserInfo = () => {
+export const useMutateUpdateUser = () => {
   const queryClient = useQueryClient()
-  const { mutate } = useMutation({
-    mutationFn: (data: UpdataDataType) => patchUserUpdateInfo(data),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [QUERY_KEY_USER_INFO] })
-      alert("성공")
+  const { mutate: updateUser } = useMutation({
+    mutationFn: (updateForm: UpdateUserFormType) =>
+      patchUserOnPeanut(updateForm),
+    onSuccess: (data) => {
+      const user = convertPatchUserRes({ response: data }) // axios 결과를 user 객체로 변환
+      queryClient.setQueryData([QUERY_KEY_USER], user) // 캐싱데이터 갱신
+      alert("사용자 정보를 갱신했습니다.") // 사용자에게 알림
     },
     onError: () => {
-      alert("실패")
+      alert("사용자 정보 갱신에 실패했습니다.")
     },
   })
-  return { mutate }
+  return { updateUser }
 }
 
 /**
