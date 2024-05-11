@@ -1,6 +1,6 @@
 import { QUERY_KEY_USER } from "@/constants"
 import { useQuery } from "@tanstack/react-query"
-import { getUserFromPeanut } from "./useUser.func"
+import { getUserFromPeanut } from "./use-user.func"
 
 export const useUser = () => {
   const { data: user, ...rest } = useQuery({
