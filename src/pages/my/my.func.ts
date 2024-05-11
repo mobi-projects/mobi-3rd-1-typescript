@@ -1,33 +1,56 @@
 import {
-  API_UPDATE_USER_IMAGE,
+  API_UPDATE_PROFILE,
   API_UPDATE_USER_INFO,
 } from "@/constants/server-endpoint"
 import { baseAxiosInstance } from "@/libs/axios"
+import type { ConvertAxiosResFT, UserType } from "@/types"
+import type { PatchProfileFT, PatchUserFT } from "./my.type"
 
-import type { PatchUserInfoFT, PatchUserUpdateInfoFT } from "./my.type"
-
-export const patchUserInfo: PatchUserInfoFT = async () => {
-  try {
-    const response = await baseAxiosInstance.patch(API_UPDATE_USER_INFO)
-    return response.data
-  } catch (err) {
-    console.log(err)
-  }
-}
-
-export const patchUserUpdateInfo: PatchUserUpdateInfoFT = async (newData) => {
+/**
+ * 이메일, 비밀번호를 제외한 사용자 정보를 업데이트합니다.
+ */
+export const patchUserOnPeanut: PatchUserFT = async ({ nickname }) => {
   try {
     const response = await baseAxiosInstance.patch(API_UPDATE_USER_INFO, {
-      data: { ...newData },
+      data: { ...{ nickname } },
     })
-    return response.data
-  } catch (err) {
-    console.log(err)
+    return response
+  } catch {
+    throw new Error("사용자 정보 업데이트에 실패했습니다.")
   }
 }
-
-export const patchUserImage = async (formData: FormData) => {
-  await baseAxiosInstance.patch(API_UPDATE_USER_IMAGE, formData, {
+/**
+ * 사용자 프로필을 업데이트합니다.
+ */
+export const patchProfileOnPeanut: PatchProfileFT = async (
+  formData: FormData,
+) => {
+  const response = await baseAxiosInstance.patch(API_UPDATE_PROFILE, formData, {
     headers: { "content-type": "multipart/form-data" },
   })
+  return response
 }
+/**
+ * patchUserOnPeanut 의 결과를 User 타입으로 변환합니다.
+ */
+export const convertPatchUserResToUser: ConvertAxiosResFT<UserType> = ({
+  response,
+}) => {
+  const email = response.data.userId
+  const profileUrl = response.data.profileUrl
+  const nickname = response.data.data.nickname
+  console.log(email)
+  console.log(profileUrl)
+  console.log(nickname)
+  const user: UserType = {
+    email,
+    profileUrl,
+    nickname,
+  }
+  return user
+}
+/**
+ * patchProfileOnPeanut 의 결과에서 프로필 이미지 주소를 추출합니다.
+ */
+export const extractProfile: ConvertAxiosResFT<string> = ({ response }) =>
+  response.data.profileUrl

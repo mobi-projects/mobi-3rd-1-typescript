@@ -1,6 +1,9 @@
 import { useDialog } from "@/components/dialog/dialog.hook"
-import { useFetchingUserInfo, useUpdateUserImage } from "./my.hook"
-import { UpadateUserInfoModal } from "./my.modal"
+import { QUERY_KEY_USER } from "@/constants"
+import { useUser } from "@/hooks"
+import { useQueryClient } from "@tanstack/react-query"
+import { useMutateUpdateProfile } from "./my.hook"
+// import { UpadateUserInfoModal } from "./my.modal"
 
 /**
  * @notice
@@ -8,8 +11,9 @@ import { UpadateUserInfoModal } from "./my.modal"
  */
 export const My = () => {
   const { onModal } = useDialog()
-  const { data, isLoading } = useFetchingUserInfo()
-  const { mutate } = useUpdateUserImage()
+  const { user, isLoading } = useUser()
+  const { updateProfile } = useMutateUpdateProfile()
+  const queryClient = useQueryClient()
 
   const onClickConfirm = () => {
     // 확인누르면 실행할 로직작성
@@ -19,9 +23,11 @@ export const My = () => {
     const formData = new FormData()
     if (e.currentTarget.files) {
       formData.append("image", e.currentTarget.files[0])
-      mutate(formData)
+      updateProfile(formData)
     }
   }
+  const data = queryClient.getQueryData([QUERY_KEY_USER])
+  console.log(data)
 
   if (isLoading) return <h1>Loading중....</h1>
   return (
@@ -31,7 +37,7 @@ export const My = () => {
           <div className="relative h-36 w-36  cursor-pointer rounded-full ">
             <img
               src={
-                data?.profileUrl || "https://source.unsplash.com/random/?man"
+                user?.profileUrl || "https://source.unsplash.com/random/?man"
               }
               className="absolute h-36 w-36 rounded-full"
             />
@@ -47,15 +53,15 @@ export const My = () => {
           </div>
         </div>
         <p className="h-[3rem] w-fit bg-green-300">
-          {data?.data.nickName || "닉네임입력좀"}
+          {user?.nickname || "닉네임입력좀"}
         </p>
-        <p className="h-[3rem]  bg-slate-300">{data?.userId}</p>
+        <p className="h-[3rem]  bg-slate-300">{user?.email}</p>
       </div>
       <button
         onClick={() =>
           onModal({
             onConfirm: onClickConfirm,
-            children: <UpadateUserInfoModal />,
+            // children: <UpadateUserInfoModal />,
           })
         }
         className="h-fit w-fit rounded-3xl bg-slate-200 p-4 hover:bg-slate-400"
