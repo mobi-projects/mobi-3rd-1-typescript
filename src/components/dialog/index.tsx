@@ -1,4 +1,5 @@
 import type { FC } from "react"
+import { dialogContentVariants } from "./dialog.cva"
 import type { BackgroundPT, DialogPT } from "./dialog.type"
 
 export const Dialog: FC<DialogPT> = ({
@@ -16,13 +17,11 @@ export const Dialog: FC<DialogPT> = ({
   )
 }
 
-/** `Pagination` 에서 분리시킬 (부품) 컴포넌트가 있다면, export 없이 이 아래(👇) 작성해주세요.! */
-
 const Background: FC<BackgroundPT> = ({ children, onCancel }) => {
   return (
     <div
       onClick={onCancel}
-      className="fixed left-0 top-0 z-50 flex h-screen w-screen items-center justify-center bg-black/25"
+      className="fixed left-0 top-0 z-50 flex h-screen w-screen items-center justify-center bg-black/40"
     >
       {children}
     </div>
@@ -40,30 +39,38 @@ const DialogContent: FC<DialogPT> = ({
       onClick={(e: React.MouseEvent<HTMLDivElement>) => {
         e.stopPropagation()
       }}
-      className="flex h-52 w-52 flex-col items-center justify-between border-2 border-black bg-white"
+      className={dialogContentVariants({ size: isAlert ? "alert" : "modal" })}
     >
-      <div
-        className="flex h-10 w-full items-center justify-end pr-3"
+      <button
+        className="flex h-10 w-full cursor-pointer items-center justify-end text-3xl"
         onClick={onCancel}
       >
         x
-      </div>
-      <div className="flex h-full w-full items-center justify-center border-b-2 border-black">
+      </button>
+      <div className="flex h-full w-full items-center justify-center border-black">
         {children}
       </div>
-      {!isAlert && (
-        <div className="flex h-20 w-full items-center justify-around">
-          <button onClick={onCancel}>취소</button>
-          <button
-            onClick={() => {
-              onConfirm()
-              onCancel()
-            }}
-          >
-            확인
-          </button>
-        </div>
-      )}
+
+      {!isAlert && <ModalButtons {...{ onCancel, onConfirm }} />}
+    </div>
+  )
+}
+
+const ModalButtons: FC<DialogPT> = ({ onCancel, onConfirm }) => {
+  return (
+    <div className="flex h-16 w-full cursor-pointer items-center justify-evenly border-t-[1px] border-t-black/30">
+      <button onClick={onCancel}>취소</button>
+
+      <div className="h-full w-[0.5px] bg-black/30" />
+
+      <button
+        onClick={() => {
+          onConfirm()
+          onCancel()
+        }}
+      >
+        확인
+      </button>
     </div>
   )
 }
