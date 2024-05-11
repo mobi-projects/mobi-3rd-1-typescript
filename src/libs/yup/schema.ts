@@ -13,3 +13,8 @@ export const passwordSchema = yup
   .matches(/\d/, "숫자를 포함해주세요.")
   .matches(/[!@#$%^&*()_+]/, "특수문자를 포함해주세요.")
   .required("비밀번호는 필수항목 입니다.")
+
+export const passwordConfirmSchema = yup
+  .string()
+  .oneOf([yup.ref("password")], "비밀번호가 일치하지 않습니다.")
+  .required("비밀번호를 다시 입력해 주세요.")

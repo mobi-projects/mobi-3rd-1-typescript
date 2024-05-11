@@ -11,7 +11,7 @@ import { useForm } from "react-hook-form"
 import { useNavigate } from "react-router-dom"
 import { postSignUp, postUserSignIn } from "./sign.func"
 import type { SignFormType, SignUpFormType } from "./sign.type"
-import { signInSchema } from "./sign.yup-schema"
+import { signInSchema, signUpSchema } from "./sign.yup-schema"
 
 export const useSignInForm = () => {
   const {
@@ -48,7 +48,10 @@ export const useSignUpForm = () => {
     register,
     handleSubmit,
     formState: { errors, isValid },
-  } = useForm<SignUpFormType>()
+  } = useForm<SignUpFormType>({
+    mode: "onChange",
+    resolver: yupResolver(signUpSchema),
+  })
   return { register, handleSubmit, errors, isValid }
 }
 export const useMutationSignUp = () => {
