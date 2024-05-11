@@ -56,15 +56,14 @@ export const postUserSignIn: PostUserSignInFT = async ({ password, email }) => {
  */
 export const postSignUp: PostSignUpFT = async ({ email, password }) => {
   const nickname = generateTempNicknameByEmail({ email })
-  const newUserData = generateNewUserData({
+  const newUser = generateNewUserData({
     email,
     password,
     nickname,
   })
   try {
-    const response = await baseAxiosInstance.post(API_SIGN_UP, newUserData)
-    return response.data
-  } catch (e) {
+    await baseAxiosInstance.post(API_SIGN_UP, newUser)
+  } catch {
     throw new Error("네트워크 문제로 인하여, 회원가입에 실패했습니다.")
   }
 }

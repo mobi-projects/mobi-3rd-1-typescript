@@ -1,6 +1,6 @@
-import { useDialog } from "@/components/dialog/dialog.hook"
 import {
   MUTATION_KEY_SIGN_IN,
+  MUTATION_KEY_SIGN_UP,
   PATH_HOME,
   PATH_SIGN,
   QUERY_KEY_USER,
@@ -43,26 +43,18 @@ export const useMutationSignIn = () => {
     onError: (error) => alert(error.message),
   })
 }
-
 export const useMutationSignUp = () => {
   const navigate = useNavigate()
-  const { onAlert } = useDialog()
-  return useMutation({
-    mutationKey: [],
-    mutationFn: (signUpInput: SignFormType) => postSignUp(signUpInput),
-    onError: (error) => {
-      console.error(error)
-      onAlert({
-        children: "다시 시도해주세요.",
-        onConfirm: () => {},
-      })
-    },
+  const { mutate: signUp } = useMutation({
+    mutationKey: [MUTATION_KEY_SIGN_UP],
+    mutationFn: (signForm: SignFormType) => postSignUp(signForm),
     onSuccess: () => {
-      onAlert({
-        children: "축하합니다. 회원가입에 성공하셨습니다.",
-        onConfirm: () => {},
-      })
-      navigate(PATH_SIGN)
+      alert("회원가입에 성공했습니다.")
+      navigate(PATH_SIGN, { replace: true })
+    },
+    onError: () => {
+      alert("회원가입에 실패했습니다.")
     },
   })
+  return { signUp }
 }
