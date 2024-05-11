@@ -1,6 +1,6 @@
-import type { ReactNode } from "react"
+import type { PropsWithChildren, ReactNode } from "react"
 
-export type DialogModalProps = {
-  modalForm: ReactNode
-  modalBtn: ReactNode
+export type DialogModalPT = PropsWithChildren & {
+  modalTrigger: ReactNode
+  isAlert?: boolean
 }
