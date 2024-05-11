@@ -1,6 +1,7 @@
 import { FORM_EMAIL, FORM_PW, FORM_PW_CONFIRM } from "@/constants"
 import type { UserType } from "@/types"
 import { AxiosResponse } from "axios"
+import { FieldError } from "react-hook-form"
 
 export type SignInDataType = Record<"userId" | "password", string>
 export type SignInDataReturnType = {
@@ -51,3 +52,5 @@ export type SignInReqBodyType = {
 export type CreateSignInReqBodyFT = (input: SignFormType) => SignInReqBodyType
 
 export type OnSubmitFormFT = (input: SignFormType) => void
+
+export type ErrorMsgPT = { errorField?: FieldError }

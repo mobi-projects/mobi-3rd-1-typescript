@@ -4,11 +4,10 @@ import { FORM_EMAIL, FORM_PW } from "@/constants"
 import { Label } from "@radix-ui/react-label"
 import { useMutationSignIn, useSignInForm } from "../sign.hooks"
 import { OnSubmitFormFT } from "../sign.type"
+import { ErrorMsg } from "./error-msg"
+
 export const SignInForm = () => {
-  /**
-   * @notice {{ mode: 'onChange', resolver: yupResolver(schema) }} 유효성검사활성화할때 추가하면됨
-   */
-  const { register, handleSubmit } = useSignInForm()
+  const { register, handleSubmit, errors } = useSignInForm()
   const { mutate } = useMutationSignIn()
   const onSubmitForm: OnSubmitFormFT = (form) => mutate(form)
 
@@ -25,6 +24,7 @@ export const SignInForm = () => {
           placeholder="Email"
           autoComplete="off"
         />
+        <ErrorMsg errorField={errors[FORM_EMAIL]} />
       </div>
       <div className="grid w-full items-center gap-1.5">
         <Label>Password</Label>
@@ -34,13 +34,7 @@ export const SignInForm = () => {
           placeholder="Password"
           autoComplete="off"
         />
-        {/* <div className="h-6 w-full">
-          {errors.email || errors.password ? (
-            <p className="text-[10px] text-red-600">
-              *{errors.email?.message || errors.password?.message}
-            </p>
-          ) : null}
-        </div> */}
+        <ErrorMsg errorField={errors[FORM_PW]} />
       </div>
       <Button type="submit">Login</Button>
     </form>

@@ -10,14 +10,19 @@ import { useForm } from "react-hook-form"
 import { useNavigate } from "react-router-dom"
 import { postSignUp, postUserSignIn } from "./sign.func"
 
+import { yupResolver } from "@hookform/resolvers/yup"
 import type { SignFormType } from "./sign.type"
+import { signInSchema } from "./sign.yup-schema"
 
 export const useSignInForm = () => {
   const {
     register,
     handleSubmit,
     formState: { errors, isValid },
-  } = useForm<SignFormType>()
+  } = useForm<SignFormType>({
+    mode: "onChange",
+    resolver: yupResolver(signInSchema),
+  })
 
   return { register, handleSubmit, errors, isValid }
 }
