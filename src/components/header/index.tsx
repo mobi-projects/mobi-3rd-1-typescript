@@ -1,5 +1,5 @@
-import { PATH_HOME, PATH_MY, PATH_SIGN } from "@/constants"
-import { postUserSignOut } from "@/pages/sign/sign.func"
+import { PATH_HOME, PATH_MY } from "@/constants"
+import { useSignOut } from "@/hooks/use-sign-out"
 import { Home, LogOut, User } from "lucide-react"
 import { useNavigate } from "react-router-dom"
 import { Button } from "../ui/button"
@@ -7,6 +7,7 @@ import { BUTTON_STYLE, BUTTON_VARIANT } from "./header.constant"
 
 export const Header = () => {
   const navigate = useNavigate()
+  const { logout } = useSignOut()
 
   return (
     <div className=" flex h-[6rem] w-full flex-col justify-center border-b-2">
@@ -33,14 +34,7 @@ export const Header = () => {
         <Button
           variant={BUTTON_VARIANT}
           className={BUTTON_STYLE}
-          onClick={async () => {
-            try {
-              await postUserSignOut()
-              navigate(PATH_SIGN)
-            } catch {
-              alert("로그아웃 실패")
-            }
-          }}
+          onClick={() => logout()}
         >
           <LogOut />
           LogOut
