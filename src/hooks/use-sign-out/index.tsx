@@ -1,3 +1,4 @@
+import { useDialog } from "@/components/dialog/dialog.hook"
 import {
   AUTH_TOKEN,
   MUTATION_KEY_SIGN_OUT,
@@ -12,14 +13,14 @@ import { postUserSignOut } from "./use-sign-out.func"
 export const useSignOut = () => {
   const queryClient = new QueryClient()
   const navigate = useNavigate()
-
+  const { onAlert } = useDialog()
   const { mutate: logout } = useMutation({
     mutationKey: [MUTATION_KEY_SIGN_OUT],
     mutationFn: () => postUserSignOut(),
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: [QUERY_KEY_USER] })
       removeFromLocalStorage({ key: AUTH_TOKEN })
-      alert("로그아웃에 성공하셨습니다.")
+      onAlert({ children: "로그아웃에 성공하셨습니다." })
       navigate(PATH_SIGN)
     },
   })

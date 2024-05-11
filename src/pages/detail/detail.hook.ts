@@ -1,3 +1,4 @@
+import { useDialog } from "@/components/dialog/dialog.hook"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { BOOK_DETAIL_GC_TIME, BOOK_DETAIL_STALE_TIME } from "./detail.constant"
 import { getBookDetail, postReviewOnPeanut } from "./detail.func"
@@ -13,6 +14,7 @@ export const useBookDetail = ({ isbn13 }: { isbn13: string }) =>
 
 export const useMutateReview = () => {
   const queryClient = useQueryClient()
+  const { onAlert } = useDialog()
   return useMutation({
     mutationKey: ["post-review"],
     mutationFn: ({
@@ -28,5 +30,6 @@ export const useMutateReview = () => {
       const isbn13 = variables.isbn13
       queryClient.setQueryData(["book-detail", isbn13], { ...data })
     },
+    onError: (error) => onAlert({ children: error.message }),
   })
 }

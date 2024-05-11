@@ -1,3 +1,4 @@
+import { useDialog } from "@/components/dialog/dialog.hook"
 import { QUERY_KEY_USER } from "@/constants/query-key"
 import { isUndefined } from "@/funcs"
 import { UserType } from "@/types"
@@ -13,23 +14,23 @@ import type { UpdataDataType, UpdateUserFormType } from "./my.type"
 
 export const useMutateUpdateUser = () => {
   const queryClient = useQueryClient()
+  const { onAlert } = useDialog()
   const { mutate: updateUser } = useMutation({
     mutationFn: (updateForm: UpdateUserFormType) =>
       patchUserOnPeanut(updateForm),
     onSuccess: (data) => {
       const user = convertPatchUserResToUser({ response: data }) // axios 결과를 user 객체로 변환
       queryClient.setQueryData([QUERY_KEY_USER], user) // 캐싱데이터 갱신
-      alert("사용자 정보를 갱신했습니다.") // 사용자에게 알림
+      onAlert({ children: "사용자 정보를 갱신했습니다." })
     },
-    onError: (error) => {
-      alert(error.message)
-    },
+    onError: (error) => onAlert({ children: error.message }),
   })
   return { updateUser }
 }
 
 export const useMutateUpdateProfile = () => {
   const queryClient = useQueryClient()
+  const { onAlert } = useDialog()
   const { mutate: updateProfile } = useMutation({
     mutationFn: (data: FormData) => patchProfileOnPeanut(data),
     onSuccess: (data) => {
@@ -38,11 +39,9 @@ export const useMutateUpdateProfile = () => {
         if (isUndefined(prev)) return prev
         return { ...prev, profileUrl }
       })
-      alert("프로필 갱신에 성공했습니다.")
+      onAlert({ children: "프로필 갱신에 성공했습니다." })
     },
-    onError: (error) => {
-      alert(error.message)
-    },
+    onError: (error) => onAlert({ children: error.message }),
   })
   return { updateProfile }
 }

@@ -1,3 +1,4 @@
+import { useDialog } from "@/components/dialog/dialog.hook"
 import {
   MUTATION_KEY_SIGN_IN,
   MUTATION_KEY_SIGN_UP,
@@ -27,17 +28,18 @@ export const useSignInForm = () => {
 export const useMutationSignIn = () => {
   const queryClient = useQueryClient()
   const navigate = useNavigate()
+  const { onAlert } = useDialog()
   return useMutation({
     mutationKey: [MUTATION_KEY_SIGN_IN],
     mutationFn: ({ email, password }: SignFormType) =>
       postUserSignIn({ email, password }),
     onSuccess: (data) => {
       const user = { ...data }
-      alert(`${user.nickname} 님, 환영합니다.`)
+      onAlert({ children: `${user.nickname} 님, 환영합니다.` })
       queryClient.setQueryData([QUERY_KEY_USER], user)
       navigate(PATH_HOME)
     },
-    onError: (error) => alert(error.message),
+    onError: (error) => onAlert({ children: error.message }),
   })
 }
 
@@ -50,16 +52,15 @@ export const useSignUpForm = () => {
   return { register, handleSubmit, errors, isValid }
 }
 export const useMutationSignUp = () => {
+  const { onAlert } = useDialog()
   const { mutate: signUp } = useMutation({
     mutationKey: [MUTATION_KEY_SIGN_UP],
     mutationFn: (signForm: SignFormType) => postSignUp(signForm),
     onSuccess: () => {
-      alert("회원가입에 성공했습니다.")
+      onAlert({ children: "회원가입에 성공했습니다." })
       window.location.reload()
     },
-    onError: () => {
-      alert("회원가입에 실패했습니다.")
-    },
+    onError: (error) => onAlert({ children: error.message }),
   })
   return { signUp }
 }

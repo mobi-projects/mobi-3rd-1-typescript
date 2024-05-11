@@ -1,21 +1,10 @@
 import { FORM_EMAIL, FORM_PW, FORM_PW_CONFIRM } from "@/constants"
 import type { UserType } from "@/types"
-import { AxiosResponse } from "axios"
 import { FieldError } from "react-hook-form"
 
-export type SignInDataType = Record<"userId" | "password", string>
-export type SignInDataReturnType = {
-  info: object
-  token: string
-  userId: string
-}
 export type PostUserSignInFT = (input: SignFormType) => Promise<UserType>
 
-export type ConvertSignResToUserFT = (input: {
-  response: AxiosResponse
-}) => UserType
-
-export type PostSignUpFT = (input: SignFormType) => Promise<UserType>
+export type PostSignUpFT = (input: SignFormType) => Promise<void>
 
 export type GenerateNewUserDataFT = (input: {
   email: string
