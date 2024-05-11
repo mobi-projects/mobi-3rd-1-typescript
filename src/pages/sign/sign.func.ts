@@ -9,7 +9,6 @@ import {
 import { baseAxiosInstance } from "@/libs/axios"
 import { ConvertAxiosResFT, UserType } from "@/types"
 import type {
-  ConvertSignResToUserFT,
   CreateSignInReqBodyFT,
   GenerateNewUserDataFT,
   GenerateTempNicknameByEmailFT,
@@ -121,20 +120,6 @@ export const convertSignInResToUser: ConvertAxiosResFT<UserType> = ({
     email: email,
     nickname: nickname,
     profileUrl: profileUrl,
-  }
-  return user
-}
-
-/**
- * signIn 의 response 를 User 객체 변환합니다.
- */
-export const convertSignUpResToUser: ConvertSignResToUserFT = ({
-  response,
-}) => {
-  const user: UserType = {
-    email: response.data.userId,
-    nickname: response.data.data.nickname,
-    profileUrl: ".",
   }
   return user
 }
