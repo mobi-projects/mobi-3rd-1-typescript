@@ -4,13 +4,13 @@ import { BookDetailType } from "../detail.type"
 
 export const DetailContent = (data: BookDetailType) => {
   return (
-    <div className=" flex h-[43rem] w-full pt-4 IPHON_XR:h-full IPHON_XR:flex-col IPHON_XR:items-center">
+    <div className=" relative flex h-full w-full flex-col items-center pt-4 IPAD_PRO:flex-row ">
       <img
         src={data.cover}
-        className="h-full border-2 drop-shadow-2xl IPHON_XR:h-[20rem]"
+        className="border-2 drop-shadow-2xl SF_DUO:h-[20rem] IPAD_PRO:h-[30rem]"
       />
-      <div className="relative flex w-[40rem] flex-col gap-4 pl-6 IPHON_XR:w-full IPHON_XR:pl-0">
-        <h2 className="w-full border-b-2 py-2 pl-4 text-lg font-semibold text-slate-700">
+      <div className="  flex w-full flex-col gap-4 pl-0 IPAD_PRO:w-[40rem] IPAD_PRO:items-start IPAD_PRO:pl-6">
+        <h2 className="  w-full border-b-2 py-2 pl-4 text-lg font-semibold text-slate-700">
           책 정보
         </h2>
         <div className="flex items-center">
@@ -29,9 +29,11 @@ export const DetailContent = (data: BookDetailType) => {
         </div>
         <div className="flex ">
           <p className="w-[6rem] font-semibold ">책 소개</p>
-          <p className="h-fit w-[17rem] break-keep">{data.description}</p>
+          <p className="h-fit w-[17rem] break-keep SF_DUO:w-[24rem] ">
+            {data.description}
+          </p>
         </div>
-        <div className="flex w-full justify-end pr-5">
+        <div className="flex w-full justify-end ">
           <Button
             className="absolute bottom-0 right-0 IPHON_XR:static"
             onClick={() => window.open(data.link)}
