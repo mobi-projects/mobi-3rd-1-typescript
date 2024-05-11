@@ -1,7 +1,9 @@
 import { useDialog } from "@/components/dialog/dialog.hook"
+import { QUERY_KEY_USER } from "@/constants"
 import { useUser } from "@/hooks"
-import { useUpdateUserImage } from "./my.hook"
-import { UpadateUserInfoModal } from "./my.modal"
+import { useQueryClient } from "@tanstack/react-query"
+import { useMutateUpdateProfile } from "./my.hook"
+// import { UpadateUserInfoModal } from "./my.modal"
 
 /**
  * @notice
@@ -10,7 +12,8 @@ import { UpadateUserInfoModal } from "./my.modal"
 export const My = () => {
   const { onModal } = useDialog()
   const { user, isLoading } = useUser()
-  const { mutate } = useUpdateUserImage()
+  const { updateProfile } = useMutateUpdateProfile()
+  const queryClient = useQueryClient()
 
   const onClickConfirm = () => {
     // 확인누르면 실행할 로직작성
@@ -20,9 +23,11 @@ export const My = () => {
     const formData = new FormData()
     if (e.currentTarget.files) {
       formData.append("image", e.currentTarget.files[0])
-      mutate(formData)
+      updateProfile(formData)
     }
   }
+  const data = queryClient.getQueryData([QUERY_KEY_USER])
+  console.log(data)
 
   if (isLoading) return <h1>Loading중....</h1>
   return (
@@ -56,7 +61,7 @@ export const My = () => {
         onClick={() =>
           onModal({
             onConfirm: onClickConfirm,
-            children: <UpadateUserInfoModal />,
+            // children: <UpadateUserInfoModal />,
           })
         }
         className="h-fit w-fit rounded-3xl bg-slate-200 p-4 hover:bg-slate-400"

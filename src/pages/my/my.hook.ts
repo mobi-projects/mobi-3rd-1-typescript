@@ -1,9 +1,12 @@
-import { QUERY_KEY_USER, QUERY_KEY_USER_INFO } from "@/constants/query-key"
+import { QUERY_KEY_USER } from "@/constants/query-key"
+import { isUndefined } from "@/funcs"
+import { UserType } from "@/types"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { useForm } from "react-hook-form"
 import {
-  convertPatchUserRes,
-  patchUserImage,
+  convertPatchUserResToUser,
+  extractProfile,
+  patchProfileOnPeanut,
   patchUserOnPeanut,
 } from "./my.func"
 import type { UpdataDataType, UpdateUserFormType } from "./my.type"
@@ -14,15 +17,34 @@ export const useMutateUpdateUser = () => {
     mutationFn: (updateForm: UpdateUserFormType) =>
       patchUserOnPeanut(updateForm),
     onSuccess: (data) => {
-      const user = convertPatchUserRes({ response: data }) // axios 결과를 user 객체로 변환
+      const user = convertPatchUserResToUser({ response: data }) // axios 결과를 user 객체로 변환
       queryClient.setQueryData([QUERY_KEY_USER], user) // 캐싱데이터 갱신
       alert("사용자 정보를 갱신했습니다.") // 사용자에게 알림
     },
-    onError: () => {
-      alert("사용자 정보 갱신에 실패했습니다.")
+    onError: (error) => {
+      alert(error.message)
     },
   })
   return { updateUser }
+}
+
+export const useMutateUpdateProfile = () => {
+  const queryClient = useQueryClient()
+  const { mutate: updateProfile } = useMutation({
+    mutationFn: (data: FormData) => patchProfileOnPeanut(data),
+    onSuccess: (data) => {
+      const profileUrl = extractProfile({ response: data })
+      queryClient.setQueryData<UserType>([QUERY_KEY_USER], (prev) => {
+        if (isUndefined(prev)) return prev
+        return { ...prev, profileUrl }
+      })
+      alert("프로필 갱신에 성공했습니다.")
+    },
+    onError: (error) => {
+      alert(error.message)
+    },
+  })
+  return { updateProfile }
 }
 
 /**
@@ -36,26 +58,4 @@ export const useSubmitUpdateData = () => {
     // formState: { errors, isValid },
   } = useForm<UpdataDataType>({ mode: "onChange" })
   return { register, handleSubmit }
-}
-
-/**
- * @description
- * - 유저 프로필이미지 업데이트 hook입니다.
- * - patchUserImage() 함수를 실행하면 서버로 이미지업로드 patch요청이 진행됩니다.
- * - 서버요청을 성공하면 onSuccess() 를실행해서  queryKey: [QUERY_KEY_USER_INFO] 를 재조회해서 현재 패칭된 data정보를 갱신합니다.
- */
-export const useUpdateUserImage = () => {
-  const queryClient = useQueryClient()
-  const { mutate } = useMutation({
-    mutationFn: (data: FormData) => patchUserImage(data),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [QUERY_KEY_USER_INFO] })
-    },
-    onError: (err) => {
-      console.log("뮤테이션실패")
-      console.log(err)
-    },
-  })
-
-  return { mutate }
 }
