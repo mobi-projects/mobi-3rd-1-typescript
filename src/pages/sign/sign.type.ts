@@ -20,7 +20,7 @@ export type PostSignUpFT = (input: SignFormType) => Promise<UserType>
 export type GenerateNewUserDataFT = (input: {
   email: string
   password: string
-  nickName: string
+  nickname: string
 }) => SignUpRequestType
 
 export type GenerateTempNicknameByEmailFT = (input: { email: string }) => string
@@ -31,7 +31,7 @@ export type SignUpRequestType = {
   userId: string
   password: string
   data: {
-    nickName: string
+    nickname: string
   }
 }
 
