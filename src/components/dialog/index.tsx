@@ -7,6 +7,7 @@ import {
 import { DialogModalPT } from "./dialog.type"
 import { FC } from "react"
 import { DialogClose } from "@radix-ui/react-dialog"
+import { CircleCheckBig } from "lucide-react"
 
 export const DialogModal: FC<DialogModalPT> = ({
   modalTrigger,
@@ -24,7 +25,7 @@ export const DialogModal: FC<DialogModalPT> = ({
           {isAlert && (
             <DialogClose className="flex justify-center ">
               <div className="boreder-2 w-[10rem] rounded-full bg-blue-400 p-3 hover:bg-blue-50">
-                확인
+                <CircleCheckBig />
               </div>
             </DialogClose>
           )}
