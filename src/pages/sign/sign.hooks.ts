@@ -2,7 +2,6 @@ import {
   MUTATION_KEY_SIGN_IN,
   MUTATION_KEY_SIGN_UP,
   PATH_HOME,
-  PATH_SIGN,
   QUERY_KEY_USER,
 } from "@/constants"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
@@ -10,7 +9,7 @@ import { useForm } from "react-hook-form"
 import { useNavigate } from "react-router-dom"
 import { postSignUp, postUserSignIn } from "./sign.func"
 
-import type { SignFormType } from "./sign.type"
+import type { SignFormType, SignUpFormType } from "./sign.type"
 
 export const useSignInForm = () => {
   const {
@@ -18,10 +17,8 @@ export const useSignInForm = () => {
     handleSubmit,
     formState: { errors, isValid },
   } = useForm<SignFormType>()
-
   return { register, handleSubmit, errors, isValid }
 }
-
 export const useMutationSignIn = () => {
   const queryClient = useQueryClient()
   const navigate = useNavigate()
@@ -38,14 +35,22 @@ export const useMutationSignIn = () => {
     onError: (error) => alert(error.message),
   })
 }
+
+export const useSignUpForm = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+  } = useForm<SignUpFormType>()
+  return { register, handleSubmit, errors, isValid }
+}
 export const useMutationSignUp = () => {
-  const navigate = useNavigate()
   const { mutate: signUp } = useMutation({
     mutationKey: [MUTATION_KEY_SIGN_UP],
     mutationFn: (signForm: SignFormType) => postSignUp(signForm),
     onSuccess: () => {
       alert("회원가입에 성공했습니다.")
-      navigate(PATH_SIGN, { replace: true })
+      window.location.reload()
     },
     onError: () => {
       alert("회원가입에 실패했습니다.")

@@ -3,14 +3,13 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { FORM_EMAIL, FORM_PW, FORM_PW_CONFIRM } from "@/constants"
 import { Label } from "@radix-ui/react-label"
-import { useForm } from "react-hook-form"
-import { useMutationSignUp } from "../sign.hooks"
+import { useMutationSignUp, useSignUpForm } from "../sign.hooks"
 import { SignUpFormType } from "../sign.type"
 
 export const SignUpForm = () => {
-  const { mutate } = useMutationSignUp()
+  const { signUp } = useMutationSignUp()
+  const { register, handleSubmit } = useSignUpForm()
   const { onAlert } = useDialog()
-  const { register, handleSubmit } = useForm<SignUpFormType>()
 
   const onSubmitSignInData = (data: SignUpFormType) => {
     /** @notice yup schema 적용시, 👇 아래 분기 삭제 */
@@ -29,7 +28,7 @@ export const SignUpForm = () => {
       })
       return
     }
-    mutate({
+    signUp({
       email: data.email,
       password: data.password,
     })
