@@ -53,12 +53,13 @@ export const useSignUpForm = () => {
 }
 export const useMutationSignUp = () => {
   const { onAlert } = useDialog()
+  const navigate = useNavigate()
   const { mutate: signUp } = useMutation({
     mutationKey: [MUTATION_KEY_SIGN_UP],
     mutationFn: (signForm: SignFormType) => postSignUp(signForm),
     onSuccess: () => {
       onAlert({ children: "회원가입에 성공했습니다." })
-      window.location.reload()
+      navigate(0)
     },
     onError: (error) => onAlert({ children: error.message }),
   })
