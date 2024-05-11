@@ -1,3 +1,6 @@
+import { FORM_NICKNAME } from "@/constants"
+import { AxiosResponse } from "axios"
+
 export type UpdataDataType = Record<"nickName", string>
 
 export type UserDataType = {
@@ -6,6 +9,8 @@ export type UserDataType = {
   userId: string
 }
 
-export type PatchUserUpdateInfoFT = (
-  data: UpdataDataType,
-) => Promise<UserDataType>
+export type UpdateUserFormType = {
+  [FORM_NICKNAME]: string
+}
+
+export type PatchUserFT = (input: UpdateUserFormType) => Promise<AxiosResponse>
