@@ -55,16 +55,15 @@ export const postUserSignIn: PostUserSignInFT = async ({ password, email }) => {
  * 회원가입
  */
 export const postSignUp: PostSignUpFT = async ({ email, password }) => {
-  const initNickname = generateTempNicknameByEmail({ email })
-  const newUserData = generateNewUserData({
+  const nickname = generateTempNicknameByEmail({ email })
+  const newUser = generateNewUserData({
     email,
     password,
-    nickName: initNickname,
+    nickname,
   })
   try {
-    const response = await baseAxiosInstance.post(API_SIGN_UP, newUserData)
-    return response.data
-  } catch (e) {
+    await baseAxiosInstance.post(API_SIGN_UP, newUser)
+  } catch {
     throw new Error("네트워크 문제로 인하여, 회원가입에 실패했습니다.")
   }
 }
@@ -74,13 +73,13 @@ export const postSignUp: PostSignUpFT = async ({ email, password }) => {
 const generateNewUserData: GenerateNewUserDataFT = ({
   email,
   password,
-  nickName,
+  nickname,
 }) => {
   const newUserData: SignUpRequestType = {
     userId: email,
     password: password,
     data: {
-      nickName,
+      nickname,
     },
   }
   return newUserData
@@ -115,12 +114,12 @@ export const convertSignInResToUser: ConvertAxiosResFT<UserType> = ({
   response,
 }) => {
   const email = response.data.userId
-  const nickName = response.data.info.nickName
+  const nickname = response.data.info.nickname
   const profileUrl = response.data.info.profile
 
   const user: UserType = {
     email: email,
-    nickname: nickName,
+    nickname: nickname,
     profileUrl: profileUrl,
   }
   return user

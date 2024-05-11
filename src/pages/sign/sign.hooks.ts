@@ -1,17 +1,15 @@
-import { useDialog } from "@/components/dialog/dialog.hook"
 import {
   MUTATION_KEY_SIGN_IN,
+  MUTATION_KEY_SIGN_UP,
   PATH_HOME,
-  PATH_SIGN,
   QUERY_KEY_USER,
 } from "@/constants"
+import { yupResolver } from "@hookform/resolvers/yup"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { useForm } from "react-hook-form"
 import { useNavigate } from "react-router-dom"
 import { postSignUp, postUserSignIn } from "./sign.func"
-
-import { yupResolver } from "@hookform/resolvers/yup"
-import type { SignFormType } from "./sign.type"
+import type { SignFormType, SignUpFormType } from "./sign.type"
 import { signInSchema } from "./sign.yup-schema"
 
 export const useSignInForm = () => {
@@ -26,7 +24,6 @@ export const useSignInForm = () => {
 
   return { register, handleSubmit, errors, isValid }
 }
-
 export const useMutationSignIn = () => {
   const queryClient = useQueryClient()
   const navigate = useNavigate()
@@ -44,25 +41,25 @@ export const useMutationSignIn = () => {
   })
 }
 
+export const useSignUpForm = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+  } = useForm<SignUpFormType>()
+  return { register, handleSubmit, errors, isValid }
+}
 export const useMutationSignUp = () => {
-  const navigate = useNavigate()
-  const { onAlert } = useDialog()
-  return useMutation({
-    mutationKey: [],
-    mutationFn: (signUpInput: SignFormType) => postSignUp(signUpInput),
-    onError: (error) => {
-      console.error(error)
-      onAlert({
-        children: "다시 시도해주세요.",
-        onConfirm: () => {},
-      })
-    },
+  const { mutate: signUp } = useMutation({
+    mutationKey: [MUTATION_KEY_SIGN_UP],
+    mutationFn: (signForm: SignFormType) => postSignUp(signForm),
     onSuccess: () => {
-      onAlert({
-        children: "축하합니다. 회원가입에 성공하셨습니다.",
-        onConfirm: () => {},
-      })
-      navigate(PATH_SIGN)
+      alert("회원가입에 성공했습니다.")
+      window.location.reload()
+    },
+    onError: () => {
+      alert("회원가입에 실패했습니다.")
     },
   })
+  return { signUp }
 }
