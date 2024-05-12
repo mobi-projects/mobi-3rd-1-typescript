@@ -29,7 +29,7 @@ export const useMutationSignIn = () => {
   const queryClient = useQueryClient()
   const navigate = useNavigate()
   const { onAlert } = useDialog()
-  return useMutation({
+  const { mutate: signIn, ...rest } = useMutation({
     mutationKey: [MUTATION_KEY_SIGN_IN],
     mutationFn: ({ email, password }: SignFormType) =>
       postUserSignIn({ email, password }),
@@ -41,6 +41,7 @@ export const useMutationSignIn = () => {
     },
     onError: (error) => onAlert({ children: error.message }),
   })
+  return { signIn, ...rest }
 }
 
 export const useSignUpForm = () => {
@@ -56,7 +57,7 @@ export const useSignUpForm = () => {
 }
 export const useMutationSignUp = () => {
   const { onAlert } = useDialog()
-  const { mutate: signUp } = useMutation({
+  const { mutate: signUp, ...rest } = useMutation({
     mutationKey: [MUTATION_KEY_SIGN_UP],
     mutationFn: (signForm: SignFormType) => postSignUp(signForm),
     onSuccess: () => {
@@ -65,5 +66,5 @@ export const useMutationSignUp = () => {
     },
     onError: (error) => onAlert({ children: error.message }),
   })
-  return { signUp }
+  return { signUp, ...rest }
 }
