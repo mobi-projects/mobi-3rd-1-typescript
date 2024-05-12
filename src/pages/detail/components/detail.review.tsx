@@ -4,6 +4,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { useForm } from "react-hook-form"
 import { useMutateReview } from "../detail.hook"
 
+import { isUndefined } from "@/funcs"
 import { useUser } from "@/hooks"
 import type { BookDetailType, ReviewFormType, ReviewType } from "../detail.type"
 
@@ -12,23 +13,22 @@ export const Review = ({
   ...data
 }: BookDetailType & { bookId: string | undefined }) => {
   const { register, handleSubmit } = useForm<ReviewFormType>()
-  const { mutate } = useMutateReview()
+  const { leaveReview } = useMutateReview()
   const { user } = useUser()
 
   const onSubmitReview = (reviewFormData: ReviewFormType) => {
-    /**
-     * @note
-     * 👇 아래 `review` 는 임의로 생성한 Review 객체입니다.
-     *   User 객체를 가져오면, `email`, `nickname`, `profileUrl` 값을 채워야 합니다.
-     */
+    if (isUndefined(user)) return
+    const email = user.email
+    const nickname = user.nickname
+    const profileUrl = user.profileUrl
     const review: ReviewType = {
-      email: "test@email.com",
-      nickname: "testNickname",
-      profileUrl: "testProfile",
+      email,
+      nickname,
+      profileUrl,
       comment: reviewFormData.comment,
       rating: reviewFormData.rating,
     }
-    mutate({ isbn13: bookId as string, bookDetail: data, review })
+    leaveReview({ isbn13: bookId as string, bookDetail: data, review })
   }
 
   return (

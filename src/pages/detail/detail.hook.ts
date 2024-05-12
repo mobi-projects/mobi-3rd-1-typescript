@@ -17,8 +17,7 @@ export const useBookDetail = ({ isbn13 }: { isbn13: string }) => {
 export const useMutateReview = () => {
   const queryClient = useQueryClient()
   const { onAlert } = useDialog()
-  return useMutation({
-    mutationKey: ["post-review"],
+  const { mutate: leaveReview, ...rest } = useMutation({
     mutationFn: ({
       isbn13,
       bookDetail,
@@ -34,4 +33,5 @@ export const useMutateReview = () => {
     },
     onError: (error) => onAlert({ children: error.message }),
   })
+  return { leaveReview, ...rest }
 }
