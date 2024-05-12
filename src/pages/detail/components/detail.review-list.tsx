@@ -1,4 +1,7 @@
-import type { BookDetailType } from "../detail.type"
+import { isNull } from "@/funcs"
+import { FC } from "react"
+import { NOT_RATE } from "../detail.constant"
+import type { BookDetailType, ReviewType } from "../detail.type"
 
 export const ReviewList = (data: BookDetailType) => {
   const reviewCount = data.reviews.length
@@ -8,30 +11,42 @@ export const ReviewList = (data: BookDetailType) => {
         {`${reviewCount} 개의 후기`}
       </h1>
       {reviewCount === 0 ? (
-        <h1 className="flex w-full items-center justify-center py-2 font-bold">
-          아직 리뷰가없어요! 소중한 리뷰를 달아주세요
-        </h1>
+        <NoReviewNotice />
       ) : (
         data.reviews.map((review, idx) => (
-          <div
-            className="flex w-full border-y-2 border-slate-100 py-2"
-            key={idx}
-          >
-            <div className="flex items-start py-2">
-              <img
-                src={review.profileUrl}
-                className="h-16 w-16 rounded-full "
-              />
-            </div>
-            <div className="pl-2">
-              <p className="pb-2 text-sm font-thin IPHON_XR:text-xs">
-                {review.nickname}
-              </p>
-              <p className="IPHON_XR: text-sm">{review.comment}</p>
-            </div>
-          </div>
+          <ReviewItemCard {...review} key={idx} />
         ))
       )}
+    </div>
+  )
+}
+
+const NoReviewNotice: FC = () => (
+  <h1 className="flex w-full items-center justify-center py-2 font-bold">
+    아직 리뷰가없어요! 소중한 리뷰를 달아주세요
+  </h1>
+)
+
+const ReviewItemCard: FC<ReviewType> = (review) => {
+  const comment = review.comment
+  const profile = !isNull(review.profileUrl) ? review.profileUrl : ""
+  const rating = review.rating
+  const ratingNotice = rating !== NOT_RATE ? `${rating}/10` : "- / 10"
+
+  return (
+    <div className="flex w-full border-y-2 border-slate-100 py-2">
+      <div className="flex items-start py-2">
+        <img src={profile} className="h-16 w-16 rounded-full " />
+      </div>
+      <div className="pl-2">
+        <p className="pb-2 text-sm font-thin IPHON_XR:text-xs">
+          {review.nickname}
+        </p>
+        <p className="IPHON_XR: h-8 text-sm">{comment}</p>
+        <p className="IPHON_XR: text-xs font-thin text-gray-500">
+          ⭐️ 별점: {ratingNotice}
+        </p>
+      </div>
     </div>
   )
 }

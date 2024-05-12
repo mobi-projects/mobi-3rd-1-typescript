@@ -36,3 +36,8 @@ export const BOOK_DETAIL_TEMPLATE: BookDetailType = {
   },
   reviews: [],
 } as const
+
+/**
+ * 도서 리뷰 중 평점을 주지 않은 경우, 대체값
+ */
+export const NOT_RATE = -1
