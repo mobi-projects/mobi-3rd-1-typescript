@@ -8,8 +8,8 @@ import { ErrorMsg } from "./error-msg"
 
 export const SignInForm = () => {
   const { register, handleSubmit, errors, isValid } = useSignInForm()
-  const { login } = useMutationSignIn()
-  const onSubmitForm: OnSubmitFormFT = (form) => login(form)
+  const { signIn } = useMutationSignIn()
+  const onSubmitForm: OnSubmitFormFT = (form) => signIn(form)
 
   return (
     <form
