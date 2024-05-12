@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom"
 import { isBookDetail } from "./detail.func"
 import { useBookDetail } from "./detail.hook"
-import { DetailContent, DetailTitle, Review } from "./components"
+import { DetailContent, DetailTitle, Review, ReviewList } from "./components"
 
 export const Detail = () => {
   const { bookId } = useParams()
@@ -17,6 +17,7 @@ export const Detail = () => {
           <DetailTitle {...data} />
           <DetailContent {...data} />
           <Review bookId={bookId} {...data} />
+          <ReviewList {...data} />
         </div>
       </div>
     </div>
