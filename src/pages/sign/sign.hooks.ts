@@ -11,7 +11,7 @@ import { useForm } from "react-hook-form"
 import { useNavigate } from "react-router-dom"
 import { postSignUp, postUserSignIn } from "./sign.func"
 import type { SignFormType, SignUpFormType } from "./sign.type"
-import { signInSchema } from "./sign.yup-schema"
+import { signInSchema, signUpSchema } from "./sign.yup-schema"
 
 export const useSignInForm = () => {
   const {
@@ -29,7 +29,7 @@ export const useMutationSignIn = () => {
   const queryClient = useQueryClient()
   const navigate = useNavigate()
   const { onAlert } = useDialog()
-  return useMutation({
+  const { mutate: signIn, ...rest } = useMutation({
     mutationKey: [MUTATION_KEY_SIGN_IN],
     mutationFn: ({ email, password }: SignFormType) =>
       postUserSignIn({ email, password }),
@@ -41,6 +41,7 @@ export const useMutationSignIn = () => {
     },
     onError: (error) => onAlert({ children: error.message }),
   })
+  return { signIn, ...rest }
 }
 
 export const useSignUpForm = () => {
@@ -48,12 +49,15 @@ export const useSignUpForm = () => {
     register,
     handleSubmit,
     formState: { errors, isValid },
-  } = useForm<SignUpFormType>()
+  } = useForm<SignUpFormType>({
+    mode: "onChange",
+    resolver: yupResolver(signUpSchema),
+  })
   return { register, handleSubmit, errors, isValid }
 }
 export const useMutationSignUp = () => {
   const { onAlert } = useDialog()
-  const { mutate: signUp } = useMutation({
+  const { mutate: signUp, ...rest } = useMutation({
     mutationKey: [MUTATION_KEY_SIGN_UP],
     mutationFn: (signForm: SignFormType) => postSignUp(signForm),
     onSuccess: () => {
@@ -62,5 +66,5 @@ export const useMutationSignUp = () => {
     },
     onError: (error) => onAlert({ children: error.message }),
   })
-  return { signUp }
+  return { signUp, ...rest }
 }
