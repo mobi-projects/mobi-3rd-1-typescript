@@ -1,9 +1,10 @@
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
 import { useForm } from "react-hook-form"
 import { useMutateReview } from "../detail.hook"
-import { Textarea } from "@/components/ui/textarea"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
 
+import { useUser } from "@/hooks"
 import type { BookDetailType, ReviewFormType, ReviewType } from "../detail.type"
 
 export const Review = ({
@@ -12,6 +13,8 @@ export const Review = ({
 }: BookDetailType & { bookId: string | undefined }) => {
   const { register, handleSubmit } = useForm<ReviewFormType>()
   const { mutate } = useMutateReview()
+  const { user } = useUser()
+
   const onSubmitReview = (reviewFormData: ReviewFormType) => {
     /**
      * @note

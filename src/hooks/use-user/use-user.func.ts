@@ -7,6 +7,7 @@ import { ConvertAxiosResFT, UserType } from "@/types"
  */
 export const getUserFromPeanut = async () => {
   const response = await baseAxiosInstance.patch(API_GET_USER)
+  console.log(response)
   const user = convertGetUserResToUser({ response })
   return user
 }
@@ -14,11 +15,13 @@ export const getUserFromPeanut = async () => {
  * getUserFromPeanut() 중, axios 응답에 대해 User 데이터로 변환합니다.
  */
 const convertGetUserResToUser: ConvertAxiosResFT<UserType> = ({ response }) => {
-  const resData = response.data
+  const email = response.data.userId
+  const profileUrl = response.data.profileUrl
+  const nickname = response.data.data.nickname
   const user: UserType = {
-    email: resData.userId,
-    profileUrl: resData.profileUrl,
-    nickname: resData.data.nickName,
+    email,
+    profileUrl,
+    nickname,
   }
   return user
 }
