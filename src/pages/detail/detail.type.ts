@@ -1,3 +1,4 @@
+import { FORM_COMMENT, FORM_RATING } from "@/constants"
 import type { BookItemType } from "@/types"
 import type { UseQueryResult } from "@tanstack/react-query"
 import type { AxiosResponse } from "axios"
@@ -21,8 +22,8 @@ export type ReviewType = {
 }
 
 export type ReviewFormType = {
-  rating: number
-  comment: string
+  [FORM_RATING]?: number
+  [FORM_COMMENT]: string
 }
 
 /* -------------------[호출 시그니처]---------------------- */

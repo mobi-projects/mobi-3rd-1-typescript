@@ -1,8 +1,23 @@
 import { useDialog } from "@/components/dialog/dialog.hook"
+import { yupResolver } from "@hookform/resolvers/yup"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { useForm } from "react-hook-form"
 import { BOOK_DETAIL_GC_TIME, BOOK_DETAIL_STALE_TIME } from "./detail.constant"
 import { getBookDetail, postReviewOnPeanut } from "./detail.func"
-import type { BookDetailType, ReviewType } from "./detail.type"
+import type { BookDetailType, ReviewFormType, ReviewType } from "./detail.type"
+import { reviewSchema } from "./detail.yup-schema"
+
+export const useReviewForm = () => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isValid },
+  } = useForm<ReviewFormType>({
+    mode: "onChange",
+    resolver: yupResolver(reviewSchema),
+  })
+  return { register, handleSubmit, errors, isValid }
+}
 
 export const useBookDetail = ({ isbn13 }: { isbn13: string }) => {
   const { data: bookDetail, ...rest } = useQuery({
