@@ -7,7 +7,6 @@ import { ConvertAxiosResFT, UserType } from "@/types"
  */
 export const getUserFromPeanut = async () => {
   const response = await baseAxiosInstance.patch(API_GET_USER)
-  console.log(response)
   const user = convertGetUserResToUser({ response })
   return user
 }
