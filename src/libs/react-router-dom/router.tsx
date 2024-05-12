@@ -6,7 +6,8 @@ import {
   PATH_SIGN,
 } from "@/constants"
 import { Detail, Home, My, NotFound, Sign } from "@/pages"
-
+import { HomeSuspenseFallback } from "@/pages/home/home.suspense"
+import { Suspense } from "react"
 import { Outlet, createBrowserRouter } from "react-router-dom"
 import { AuthRoute } from "./auth-route"
 
@@ -25,7 +26,11 @@ export const Router = createBrowserRouter([
     children: [
       {
         path: PATH_HOME,
-        element: <Home />,
+        element: (
+          <Suspense fallback={<HomeSuspenseFallback />}>
+            <Home />,
+          </Suspense>
+        ),
       },
       {
         path: PATH_MY,
