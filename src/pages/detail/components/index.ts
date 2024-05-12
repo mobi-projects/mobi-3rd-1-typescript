@@ -1,7 +1,7 @@
 export * from "./detail.content"
 export * from "./detail.review"
 export * from "./detail.title"
-
+export * from "./detail.review-list"
 /** ["detail" 의 자식 컴포넌트 관리]
 ---------------------------------------------------------------------------
 ## 컴포넌트 생성 시
