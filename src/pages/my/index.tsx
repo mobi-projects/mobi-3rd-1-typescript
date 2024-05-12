@@ -67,7 +67,10 @@ export const My = () => {
           </div>
 
           <main className="flex h-full w-[50%] flex-col  items-stretch">
-            <div className="x-full flex h-[80%] flex-col items-center">
+            <div
+              id="infoWrapper"
+              className="x-full flex h-[80%] flex-col items-center"
+            >
               <div
                 id="subTitle"
                 className="font-bord flex h-[10%] w-full items-end border-b-2 pb-2 pl-[3%] text-xl"
