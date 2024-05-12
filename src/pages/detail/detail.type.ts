@@ -2,6 +2,7 @@ import { FORM_COMMENT, FORM_RATING } from "@/constants"
 import type { BookItemType } from "@/types"
 import type { UseQueryResult } from "@tanstack/react-query"
 import type { AxiosResponse } from "axios"
+import type { FieldError } from "react-hook-form"
 
 /* -------------------[객체 타입]---------------------- */
 export type BookDetailType = BookItemType & {
@@ -25,6 +26,7 @@ export type ReviewFormType = {
   [FORM_RATING]?: number
   [FORM_COMMENT]: string
 }
+export type ErrorMsgPT = { errorField?: FieldError }
 
 /* -------------------[호출 시그니처]---------------------- */
 export type UseBookDetailFT = (input: {
