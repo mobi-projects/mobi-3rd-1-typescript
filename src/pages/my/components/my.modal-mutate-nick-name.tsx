@@ -1,12 +1,16 @@
 import { Input } from "@/components/ui/input"
 import { useMutateUpdateUser, useSubmitUpdateData } from "../my.hook"
 import type { UpdateUserFormType } from "../my.type"
+import { useContext } from "react"
+import { DialogContext } from "@/components/dialog/dialog.context"
 
 export const MutateNickName = () => {
   const { updateUser } = useMutateUpdateUser()
+  const { onCloseDialog } = useContext(DialogContext)
   const { register, handleSubmit } = useSubmitUpdateData()
   const onSubmitUpdateData = (data: UpdateUserFormType) => {
     updateUser(data)
+    onCloseDialog()
   }
   return (
     <form
