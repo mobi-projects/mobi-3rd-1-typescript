@@ -1,7 +1,7 @@
 import { cva } from "class-variance-authority"
 
 export const dialogContentVariants = cva(
-  "flex flex-col items-center justify-between rounded-xl border-black bg-white px-3 py-1",
+  "flex flex-col items-center justify-between rounded-xl border-black bg-white px-3 py-1 relative",
   {
     variants: {
       size: {

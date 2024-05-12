@@ -1,6 +1,7 @@
 import type { FC } from "react"
 import { dialogContentVariants } from "./dialog.cva"
 import type { BackgroundPT, DialogPT } from "./dialog.type"
+import { X } from "lucide-react"
 
 export const Dialog: FC<DialogPT> = ({
   children,
@@ -41,12 +42,7 @@ const DialogContent: FC<DialogPT> = ({
       }}
       className={dialogContentVariants({ size: isAlert ? "alert" : "modal" })}
     >
-      <button
-        className="flex h-10 w-full cursor-pointer items-center justify-end text-3xl"
-        onClick={onCancel}
-      >
-        x
-      </button>
+      <X onClick={onCancel} className="absolute right-2 top-2" />
       <div className="flex h-full w-full items-center justify-center border-black">
         {children}
       </div>
@@ -58,18 +54,18 @@ const DialogContent: FC<DialogPT> = ({
 
 const ModalButtons: FC<DialogPT> = ({ onCancel, onConfirm }) => {
   return (
-    <div className="flex h-16 w-full cursor-pointer items-center justify-evenly border-t-[1px] border-t-black/30">
-      <button onClick={onCancel}>취소</button>
-
-      <div className="h-full w-[0.5px] bg-black/30" />
-
+    <div className="flex h-14 w-full cursor-pointer items-center justify-evenly border-t-2">
+      <button onClick={onCancel} className="h-full w-1/2 border-r-2">
+        Cancel
+      </button>
       <button
         onClick={() => {
           onConfirm()
           onCancel()
         }}
+        className="h-full w-1/2"
       >
-        확인
+        Ok
       </button>
     </div>
   )

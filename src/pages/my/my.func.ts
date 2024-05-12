@@ -39,9 +39,7 @@ export const convertPatchUserResToUser: ConvertAxiosResFT<UserType> = ({
   const email = response.data.userId
   const profileUrl = response.data.profileUrl
   const nickname = response.data.data.nickname
-  console.log(email)
-  console.log(profileUrl)
-  console.log(nickname)
+
   const user: UserType = {
     email,
     profileUrl,
