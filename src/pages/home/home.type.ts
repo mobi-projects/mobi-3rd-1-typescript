@@ -1,5 +1,4 @@
 import type { BookItemType } from "@/types"
-import type { UseQueryResult } from "@tanstack/react-query"
 
 export type BookListResponseType = {
   item: Array<BookItemType>
@@ -10,10 +9,6 @@ export type BookListResponseType = {
 export type GetBookListFT = (input: {
   page: number
 }) => Promise<BookListResponseType>
-
-export type UseBookListFT = (input: {
-  page: number
-}) => UseQueryResult<BookListResponseType, Error>
 
 export type CardPropsType = {
   data: BookItemType
