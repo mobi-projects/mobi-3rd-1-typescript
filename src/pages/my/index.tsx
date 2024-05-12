@@ -69,7 +69,7 @@ export const My = () => {
           <main className="flex h-full w-[50%] flex-col  items-stretch">
             <div
               id="infoWrapper"
-              className="x-full flex h-[80%] flex-col items-center"
+              className="x-full flex h-[70%] flex-col items-center"
             >
               <div
                 id="subTitle"
@@ -96,7 +96,6 @@ export const My = () => {
                   onClick={() =>
                     onModal({
                       onConfirm: onClickConfirm,
-                      // children: <UpadateUserInfoModal />,
                     })
                   }
                   className="h-fit w-fit rounded-full  p-4 hover:bg-slate-200"
