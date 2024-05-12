@@ -18,7 +18,7 @@ export const useSignOut = () => {
     mutationKey: [MUTATION_KEY_SIGN_OUT],
     mutationFn: () => postUserSignOut(),
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: [QUERY_KEY_USER] })
+      queryClient.removeQueries({ queryKey: [QUERY_KEY_USER] })
       removeFromLocalStorage({ key: AUTH_TOKEN })
       onAlert({ children: "로그아웃에 성공하셨습니다." })
       navigate(PATH_SIGN)
