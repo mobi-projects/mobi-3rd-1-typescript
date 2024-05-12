@@ -2,6 +2,7 @@ import { DollarSign } from "lucide-react"
 import { HTMLAttributes } from "react"
 
 import type { CardPropsType } from "../home.type"
+import { addCommasToAmount } from "@/funcs/calculate"
 
 export const Card = ({
   data,
@@ -21,20 +22,21 @@ export const Card = ({
 const CardTitle = ({ data }: CardPropsType) => {
   return (
     <div className="mt-[1px] flex h-fit w-full items-center justify-start border-b-2 p-1 text-black">
-      <p className="truncate ">{data?.title}</p>
+      <p className="truncate ">{data.title}</p>
     </div>
   )
 }
 
 const CardContent = ({ data }: CardPropsType) => {
+  const priceWithCommas = addCommasToAmount({ amount: data.priceSales })
   return (
     <div className="relative flex h-full w-full items-start pl-[2px] hover:bg-slate-50">
-      <img src={data?.cover} className="h-full max-h-[12.5rem] w-[10rem] " />
+      <img src={data.cover} className="h-full max-h-[12.5rem] w-[10rem] " />
       <div className="h-full w-[60%] items-start pl-1">
-        <p className="line-clamp-6 text-slate-500">{data?.description}</p>
+        <p className="line-clamp-6 text-slate-500">{data.description}</p>
         <div className="absolute bottom-0 right-0 flex h-6 items-center  ">
           <DollarSign size="19px" className=" pt-[2px]" />
-          <p className="h-full">{data?.priceSales}원</p>
+          <p className="h-full">{priceWithCommas}원</p>
         </div>
         <p className="absolute bottom-0 h-6 w-[7.5rem] truncate text-slate-600 IPHON_XR:hidden">
           {data.author}

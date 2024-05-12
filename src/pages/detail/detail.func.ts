@@ -6,6 +6,7 @@ import type {
   BookDetailType,
   GetBookDetailFT,
   GetBookDetailFromApiFT,
+  GetDiscountRateFT,
   PostReviewOnPeanutFT,
   ResponseConverterFT,
 } from "./detail.type"
@@ -178,4 +179,8 @@ export const isBookDetail = (
 ): input is BookDetailType => {
   if (typeof input !== "undefined") return true
   return false
+}
+
+export const getDiscountRate: GetDiscountRateFT = ({ standard, sale }) => {
+  return Math.ceil((1 - sale / standard) * 100)
 }

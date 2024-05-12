@@ -1,8 +1,18 @@
 import { Button } from "@/components/ui/button"
 import { Hand } from "lucide-react"
 import { BookDetailType } from "../detail.type"
+import { addCommasToAmount } from "@/funcs/calculate"
+import { getDiscountRate } from "../detail.func"
 
 export const DetailContent = (data: BookDetailType) => {
+  const salePriceWithCommas = addCommasToAmount({ amount: data.priceSales })
+  const standardPriceWithCommas = addCommasToAmount({
+    amount: data.priceStandard,
+  })
+  const discountRate = getDiscountRate({
+    sale: data.priceSales,
+    standard: data.priceStandard,
+  })
   return (
     <div className=" relative flex h-full w-full flex-col items-center pt-4 IPAD_PRO:flex-row IPAD_PRO:items-start ">
       <img
@@ -15,10 +25,10 @@ export const DetailContent = (data: BookDetailType) => {
         </h2>
         <div className="flex items-center">
           <p className="w-[6rem] font-semibold ">판매가</p>
-          <div className="flex h-fit w-[17rem] break-keep SF_DUO:w-[20rem] IPAD_PRO:w-[20rem]">
-            <p className="text-slate-700">{data.priceSales}원</p>
-            <p className="pl-2 pr-1 text-sm text-slate-500 line-through">{`(정가${data.priceStandard}원)`}</p>
-            <p className="text-sm">33%sale중</p>
+          <div className="flex h-fit w-[17rem] items-center break-keep SF_DUO:w-[20rem] IPAD_PRO:w-[20rem]">
+            <p className="text-slate-700">{salePriceWithCommas}원</p>
+            <p className="pl-2 pr-1 text-sm text-slate-500 line-through">{`(정가${standardPriceWithCommas}원)`}</p>
+            <p className="text-sm">{`${discountRate}%sale중`}</p>
           </div>
         </div>
         <div className="flex">

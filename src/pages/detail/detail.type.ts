@@ -60,3 +60,8 @@ export type PostReviewOnPeanutFT = (input: {
   bookDetail: BookDetailType
   review: ReviewType
 }) => Promise<BookDetailType | undefined>
+
+export type GetDiscountRateFT = ({
+  standard,
+  sale,
+}: Record<"standard" | "sale", number>) => number
