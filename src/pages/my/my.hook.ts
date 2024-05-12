@@ -10,7 +10,7 @@ import {
   patchProfileOnPeanut,
   patchUserOnPeanut,
 } from "./my.func"
-import type { UpdataDataType, UpdateUserFormType } from "./my.type"
+import type { UpdateUserFormType } from "./my.type"
 
 export const useMutateUpdateUser = () => {
   const queryClient = useQueryClient()
@@ -55,6 +55,6 @@ export const useSubmitUpdateData = () => {
     register,
     handleSubmit,
     // formState: { errors, isValid },
-  } = useForm<UpdataDataType>({ mode: "onChange" })
+  } = useForm<UpdateUserFormType>({ mode: "onChange" })
   return { register, handleSubmit }
 }

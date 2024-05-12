@@ -1,5 +1,7 @@
-export * from "./" // 여기서부터 작성해주세요. (작성 후, 이 주석은 지워주세요.!)
-
+export * from "./my.modal-mutate-nick-name"
+export * from "./my.header"
+export * from "./my.info"
+export * from "./my.profile-image"
 /** ["my" 의 자식 컴포넌트 관리]
 ---------------------------------------------------------------------------
 ## 컴포넌트 생성 시
