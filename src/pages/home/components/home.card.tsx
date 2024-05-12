@@ -46,19 +46,6 @@ const CardContent = ({ data }: CardPropsType) => {
 
 export const CantFoundISBN13 = () => {
   return (
-    <li>
-      <section>
-        <div>
-          <strong>🖥️ 광고제목</strong>
-        </div>
-        <div>
-          <strong>🔥 광고설명</strong>
-        </div>
-        <div>
-          <strong>광고ㅋㅋ</strong>
-        </div>
-      </section>
-      <div>=========================</div>
-    </li>
+    <div className="flex h-[15rem]  w-full max-w-[35rem] cursor-pointer flex-col rounded-md border-2 border-x-2 border-slate-300 bg-slate-300 drop-shadow-2xl" />
   )
 }
