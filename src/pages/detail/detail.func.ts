@@ -63,7 +63,7 @@ export const postReviewOnPeanut: PostReviewOnPeanutFT = async ({
 const addBookReviews: AddBookReviewsFT = ({ bookDetail, review }) => {
   const _bookDetail = { ...bookDetail }
   const _review = { ...review }
-  _bookDetail.reviews = [...bookDetail.reviews, _review]
+  _bookDetail.reviews = [_review, ...bookDetail.reviews]
   return _bookDetail
 }
 
