@@ -1,5 +1,7 @@
 import { ALADIN_POINT_BOOK_DETAIL, API_BOOK } from "@/constants"
+import { isUndefined } from "@/funcs"
 import { aladinAxiosInstance, baseAxiosInstance } from "@/libs/axios"
+import { UserType } from "@/types"
 import { BOOK_DETAIL_TEMPLATE } from "./detail.constant"
 import type {
   AddBookReviewsFT,
@@ -9,6 +11,8 @@ import type {
   GetDiscountRateFT,
   PostReviewOnPeanutFT,
   ResponseConverterFT,
+  ReviewFormType,
+  ReviewType,
 } from "./detail.type"
 
 /**
@@ -183,4 +187,19 @@ export const isBookDetail = (
 
 export const getDiscountRate: GetDiscountRateFT = ({ standard, sale }) => {
   return Math.ceil((1 - sale / standard) * 100)
+}
+
+export const createReview = ({
+  user,
+  reviewForm,
+}: {
+  user: UserType
+  reviewForm: ReviewFormType
+}) => {
+  const review: ReviewType = {
+    ...user,
+    ...reviewForm,
+    rating: isUndefined(reviewForm.rating) ? -1 : reviewForm.rating,
+  }
+  return review
 }
