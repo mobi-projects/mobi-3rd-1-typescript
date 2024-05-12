@@ -8,7 +8,7 @@ import { ErrorMsg } from "./error-msg"
 
 export const SignUpForm = () => {
   const { signUp } = useMutationSignUp()
-  const { register, handleSubmit, errors } = useSignUpForm()
+  const { register, handleSubmit, errors, isValid } = useSignUpForm()
   const onSubmitForm: OnSubmitFormFT = (form) => signUp(form)
 
   return (
@@ -46,7 +46,9 @@ export const SignUpForm = () => {
         />
         <ErrorMsg errorField={errors[FORM_PW_CONFIRM]} />
       </div>
-      <Button type="submit">Join Now</Button>
+      <Button type="submit" disabled={!isValid}>
+        Join Now
+      </Button>
     </form>
   )
 }

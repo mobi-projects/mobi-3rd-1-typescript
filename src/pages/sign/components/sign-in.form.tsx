@@ -7,7 +7,7 @@ import { OnSubmitFormFT } from "../sign.type"
 import { ErrorMsg } from "./error-msg"
 
 export const SignInForm = () => {
-  const { register, handleSubmit, errors } = useSignInForm()
+  const { register, handleSubmit, errors, isValid } = useSignInForm()
   const { mutate } = useMutationSignIn()
   const onSubmitForm: OnSubmitFormFT = (form) => mutate(form)
 
@@ -36,7 +36,9 @@ export const SignInForm = () => {
         />
         <ErrorMsg errorField={errors[FORM_PW]} />
       </div>
-      <Button type="submit">Login</Button>
+      <Button type="submit" disabled={!isValid}>
+        Login
+      </Button>
     </form>
   )
 }
