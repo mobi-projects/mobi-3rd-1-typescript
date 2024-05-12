@@ -12,9 +12,17 @@ _(* 입장을 원하신다면, 위의 로고를 클릭해주세요.!)_
 
 </div>
 
-## ⭐️ 이런 기능이 있습니다.
+
 
 <br/>
+<br/>
+<br/>
+<br/>
+
+
+
+## ⭐️ 이런 기능이 있습니다.
+
 <br/>
 
 <div align="start">
@@ -59,9 +67,13 @@ https://github.com/mobi-projects/mobi-3rd-1-typescript/assets/50646145/fa5b0a66-
 </div>
 
 
+
 <br/>
 <br/>
 <br/>
+<br/>
+
+
 
 ## 🧰 라이브러리
 
@@ -91,9 +103,13 @@ https://github.com/mobi-projects/mobi-3rd-1-typescript/assets/50646145/fa5b0a66-
 <img src="https://img.shields.io/badge/Tailwind_CSS-20232a.svg?style=for-the-badge&logo=tailwindcss&logoColor=06B6D4" />
 </div>
 
+
+
 <br/>
 <br/>
 <br/>
+<br/>
+
 
 
 ## 🌏 개발 환경
@@ -103,16 +119,26 @@ https://github.com/mobi-projects/mobi-3rd-1-typescript/assets/50646145/fa5b0a66-
 | <img src="https://img.shields.io/badge/React-20232a.svg?style=for-the-badge&logo=react&logoColor=61DAFB" /> | <img src="https://img.shields.io/badge/Typescript-20232a.svg?style=for-the-badge&logo=typescript&logoColor=3178C6" /> | <img src="https://img.shields.io/badge/Vite-20232a.svg?style=for-the-badge&logo=vite&logoColor=646CFF" /> | <img src="https://img.shields.io/badge/Npm-20232a.svg?style=for-the-badge&logo=npm&logoColor=CB3837" /> |
 
 
+
 <br/>
 <br/>
 <br/>
+<br/>
+
+
 
 ## 🗓️ 개발 개간
 2024.4.29 ~ 2024.5.12
 
+
+
+
 <br/>
 <br/>
 <br/>
+<br/>
+
+
 
 ## 🤦 멤버
 
@@ -120,10 +146,15 @@ https://github.com/mobi-projects/mobi-3rd-1-typescript/assets/50646145/fa5b0a66-
 | :--: | :--: | :--: |
 | Riel | Jeff | Chan | 
 
+
+
 <br/>
 <br/>
 <br/>
+<br/>
+
 
 
 ## 🎸 그 외
+( _* "책 췍" 은 [이미 본 책] 혹은 [새롭게 볼 책] 을 check 하라는 의미입니다._ ) 😜
 - [_어떻게 개발했는지 궁금한가요?_ 🛫](https://github.com/mobi-projects/mobi-3rd-1-typescript/wiki)
