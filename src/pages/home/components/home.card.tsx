@@ -29,16 +29,19 @@ const CardTitle = ({ data }: CardPropsType) => {
 
 const CardContent = ({ data }: CardPropsType) => {
   const priceWithCommas = addCommasToAmount({ amount: data.priceSales })
+  const description = data.description
+    ? data.description
+    : "아쉽지만 설명이 아직 준비안됐어요."
   return (
     <div className="relative flex h-full w-full items-start pl-[2px] hover:bg-slate-50">
       <img src={data.cover} className="h-full max-h-[12.5rem] w-[10rem] " />
       <div className="h-full w-[60%] items-start pl-1">
-        <p className="line-clamp-6 text-slate-500">{data.description}</p>
+        <p className="line-clamp-6 text-slate-500">{description}</p>
         <div className="absolute bottom-0 right-0 flex h-6 items-center  ">
           <DollarSign size="19px" className=" pt-[2px]" />
           <p className="h-full">{priceWithCommas}원</p>
         </div>
-        <p className="absolute bottom-0 h-6 w-[7.5rem] truncate text-slate-600 IPHON_XR:hidden">
+        <p className="absolute bottom-0 h-6 w-[16rem]  truncate text-slate-600 IPHON_XR:hidden">
           {data.author}
         </p>
       </div>
