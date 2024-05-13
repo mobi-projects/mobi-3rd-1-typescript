@@ -2,7 +2,7 @@
   
 # 📚 책 췤 !! 🎸
 
-<img src="https://github.com/mobi-projects/mobi-3rd-1-typescript/assets/50646145/03b709b0-db32-4976-8d73-8c38b3412795" width="350px" height="350px" style="borderRadius:50%" />
+[<img src="https://github.com/mobi-projects/mobi-3rd-1-typescript/assets/50646145/03b709b0-db32-4976-8d73-8c38b3412795" width="350px" height="350px" style="borderRadius:50%" />](https://chaegcheck.vercel.app/)
 
 _(* 입장을 원하신다면, 위의 로고를 클릭해주세요.!)_
 
