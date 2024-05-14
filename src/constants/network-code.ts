@@ -1,0 +1,1 @@
+const UNAUTHORIZED = 401
