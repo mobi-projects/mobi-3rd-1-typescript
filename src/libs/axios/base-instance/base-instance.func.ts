@@ -2,7 +2,7 @@ import { API_REFRESH, AUTH_TOKEN, PATH_SIGN, UNAUTHORIZED } from "@/constants"
 import { isUndefined, saveToLocalStorage, shallowCopy } from "@/funcs"
 import type { ConvertAxiosResFT } from "@/types"
 import { baseAxiosInstance } from "."
-import {
+import type {
   HandleFailedResponse,
   IsTokenNotFreshFT,
   LoadTokenIntoHeaderFT,
@@ -42,7 +42,7 @@ export const loadTokenIntoHeader: LoadTokenIntoHeaderFT = ({
   requestConfig,
   token,
 }) => {
-  const _config = { ...requestConfig }
+  const _config = shallowCopy({ obj: requestConfig })
   if (!!token) _config.headers["Authorization"] = `Bearer ${token}`
   return _config
 }
