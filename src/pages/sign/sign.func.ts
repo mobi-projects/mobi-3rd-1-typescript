@@ -1,38 +1,22 @@
-import { AUTH_REFRESH, AUTH_TOKEN } from "@/constants/auth-key"
+import { AUTH_TOKEN } from "@/constants"
 import { API_SIGN_IN, API_SIGN_UP } from "@/constants/server-endpoint"
 import {
-  removeFromLocalStorage,
   replaceMidSubstringToStar,
   saveToLocalStorage,
   spliceString,
 } from "@/funcs"
-import { baseAxiosInstance } from "@/libs/axios"
+import { baseAxiosInstance } from "@/libs/axios/base-instance"
 import { ConvertAxiosResFT, UserType } from "@/types"
 import type {
   CreateSignInReqBodyFT,
   GenerateNewUserDataFT,
   GenerateTempNicknameByEmailFT,
-  GetRefreshTokenFT,
   PostSignUpFT,
   PostUserSignInFT,
   SignInReqBodyType,
   SignUpRequestType,
 } from "./sign.type"
 
-/**
- * accessToken 을 갱신합니다.
- */
-export const getUserRefreshToken: GetRefreshTokenFT = async () => {
-  try {
-    const response = await baseAxiosInstance.get(AUTH_REFRESH)
-    const accessToken = extractAccessToken({ response })
-    saveToLocalStorage({ key: AUTH_TOKEN, value: accessToken })
-    return accessToken
-  } catch (e) {
-    removeFromLocalStorage({ key: AUTH_TOKEN })
-    throw new Error("accessToken 갱신에 실패했습니다.")
-  }
-}
 /**
  * 로그인
  * - accessToken 은 로컬스토리지에 등록합니다.
