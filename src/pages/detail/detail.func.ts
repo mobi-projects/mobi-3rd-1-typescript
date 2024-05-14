@@ -51,7 +51,7 @@ export const postReviewOnPeanut: PostReviewOnPeanutFT = async ({
       bookDetail,
       review,
     })
-    const response = await baseAxiosInstance.post(API_BOOK, {
+    const response = await baseAxiosInstance().post(API_BOOK, {
       key: isbn13,
       book: updatedBookDetail,
     })
@@ -101,7 +101,7 @@ export const getBookDetailFromPeanut: GetBookDetailFromApiFT = async ({
   isbn13,
 }) => {
   try {
-    const response = await baseAxiosInstance.get(API_BOOK, {
+    const response = await baseAxiosInstance().get(API_BOOK, {
       params: {
         key: isbn13,
         page: 1,
@@ -124,7 +124,7 @@ export const postBookDetailOnPeanut = async ({
   bookDetail: BookDetailType
 }) => {
   try {
-    await baseAxiosInstance.post(API_BOOK, {
+    await baseAxiosInstance().post(API_BOOK, {
       key: isbn13,
       book: bookDetail,
     })

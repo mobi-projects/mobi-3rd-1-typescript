@@ -1,9 +1,13 @@
 import type {
   AxiosError,
+  AxiosInstance,
   AxiosResponse,
   InternalAxiosRequestConfig,
 } from "axios"
 
+export type HandleReqConfigBeforeSendFT = (input: {
+  config: InternalAxiosRequestConfig
+}) => InternalAxiosRequestConfig
 export type HandleFailedResponse = (input: {
   error: AxiosError
 }) => Promise<AxiosResponse>
@@ -12,3 +16,6 @@ export type LoadTokenIntoHeaderFT = (input: {
   requestConfig: InternalAxiosRequestConfig
   token: string
 }) => InternalAxiosRequestConfig
+export type SetInterceptorFT = (input: {
+  instance: AxiosInstance
+}) => AxiosInstance

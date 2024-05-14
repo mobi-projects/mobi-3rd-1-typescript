@@ -1,13 +1,33 @@
 import { API_REFRESH, AUTH_TOKEN, PATH_SIGN, UNAUTHORIZED } from "@/constants"
-import { isUndefined, saveToLocalStorage, shallowCopy } from "@/funcs"
+import {
+  getFromLocalStorage,
+  isUndefined,
+  saveToLocalStorage,
+  shallowCopy,
+} from "@/funcs"
 import type { ConvertAxiosResFT } from "@/types"
 import { baseAxiosInstance } from "."
 import type {
   HandleFailedResponse,
+  HandleReqConfigBeforeSendFT,
   IsTokenNotFreshFT,
   LoadTokenIntoHeaderFT,
 } from "./base-instance.type"
 
+/**
+ * 요청 보내기 전, 처리
+ */
+export const handleConfigBeforeSend: HandleReqConfigBeforeSendFT = ({
+  config,
+}) => {
+  let _config = shallowCopy({ obj: config })
+  const accessToken = getFromLocalStorage({ key: AUTH_TOKEN })
+  _config = loadTokenIntoHeader({
+    requestConfig: _config,
+    token: accessToken,
+  })
+  return _config
+}
 /**
  * 응답 실패시 처리
  */
@@ -29,7 +49,7 @@ export const handleFailedResponse: HandleFailedResponse = async ({ error }) => {
       requestConfig: instanceConfig,
       token: refreshedToken,
     })
-    return baseAxiosInstance(newConfig)
+    return baseAxiosInstance().request(newConfig)
   } else {
     window.location.href = PATH_SIGN
     return Promise.reject(_error)
@@ -50,7 +70,7 @@ export const loadTokenIntoHeader: LoadTokenIntoHeaderFT = ({
  * 새로 갱신한 토큰을 반환합니다.
  */
 const getRefreshedToken = async () => {
-  const response = await baseAxiosInstance.get(API_REFRESH)
+  const response = await baseAxiosInstance().get(API_REFRESH)
   const accessToken = extractAccessToken({ response })
   return accessToken
 }
@@ -65,5 +85,7 @@ export const extractAccessToken: ConvertAxiosResFT<string> = ({ response }) => {
  * - true : 토큰 만료 (갱신 필요)
  * - false : 토큰 사용 가능
  */
-export const isTokenNotFresh: IsTokenNotFreshFT = ({ response }) =>
-  response.status === UNAUTHORIZED
+export const isTokenNotFresh: IsTokenNotFreshFT = ({ response }) => {
+  console.log("나", response)
+  return response.status === UNAUTHORIZED
+}

@@ -11,7 +11,7 @@ import type { PatchProfileFT, PatchUserFT } from "./my.type"
  */
 export const patchUserOnPeanut: PatchUserFT = async ({ nickname }) => {
   try {
-    const response = await baseAxiosInstance.patch(API_UPDATE_USER_INFO, {
+    const response = await baseAxiosInstance().patch(API_UPDATE_USER_INFO, {
       data: { ...{ nickname } },
     })
     return response
@@ -25,9 +25,13 @@ export const patchUserOnPeanut: PatchUserFT = async ({ nickname }) => {
 export const patchProfileOnPeanut: PatchProfileFT = async (
   formData: FormData,
 ) => {
-  const response = await baseAxiosInstance.patch(API_UPDATE_PROFILE, formData, {
-    headers: { "content-type": "multipart/form-data" },
-  })
+  const response = await baseAxiosInstance().patch(
+    API_UPDATE_PROFILE,
+    formData,
+    {
+      headers: { "content-type": "multipart/form-data" },
+    },
+  )
   return response
 }
 /**

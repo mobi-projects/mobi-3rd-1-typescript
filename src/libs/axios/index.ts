@@ -1,4 +1,5 @@
-export * from "./instance"
+export * from "./aladin-instance"
+export * from "./base-instance"
 /** ["axios" 의 설정파일 관리]
 ---------------------------------------------------------------------------
 ## 관리 항목 (추가 시, 업데이트)

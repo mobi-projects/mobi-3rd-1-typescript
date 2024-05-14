@@ -25,7 +25,7 @@ import type {
 export const postUserSignIn: PostUserSignInFT = async ({ password, email }) => {
   try {
     const reqBody = createSignInReqBody({ email, password })
-    const response = await baseAxiosInstance.post(API_SIGN_IN, reqBody)
+    const response = await baseAxiosInstance().post(API_SIGN_IN, reqBody)
     const accessToken = extractAccessToken({ response })
     saveToLocalStorage({ key: AUTH_TOKEN, value: accessToken })
     const user = convertSignInResToUser({ response })
@@ -45,7 +45,7 @@ export const postSignUp: PostSignUpFT = async ({ email, password }) => {
     nickname,
   })
   try {
-    await baseAxiosInstance.post(API_SIGN_UP, newUser)
+    await baseAxiosInstance().post(API_SIGN_UP, newUser)
   } catch {
     throw new Error("네트워크 문제로 인하여, 회원가입에 실패했습니다.")
   }

@@ -1,7 +1,6 @@
 import { ErrorFallback } from "@/components/error-fallback"
 import { Header } from "@/components/header"
-import { PATH_SIGN } from "@/constants"
-import { AUTH_TOKEN } from "@/constants/auth-key"
+import { AUTH_TOKEN, PATH_SIGN } from "@/constants"
 import { useQueryErrorResetBoundary } from "@tanstack/react-query"
 import { useEffect } from "react"
 import { ErrorBoundary } from "react-error-boundary"

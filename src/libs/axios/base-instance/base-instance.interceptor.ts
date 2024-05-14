@@ -1,19 +1,27 @@
-import { AUTH_TOKEN } from "@/constants"
-import { getFromLocalStorage, shallowCopy } from "@/funcs"
-import { baseAxiosInstance } from "."
-import { handleFailedResponse, loadTokenIntoHeader } from "./base-instance.func"
+import { shallowCopy } from "@/funcs"
+import {
+  handleConfigBeforeSend,
+  handleFailedResponse,
+} from "./base-instance.func"
+import { SetInterceptorFT } from "./base-instance.type"
 
-baseAxiosInstance.interceptors.request.use((request) => {
-  let _request = shallowCopy({ obj: request })
-  const accessToken = getFromLocalStorage({ key: AUTH_TOKEN })
-  _request = loadTokenIntoHeader({
-    requestConfig: _request,
-    token: accessToken,
-  })
-  return _request
-})
+export const setReqInterceptor: SetInterceptorFT = ({ instance }) => {
+  const _instance = shallowCopy({ obj: instance })
 
-baseAxiosInstance.interceptors.response.use(
-  (response) => response,
-  (error) => handleFailedResponse({ error }),
-)
+  _instance.interceptors.request.use((config) =>
+    handleConfigBeforeSend({ config }),
+  )
+
+  return _instance
+}
+
+export const setResInterceptor: SetInterceptorFT = ({ instance }) => {
+  const _instance = shallowCopy({ obj: instance })
+
+  _instance.interceptors.response.use(
+    (response) => response,
+    (error) => handleFailedResponse({ error }),
+  )
+
+  return _instance
+}
