@@ -49,7 +49,7 @@ export const handleFailedResponse: HandleFailedResponse = async ({ error }) => {
       requestConfig: instanceConfig,
       token: refreshedToken,
     })
-    return baseAxiosInstance().request(newConfig)
+    return baseAxiosInstance()(newConfig)
   } else {
     window.location.href = PATH_SIGN
     return Promise.reject(_error)
@@ -86,6 +86,5 @@ export const extractAccessToken: ConvertAxiosResFT<string> = ({ response }) => {
  * - false : 토큰 사용 가능
  */
 export const isTokenNotFresh: IsTokenNotFreshFT = ({ response }) => {
-  console.log("나", response)
   return response.status === UNAUTHORIZED
 }
