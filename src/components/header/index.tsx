@@ -46,9 +46,7 @@ const IconTextButton = ({ Icon, callback, text }: IconTextButtonPT) => {
     <Button
       variant="ghost"
       className="flex h-full w-full max-w-[9rem] items-center justify-evenly border-none p-0 IPHON_XR:max-w-full"
-      onClick={() => {
-        if (callback) return callback()
-      }}
+      onClick={() => callback()}
     >
       {Icon}
       {text}
