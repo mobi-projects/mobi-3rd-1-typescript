@@ -1,10 +1,8 @@
 import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
 import { FORM_EMAIL, FORM_PW, FORM_PW_CONFIRM } from "@/constants"
-import { Label } from "@radix-ui/react-label"
 import { useMutationSignUp, useSignUpForm } from "../sign.hooks"
-import { OnSubmitFormFT } from "../sign.type"
-import { ErrorMsg } from "./error-msg"
+import { OnSubmitFormFT, SignUpFormType } from "../sign.type"
+import { LabeledInputWithError } from "./"
 
 export const SignUpForm = () => {
   const { signUp } = useMutationSignUp()
@@ -16,36 +14,23 @@ export const SignUpForm = () => {
       className="flex w-full flex-col gap-5 px-3"
       onSubmit={handleSubmit(onSubmitForm)}
     >
-      <div className="grid w-full items-center gap-1.5">
-        <Label>Email</Label>
-        <Input
-          {...register(FORM_EMAIL)}
-          type="email"
-          placeholder="Email"
-          autoComplete="off"
-        />
-        <ErrorMsg errorField={errors[FORM_EMAIL]} />
-      </div>
-      <div className="grid w-full items-center gap-1.5">
-        <Label>Passoword</Label>
-        <Input
-          {...register(FORM_PW)}
-          type="password"
-          placeholder="Password"
-          autoComplete="off"
-        />
-        <ErrorMsg errorField={errors[FORM_PW]} />
-      </div>
-      <div className="grid w-full items-center gap-1.5">
-        <Label>Confirm Password</Label>
-        <Input
-          {...register(FORM_PW_CONFIRM)}
-          type="password"
-          placeholder="Confirm Password"
-          autoComplete="off"
-        />
-        <ErrorMsg errorField={errors[FORM_PW_CONFIRM]} />
-      </div>
+      <LabeledInputWithError<SignUpFormType>
+        errors={errors}
+        label={FORM_EMAIL}
+        register={register}
+      />
+      <LabeledInputWithError<SignUpFormType>
+        errors={errors}
+        label={FORM_PW}
+        register={register}
+        inputProps={{ type: "password" }}
+      />
+      <LabeledInputWithError<SignUpFormType>
+        errors={errors}
+        label={FORM_PW_CONFIRM}
+        register={register}
+        inputProps={{ type: "password" }}
+      />
       <Button type="submit" disabled={!isValid}>
         Join Now
       </Button>
