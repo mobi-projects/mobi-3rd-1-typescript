@@ -3,6 +3,7 @@
     {
       "source": "/aladin/:path(.*)",
       "destination": "http://www.aladin.co.kr/:path"
-    }
+    },
+    { "source": "/(.*)", "destination": "/" }
   ]
 }
