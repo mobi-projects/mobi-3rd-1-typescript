@@ -6,7 +6,8 @@ import type {
   LabeledInputWithErrorPT,
   SignFormType,
 } from "../sign.type"
-import { capitalize, isFieldError, isUndefined } from "@/funcs"
+import { capitalize, isUndefined } from "@/funcs"
+import type { FieldError } from "react-hook-form"
 
 export const LabeledInputWithError = <T extends SignFormType>({
   register,
@@ -15,8 +16,7 @@ export const LabeledInputWithError = <T extends SignFormType>({
   inputProps,
 }: LabeledInputWithErrorPT<T>) => {
   const capitalizedLebel = capitalize({ word: label })
-  const errorField = errors[label]
-
+  const errorField = errors[label] as FieldError | undefined
   return (
     <div className="grid w-full items-center gap-1.5">
       <Label>{capitalizedLebel}</Label>
@@ -26,7 +26,7 @@ export const LabeledInputWithError = <T extends SignFormType>({
         autoComplete="off"
         {...inputProps}
       />
-      {isFieldError(errorField) && <ErrorMsg errorField={errorField} />}
+      <ErrorMsg errorField={errorField} />
     </div>
   )
 }
