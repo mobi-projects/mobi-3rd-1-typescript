@@ -1,7 +1,7 @@
 import { ReactElement } from "react"
 
-export type ButtonIconPT = {
+export type IconTextButtonPT = {
   Icon: ReactElement
   text: string
-  callback?: VoidFunction
+  callback: VoidFunction
 }

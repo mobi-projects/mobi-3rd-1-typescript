@@ -3,7 +3,7 @@ import { Home, LogOut, User } from "lucide-react"
 import { useNavigate } from "react-router-dom"
 import { PATH_HOME, PATH_MY } from "@/constants"
 import { Button } from "../ui/button"
-import type { ButtonIconPT } from "./header.type"
+import type { IconTextButtonPT } from "./header.type"
 import logo from "/chaeg-check.svg"
 export const Header = () => {
   const navigate = useNavigate()
@@ -41,7 +41,7 @@ export const Header = () => {
   )
 }
 
-const IconTextButton = ({ Icon, callback, text }: ButtonIconPT) => {
+const IconTextButton = ({ Icon, callback, text }: IconTextButtonPT) => {
   return (
     <Button
       variant="ghost"
