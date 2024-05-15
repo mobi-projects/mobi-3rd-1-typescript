@@ -7,8 +7,8 @@ export const emailSchema = yup
 
 export const passwordSchema = yup
   .string()
-  .min(8, "최소 길이는 7자 입니다.")
-  .max(20, "최대 길이는 21자 입니다.")
+  .min(7, "최소 길이는 7자 입니다.")
+  .max(21, "최대 길이는 21자 입니다.")
   .matches(/[a-zA-Z]/, "영문자를 포함해주세요.")
   .matches(/\d/, "숫자를 포함해주세요.")
   .matches(/[!@#$%^&*()_+]/, "특수문자를 포함해주세요.")
