@@ -25,30 +25,30 @@ export const Header = () => {
           callback={() => {
             navigate(PATH_HOME)
           }}
-          Icon={<Home />}
+          icon={Home}
           text="Home"
         />
         <IconTextButton
           callback={() => {
             navigate(PATH_MY)
           }}
-          Icon={<User />}
+          icon={User}
           text="MyPage"
         />
-        <IconTextButton callback={logout} Icon={<LogOut />} text="LogOut" />
+        <IconTextButton callback={logout} icon={LogOut} text="LogOut" />
       </div>
     </div>
   )
 }
 
-const IconTextButton = ({ Icon, callback, text }: IconTextButtonPT) => {
+const IconTextButton = ({ icon: Icon, callback, text }: IconTextButtonPT) => {
   return (
     <Button
       variant="ghost"
       className="flex h-full w-full max-w-[9rem] items-center justify-evenly border-none p-0 IPHON_XR:max-w-full"
       onClick={() => callback()}
     >
-      {Icon}
+      <Icon />
       {text}
     </Button>
   )
