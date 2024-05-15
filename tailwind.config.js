@@ -5,7 +5,7 @@ module.exports = {
   prefix: "",
   theme: {
     screens: {
-      IPHON_XR: { max: "414px" },
+      IPHON_XR: { max: "430px" },
       SF_DUO: { min: "414px", max: "650px" },
       IPAD_PRO: { min: "650px" },
     },
