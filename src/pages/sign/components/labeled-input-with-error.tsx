@@ -14,15 +14,15 @@ export const LabeledInputWithError = <T extends SignFormType>({
   label,
   inputProps,
 }: LabeledInputWithErrorPT<T>) => {
-  const captalalizedLebel = capitalize({ word: label })
+  const capitalizedLebel = capitalize({ word: label })
   const errorField = errors[label]
 
   return (
     <div className="grid w-full items-center gap-1.5">
-      <Label>{captalalizedLebel}</Label>
+      <Label>{capitalizedLebel}</Label>
       <Input
         {...register(label)}
-        placeholder={captalalizedLebel}
+        placeholder={capitalizedLebel}
         autoComplete="off"
         {...inputProps}
       />
