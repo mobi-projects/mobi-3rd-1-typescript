@@ -1,6 +1,12 @@
 import { FORM_EMAIL, FORM_PW, FORM_PW_CONFIRM } from "@/constants"
 import type { UserType } from "@/types"
-import { FieldError } from "react-hook-form"
+import type { ComponentProps } from "react"
+import type {
+  FieldError,
+  FieldErrors,
+  Path,
+  UseFormRegister,
+} from "react-hook-form"
 
 export type PostUserSignInFT = (input: SignFormType) => Promise<UserType>
 
@@ -43,3 +49,10 @@ export type CreateSignInReqBodyFT = (input: SignFormType) => SignInReqBodyType
 export type OnSubmitFormFT = (input: SignFormType) => void
 
 export type ErrorMsgPT = { errorField?: FieldError }
+
+export type LabeledInputWithErrorPT<T extends object> = {
+  register: UseFormRegister<T>
+  label: Path<T>
+  errors: FieldErrors<T>
+  inputProps?: ComponentProps<"input">
+}
