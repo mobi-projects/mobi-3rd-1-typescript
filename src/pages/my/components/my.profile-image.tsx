@@ -36,7 +36,7 @@ export const ProfileImage = ({ profileUrl }: UserType) => {
           </div>
           <img
             src={MainLogo}
-            className=" h-[4.5rem] w-[4.5rem] rounded-full "
+            className=" h-[4.5rem] w-[4.5rem] rounded-full IPHON_XR:h-[3rem] IPHON_XR:w-[3rem]"
           />
         </div>
       </div>
