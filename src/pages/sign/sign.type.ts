@@ -4,6 +4,7 @@ import type { ComponentProps } from "react"
 import type {
   FieldError,
   FieldErrors,
+  FieldValues,
   Path,
   UseFormRegister,
 } from "react-hook-form"
@@ -50,9 +51,9 @@ export type OnSubmitFormFT = (input: SignFormType) => void
 
 export type ErrorMsgPT = { errorField?: FieldError }
 
-export type LabeledInputWithErrorPT<T extends SignFormType> = {
+export type LabeledInputPT<T extends FieldValues> = {
   register: UseFormRegister<T>
-  label: Path<T>
-  errors: FieldErrors<T>
+  label: string
+  registerKey: Path<T>
   inputProps?: ComponentProps<"input">
 }
