@@ -1,5 +1,4 @@
 import type {
-  CapitalizeFT,
   ReplaceMidSubstringToStar,
   SpliceStringFT,
 } from "./string-util.type"
@@ -42,13 +41,4 @@ export const spliceString: SpliceStringFT = ({
   if (originLength < length) return origin
   const endIndex = startIndex + length
   return origin.substring(startIndex, endIndex)
-}
-
-/**
- *@description 문자열을 입력받아 첫 문자만 대문자로 변환해줍니다.
- */
-export const capitalize: CapitalizeFT = ({ word }) => {
-  const wordArr = word.split("")
-  wordArr[0] = wordArr[0].toUpperCase()
-  return wordArr.join("")
 }

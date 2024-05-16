@@ -10,4 +10,3 @@ export type SpliceStringFT = (input: {
   startIndex?: number
 }) => string
 
-export type CapitalizeFT = ({ word }: { word: string }) => string
