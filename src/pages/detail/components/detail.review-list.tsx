@@ -1,10 +1,13 @@
 import { isNull } from "@/funcs"
+import { useUser } from "@/hooks"
 import { FC } from "react"
 import { NOT_RATE } from "../detail.constant"
 import type { BookDetailType, ReviewType } from "../detail.type"
 
 export const ReviewList = (data: BookDetailType) => {
+  const { user } = useUser()
   const reviewCount = data.reviews.length
+
   return (
     <div className=" mb-10 mt-5 w-full border-t-2 py-2">
       <h1 className="w-full py-2 text-lg font-semibold text-slate-700">
@@ -14,7 +17,11 @@ export const ReviewList = (data: BookDetailType) => {
         <NoReviewNotice />
       ) : (
         data.reviews.map((review, idx) => (
-          <ReviewItemCard {...review} key={idx} />
+          <ReviewItemCard
+            key={idx}
+            review={review}
+            isOwned={review.email === user?.email}
+          />
         ))
       )}
     </div>
@@ -27,14 +34,19 @@ const NoReviewNotice: FC = () => (
   </h1>
 )
 
-const ReviewItemCard: FC<ReviewType> = (review) => {
+type ReviewItemCardPT = {
+  review: ReviewType
+  isOwned: boolean
+}
+
+const ReviewItemCard: FC<ReviewItemCardPT> = ({ review, isOwned }) => {
   const comment = review.comment
   const profile = !isNull(review.profileUrl) ? review.profileUrl : ""
   const rating = review.rating
   const ratingNotice = rating !== NOT_RATE ? `${rating}/10` : "- / 10"
 
   return (
-    <div className="flex w-full border-y-2 border-slate-100 py-2">
+    <div className="grid w-full grid-cols-[4.5rem_1fr_2rem] border-y-2 border-slate-100 py-2">
       <div className="flex items-start py-2">
         <img src={profile} className="h-16 w-16 rounded-full " />
       </div>
@@ -47,6 +59,9 @@ const ReviewItemCard: FC<ReviewType> = (review) => {
           ⭐️ 별점: {ratingNotice}
         </p>
       </div>
+      {isOwned && (
+        <button className="flex w-8 items-center justify-center py-2">X</button>
+      )}
     </div>
   )
 }
