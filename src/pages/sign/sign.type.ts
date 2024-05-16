@@ -50,7 +50,7 @@ export type OnSubmitFormFT = (input: SignFormType) => void
 
 export type ErrorMsgPT = { errorField?: FieldError }
 
-export type LabeledInputWithErrorPT<T extends object> = {
+export type LabeledInputWithErrorPT<T extends SignFormType> = {
   register: UseFormRegister<T>
   label: Path<T>
   errors: FieldErrors<T>
