@@ -9,3 +9,4 @@ export type SpliceStringFT = (input: {
   length: number
   startIndex?: number
 }) => string
+

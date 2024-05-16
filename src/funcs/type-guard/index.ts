@@ -6,3 +6,4 @@ export const isNull = (input: unknown): input is null =>
 
 export const isString = (input: unknown): input is string =>
   typeof input === "string"
+
