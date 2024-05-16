@@ -3,7 +3,6 @@ import type { UserType } from "@/types"
 import type { ComponentProps } from "react"
 import type {
   FieldError,
-  FieldErrors,
   FieldValues,
   Path,
   UseFormRegister,
