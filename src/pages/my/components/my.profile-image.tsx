@@ -1,6 +1,6 @@
 import { ImagePlus } from "lucide-react"
 import { useMutateUpdateProfile } from "../my.hook"
-import { UserType } from "@/types"
+import type { UserType } from "@/types"
 import MainLogo from "@/assets/main-logo.webp"
 
 export const ProfileImage = ({ profileUrl }: UserType) => {
