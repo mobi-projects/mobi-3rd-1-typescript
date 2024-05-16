@@ -6,7 +6,7 @@ import { ConvertAxiosResFT, UserType } from "@/types"
  * 메인서버에 저장된 유저정보를 가져옵니다.
  */
 export const getUserFromPeanut = async () => {
-  const response = await baseAxiosInstance.patch(API_GET_USER)
+  const response = await baseAxiosInstance().patch(API_GET_USER)
   const user = convertGetUserResToUser({ response })
   return user
 }
