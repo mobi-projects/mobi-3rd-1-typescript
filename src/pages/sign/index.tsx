@@ -10,16 +10,16 @@ import {
 export const Sign = () => {
   return (
     <div className="flex h-dvh w-full items-center justify-center">
-      <div className="IPAD_PRO:w-[52rem] IPAD_PRO:items-start IPAD_PRO:pt-28  flex h-full w-full  items-center justify-center pb-20">
-        <Tabs defaultValue={D_LOGIN} className="w-full px-2">
+      <div className="flex h-full w-full items-center justify-center IPAD_PRO:w-[40rem]">
+        <Tabs defaultValue={D_LOGIN} className="h-[40rem] w-full px-4">
           <TabsContent value={D_LOGIN}>
             <SignInHeader />
           </TabsContent>
           <TabsContent value={D_SIGN_UP}>
             <SignUpHeader />
           </TabsContent>
-          <TabsList className="dark w-full ">
-            <TabsTrigger value={D_LOGIN} className="w-full">
+          <TabsList className="dark w-full mb-4">
+            <TabsTrigger value={D_LOGIN} className="w-full ">
               Login
             </TabsTrigger>
             <TabsTrigger value={D_SIGN_UP} className="w-full ">

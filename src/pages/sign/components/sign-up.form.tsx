@@ -12,7 +12,7 @@ export const SignUpForm = () => {
 
   return (
     <form
-      className="flex w-full flex-col gap-5 px-3"
+      className="flex w-full flex-col gap-3"
       onSubmit={handleSubmit(onSubmitForm)}
     >
       <LabeledInput<SignUpFormType>
