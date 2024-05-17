@@ -15,6 +15,7 @@ export type BookDetailType = BookItemType & {
 }
 
 export type ReviewType = {
+  id: string
   email: string
   nickname: string
   profileUrl: string | null
@@ -27,6 +28,11 @@ export type ReviewFormType = {
   [FORM_COMMENT]: string
 }
 export type ErrorMsgPT = { errorField?: FieldError }
+
+export type ReviewItemCardPT = {
+  review: ReviewType
+  isOwned: boolean
+}
 
 /* -------------------[호출 시그니처]---------------------- */
 export type UseBookDetailFT = (input: {
