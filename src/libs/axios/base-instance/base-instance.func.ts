@@ -1,4 +1,4 @@
-import { API_REFRESH, AUTH_TOKEN, PATH_SIGN, UNAUTHORIZED } from "@/constants"
+import { API_REFRESH, AUTH_TOKEN, UNAUTHORIZED } from "@/constants"
 import {
   getFromLocalStorage,
   isUndefined,
@@ -7,6 +7,7 @@ import {
 } from "@/funcs"
 import type { ConvertAxiosResFT } from "@/types"
 import { baseAxiosInstance } from "."
+import { REFRESH_BLACKLIST } from "./base-instance.constants"
 import type {
   HandleFailedResponse,
   HandleReqConfigBeforeSendFT,
@@ -28,6 +29,9 @@ export const handleConfigBeforeSend: HandleReqConfigBeforeSendFT = ({
   })
   return _config
 }
+const isPointInBlacklist = ({ responseURL }: { responseURL: string }) =>
+  REFRESH_BLACKLIST.some((blackPoint) => responseURL.includes(blackPoint))
+
 /**
  * 응답 실패시 처리
  */
@@ -42,6 +46,9 @@ export const handleFailedResponse: HandleFailedResponse = async ({ error }) => {
   if (isUndefined(request)) return Promise.reject(_error)
   if (isUndefined(instanceConfig)) return Promise.reject(_error)
 
+  const responseURL = request.responseURL
+  if (isPointInBlacklist({ responseURL })) return Promise.reject(_error)
+
   if (isTokenNotFresh({ response })) {
     const refreshedToken = await getRefreshedToken()
     saveToLocalStorage({ key: AUTH_TOKEN, value: refreshedToken })
@@ -51,7 +58,6 @@ export const handleFailedResponse: HandleFailedResponse = async ({ error }) => {
     })
     return baseAxiosInstance()(newConfig)
   } else {
-    window.location.href = PATH_SIGN
     return Promise.reject(_error)
   }
 }
