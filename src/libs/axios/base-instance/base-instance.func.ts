@@ -9,7 +9,7 @@ import type { ConvertAxiosResFT } from "@/types"
 import { baseAxiosInstance } from "."
 import { REFRESH_BLACKLIST } from "./base-instance.constants"
 import type {
-  HandleFailedResponse,
+  HandleFailedResponseFT,
   HandleReqConfigBeforeSendFT,
   IsPointInBlacklistFT,
   IsTokenNotFreshFT,
@@ -34,7 +34,9 @@ export const handleConfigBeforeSend: HandleReqConfigBeforeSendFT = ({
 /**
  * 응답 실패시 처리
  */
-export const handleFailedResponse: HandleFailedResponse = async ({ error }) => {
+export const handleFailedResponse: HandleFailedResponseFT = async ({
+  error,
+}) => {
   const _error = shallowCopy({ obj: error })
 
   const response = _error.response
