@@ -1,6 +1,6 @@
 export const SignUpHeader = () => {
   return (
-    <div className="flex h-[14rem] w-full flex-col gap-3">
+    <div className="flex h-[10rem] w-full flex-col gap-3 ">
       <h1 className="text-4xl font-extrabold">Chaeg Check</h1>
       <h2 className=" text-xl font-semibold">
         Let's sign up and share our book reviews together

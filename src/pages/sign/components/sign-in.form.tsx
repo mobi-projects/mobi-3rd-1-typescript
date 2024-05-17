@@ -12,7 +12,7 @@ export const SignInForm = () => {
 
   return (
     <form
-      className="flex w-full flex-col gap-5 px-3"
+      className="flex w-full flex-col gap-3 "
       onSubmit={handleSubmit(onSubmitForm)}
     >
       <LabeledInput
@@ -20,7 +20,7 @@ export const SignInForm = () => {
         label="Email"
         register={register}
       />
-      <ErrorMsg errorField={errors[FORM_EMAIL]} /> 
+      <ErrorMsg errorField={errors[FORM_EMAIL]} />
       <LabeledInput
         registerKey={FORM_PW}
         register={register}
