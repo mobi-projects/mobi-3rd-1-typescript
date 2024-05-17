@@ -29,6 +29,11 @@ export type ReviewFormType = {
 }
 export type ErrorMsgPT = { errorField?: FieldError }
 
+export type ReviewItemCardPT = {
+  review: ReviewType
+  isOwned: boolean
+}
+
 /* -------------------[호출 시그니처]---------------------- */
 export type UseBookDetailFT = (input: {
   isbn13: string
