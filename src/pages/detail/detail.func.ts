@@ -1,6 +1,6 @@
 import { ALADIN_POINT_BOOK_DETAIL, API_BOOK } from "@/constants"
 import { isUndefined } from "@/funcs"
-import { generateUUID } from "@/funcs/ identification"
+import { generateUUID } from "@/funcs/identification"
 import { aladinAxiosInstance, baseAxiosInstance } from "@/libs/axios"
 import { UserType } from "@/types"
 import { BOOK_DETAIL_TEMPLATE, NOT_RATE } from "./detail.constant"
