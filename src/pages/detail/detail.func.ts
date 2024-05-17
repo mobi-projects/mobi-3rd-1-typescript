@@ -1,5 +1,5 @@
 import { ALADIN_POINT_BOOK_DETAIL, API_BOOK } from "@/constants"
-import { isUndefined } from "@/funcs"
+import { isUndefined, shallowCopy } from "@/funcs"
 import { generateUUID } from "@/funcs/identification"
 import { aladinAxiosInstance, baseAxiosInstance } from "@/libs/axios"
 import { UserType } from "@/types"
@@ -198,11 +198,15 @@ export const createReview = ({
   reviewForm: ReviewFormType
 }) => {
   const reviewId = generateUUID({ prefix: "review" })
+  const _user = shallowCopy({ obj: user })
+  const _reviewForm = shallowCopy({ obj: reviewForm })
+  const rating = isUndefined(reviewForm.rating) ? NOT_RATE : reviewForm.rating
+
   const review: ReviewType = {
-    ...user,
-    ...reviewForm,
+    ..._user,
+    ..._reviewForm,
     id: reviewId,
-    rating: isUndefined(reviewForm.rating) ? NOT_RATE : reviewForm.rating,
+    rating,
   }
   return review
 }
