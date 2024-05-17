@@ -6,7 +6,7 @@ import { GenerateUUIDFT } from "./identification.type"
 
 export const generateUUID: GenerateUUIDFT = ({ prefix, postfix }) => {
   let id = uuidv4()
-  if (!isUndefined(prefix)) id = prefix + id
-  if (!isUndefined(postfix)) id += postfix
+  if (!isUndefined(prefix)) id = prefix + "-" + id
+  if (!isUndefined(postfix)) id = id + "-" + postfix
   return id
 }
