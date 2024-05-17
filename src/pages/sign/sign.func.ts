@@ -1,10 +1,5 @@
-import { AUTH_TOKEN } from "@/constants"
 import { API_SIGN_IN, API_SIGN_UP } from "@/constants/server-endpoint"
-import {
-  replaceMidSubstringToStar,
-  saveToLocalStorage,
-  spliceString,
-} from "@/funcs"
+import { replaceMidSubstringToStar, spliceString } from "@/funcs"
 import { baseAxiosInstance } from "@/libs/axios/base-instance"
 import { ConvertAxiosResFT, UserType } from "@/types"
 import type {
@@ -22,14 +17,10 @@ import type {
  * - accessToken 은 로컬스토리지에 등록합니다.
  * - 유저 객체를 반환합니다.
  */
-export const postUserSignIn: PostUserSignInFT = async ({ password, email }) => {
+export const postUserSignIn: PostUserSignInFT = async ({ reqBody }) => {
   try {
-    const reqBody = createSignInReqBody({ email, password })
     const response = await baseAxiosInstance().post(API_SIGN_IN, reqBody)
-    const accessToken = extractAccessToken({ response })
-    saveToLocalStorage({ key: AUTH_TOKEN, value: accessToken })
-    const user = convertSignInResToUser({ response })
-    return user
+    return response
   } catch {
     throw new Error("로그인에 실패했습니다.")
   }

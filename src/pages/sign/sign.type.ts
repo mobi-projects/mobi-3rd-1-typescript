@@ -1,5 +1,5 @@
 import { FORM_EMAIL, FORM_PW, FORM_PW_CONFIRM } from "@/constants"
-import type { UserType } from "@/types"
+import { AxiosResponse } from "axios"
 import type { ComponentProps } from "react"
 import type {
   FieldError,
@@ -8,7 +8,9 @@ import type {
   UseFormRegister,
 } from "react-hook-form"
 
-export type PostUserSignInFT = (input: SignFormType) => Promise<UserType>
+export type PostUserSignInFT = (input: {
+  reqBody: SignInReqBodyType
+}) => Promise<AxiosResponse>
 
 export type PostSignUpFT = (input: SignFormType) => Promise<void>
 
