@@ -15,6 +15,7 @@ export type BookDetailType = BookItemType & {
 }
 
 export type ReviewType = {
+  id: string
   email: string
   nickname: string
   profileUrl: string | null

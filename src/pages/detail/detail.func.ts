@@ -1,8 +1,9 @@
 import { ALADIN_POINT_BOOK_DETAIL, API_BOOK } from "@/constants"
 import { isUndefined } from "@/funcs"
+import { generateUUID } from "@/funcs/ identification"
 import { aladinAxiosInstance, baseAxiosInstance } from "@/libs/axios"
 import { UserType } from "@/types"
-import { BOOK_DETAIL_TEMPLATE } from "./detail.constant"
+import { BOOK_DETAIL_TEMPLATE, NOT_RATE } from "./detail.constant"
 import type {
   AddBookReviewsFT,
   BookDetailType,
@@ -196,10 +197,12 @@ export const createReview = ({
   user: UserType
   reviewForm: ReviewFormType
 }) => {
+  const reviewId = generateUUID({ prefix: "review" })
   const review: ReviewType = {
     ...user,
     ...reviewForm,
-    rating: isUndefined(reviewForm.rating) ? -1 : reviewForm.rating,
+    id: reviewId,
+    rating: isUndefined(reviewForm.rating) ? NOT_RATE : reviewForm.rating,
   }
   return review
 }
