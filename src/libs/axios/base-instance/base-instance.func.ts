@@ -11,6 +11,7 @@ import { REFRESH_BLACKLIST } from "./base-instance.constants"
 import type {
   HandleFailedResponse,
   HandleReqConfigBeforeSendFT,
+  IsPointInBlacklistFT,
   IsTokenNotFreshFT,
   LoadTokenIntoHeaderFT,
 } from "./base-instance.type"
@@ -29,8 +30,6 @@ export const handleConfigBeforeSend: HandleReqConfigBeforeSendFT = ({
   })
   return _config
 }
-const isPointInBlacklist = ({ responseURL }: { responseURL: string }) =>
-  REFRESH_BLACKLIST.some((blackPoint) => responseURL.includes(blackPoint))
 
 /**
  * 응답 실패시 처리
@@ -94,3 +93,8 @@ export const extractAccessToken: ConvertAxiosResFT<string> = ({ response }) => {
 export const isTokenNotFresh: IsTokenNotFreshFT = ({ response }) => {
   return response.status === UNAUTHORIZED
 }
+/**
+ * 토큰 갱신 금지 end-point 인지 확인합니다.
+ */
+const isPointInBlacklist: IsPointInBlacklistFT = ({ responseURL }) =>
+  REFRESH_BLACKLIST.some((blackPoint) => responseURL.includes(blackPoint))
