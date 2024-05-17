@@ -45,7 +45,7 @@ export const handleFailedResponse: HandleFailedResponse = async ({ error }) => {
   if (isUndefined(request)) return Promise.reject(_error)
   if (isUndefined(instanceConfig)) return Promise.reject(_error)
 
-  const responseURL = request.responseURL
+  const responseURL = request.responseURL as string
   if (isPointInBlacklist({ responseURL })) return Promise.reject(_error)
 
   if (isTokenNotFresh({ response })) {
