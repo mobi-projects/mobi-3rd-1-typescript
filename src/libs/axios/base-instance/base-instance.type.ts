@@ -19,4 +19,4 @@ export type LoadTokenIntoHeaderFT = (input: {
 export type SetInterceptorFT = (input: {
   instance: AxiosInstance
 }) => AxiosInstance
-export type IsPointInBlacklist = (input: { responseURL: string }) => boolean
+export type IsPointInBlacklistFT = (input: { responseURL: string }) => boolean
