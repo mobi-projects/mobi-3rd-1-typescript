@@ -8,7 +8,7 @@ import type {
 export type HandleReqConfigBeforeSendFT = (input: {
   config: InternalAxiosRequestConfig
 }) => InternalAxiosRequestConfig
-export type HandleFailedResponse = (input: {
+export type HandleFailedResponseFT = (input: {
   error: AxiosError
 }) => Promise<AxiosResponse>
 export type IsTokenNotFreshFT = (input: { response: AxiosResponse }) => boolean
@@ -19,3 +19,4 @@ export type LoadTokenIntoHeaderFT = (input: {
 export type SetInterceptorFT = (input: {
   instance: AxiosInstance
 }) => AxiosInstance
+export type IsPointInBlacklistFT = (input: { responseURL: string }) => boolean

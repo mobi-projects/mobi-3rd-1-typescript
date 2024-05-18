@@ -1,4 +1,4 @@
-import { API_REFRESH, AUTH_TOKEN, PATH_SIGN, UNAUTHORIZED } from "@/constants"
+import { API_REFRESH, AUTH_TOKEN, UNAUTHORIZED } from "@/constants"
 import {
   getFromLocalStorage,
   isUndefined,
@@ -7,9 +7,11 @@ import {
 } from "@/funcs"
 import type { ConvertAxiosResFT } from "@/types"
 import { baseAxiosInstance } from "."
+import { REFRESH_BLACKLIST } from "./base-instance.constants"
 import type {
-  HandleFailedResponse,
+  HandleFailedResponseFT,
   HandleReqConfigBeforeSendFT,
+  IsPointInBlacklistFT,
   IsTokenNotFreshFT,
   LoadTokenIntoHeaderFT,
 } from "./base-instance.type"
@@ -28,10 +30,13 @@ export const handleConfigBeforeSend: HandleReqConfigBeforeSendFT = ({
   })
   return _config
 }
+
 /**
  * 응답 실패시 처리
  */
-export const handleFailedResponse: HandleFailedResponse = async ({ error }) => {
+export const handleFailedResponse: HandleFailedResponseFT = async ({
+  error,
+}) => {
   const _error = shallowCopy({ obj: error })
 
   const response = _error.response
@@ -42,6 +47,9 @@ export const handleFailedResponse: HandleFailedResponse = async ({ error }) => {
   if (isUndefined(request)) return Promise.reject(_error)
   if (isUndefined(instanceConfig)) return Promise.reject(_error)
 
+  const responseURL = request.responseURL as string
+  if (isPointInBlacklist({ responseURL })) return Promise.reject(_error)
+
   if (isTokenNotFresh({ response })) {
     const refreshedToken = await getRefreshedToken()
     saveToLocalStorage({ key: AUTH_TOKEN, value: refreshedToken })
@@ -51,7 +59,6 @@ export const handleFailedResponse: HandleFailedResponse = async ({ error }) => {
     })
     return baseAxiosInstance()(newConfig)
   } else {
-    window.location.href = PATH_SIGN
     return Promise.reject(_error)
   }
 }
@@ -88,3 +95,8 @@ export const extractAccessToken: ConvertAxiosResFT<string> = ({ response }) => {
 export const isTokenNotFresh: IsTokenNotFreshFT = ({ response }) => {
   return response.status === UNAUTHORIZED
 }
+/**
+ * 토큰 갱신 금지 end-point 인지 확인합니다.
+ */
+const isPointInBlacklist: IsPointInBlacklistFT = ({ responseURL }) =>
+  REFRESH_BLACKLIST.some((blackPoint) => responseURL.includes(blackPoint))
