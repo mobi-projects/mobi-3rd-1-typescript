@@ -8,6 +8,7 @@ import {
 import { Button } from "../ui/button"
 import { goToTop } from "./pagination.func"
 import { CURRENT_PAGE, ITEM_TOTAL } from "@/constants"
+import type { OnClickNumBtnFT } from "./pagination.type"
 /**
  * @notice
  * - props로 서버데이터의 길이값을 받아야합니다
@@ -41,9 +42,10 @@ export const PageNationBtn = () => {
     changeUrl({ urlKey: CURRENT_PAGE, value: `${page + 1}` })
     goToTop()
   }
-  const onClickNumBtn = (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (page !== +e.currentTarget.id) {
-      changeUrl({ urlKey: CURRENT_PAGE, value: `${e.currentTarget.id}` })
+
+  const onClickNumBtn: OnClickNumBtnFT = ({ buttonNumber }) => {
+    if (page !== buttonNumber) {
+      changeUrl({ urlKey: CURRENT_PAGE, value: `${buttonNumber}` })
       goToTop()
     }
   }
@@ -59,9 +61,7 @@ export const PageNationBtn = () => {
           variant={isClikced}
           key={idx}
           id={`${idx + startNum}`}
-          onClick={(e) => {
-            onClickNumBtn(e)
-          }}
+          onClick={() => onClickNumBtn({ buttonNumber: idx + startNum })}
         >
           {startNum + idx}
         </Button>
