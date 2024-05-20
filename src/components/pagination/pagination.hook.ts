@@ -1,7 +1,7 @@
-import { SORT_PAGE, SORT_PERPAGE } from "@/constants/url-keys"
 import { useSearchParams } from "react-router-dom"
 
 import type { ChangeUrlFT, usePaginationPorps } from "./pagination.type"
+import { CURRENT_PAGE, ITEM_PERPAGE } from "@/constants"
 
 /**
  * @notice
@@ -11,10 +11,9 @@ import type { ChangeUrlFT, usePaginationPorps } from "./pagination.type"
 export const usePagination: usePaginationPorps = ({ totalPageLength }) => {
   const [urlParams, setUrlParams] = useSearchParams()
 
-  const perPage = +(urlParams?.get(SORT_PERPAGE) ?? 20)
-  const page = +(urlParams?.get(SORT_PAGE) ?? 1)
+  const page = +(urlParams?.get(CURRENT_PAGE) ?? 1)
   const pagenationBtnLength = 5
-  const totalPage = Math.ceil(totalPageLength / perPage)
+  const totalPage = Math.ceil(totalPageLength / ITEM_PERPAGE)
 
   /**
    * @param urlkey - 주소의 어떤값을 변경할건지 입력받습니다.

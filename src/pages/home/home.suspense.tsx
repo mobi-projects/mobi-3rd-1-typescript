@@ -1,4 +1,4 @@
-import { BOOK_LIST_PER_PAGE } from "./home.constant"
+import { ITEM_PERPAGE } from "@/constants"
 
 export const HomeSuspenseFallback = () => {
   return (
@@ -6,7 +6,7 @@ export const HomeSuspenseFallback = () => {
       <div className="flex w-dvw flex-col items-center justify-center IPAD_PRO:w-[75rem] ">
         <LoadingNotice />
         <div className="flex h-fit w-full flex-col justify-center gap-4 px-2 IPAD_PRO:flex-row IPAD_PRO:flex-wrap ">
-          {Array.from({ length: BOOK_LIST_PER_PAGE }).map((_, idx) => (
+          {Array.from({ length: ITEM_PERPAGE }).map((_, idx) => (
             <FallbackCard key={idx} />
           ))}
         </div>

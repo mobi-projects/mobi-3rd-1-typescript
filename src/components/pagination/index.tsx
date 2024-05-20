@@ -1,5 +1,3 @@
-import { SORT_PAGE } from "@/constants/url-keys"
-
 import { usePagination } from "./pagination.hook"
 import {
   ChevronLeft,
@@ -9,6 +7,7 @@ import {
 } from "lucide-react"
 import { Button } from "../ui/button"
 import { goToTop } from "./pagination.func"
+import { CURRENT_PAGE, ITEM_TOTAL } from "@/constants"
 /**
  * @notice
  * - props로 서버데이터의 길이값을 받아야합니다
@@ -17,34 +16,34 @@ import { goToTop } from "./pagination.func"
  */
 export const PageNationBtn = () => {
   const { page, pagenationBtnLength, totalPage, changeUrl } = usePagination({
-    totalPageLength: 333,
+    totalPageLength: ITEM_TOTAL,
   })
 
   const onClickEndBtn = () => {
     if (page !== +totalPage) {
-      changeUrl({ urlKey: SORT_PAGE, value: `${totalPage}` })
+      changeUrl({ urlKey: CURRENT_PAGE, value: `${totalPage}` })
       goToTop()
     }
   }
   const onClickStartBtn = () => {
     if (page !== 1) {
-      changeUrl({ urlKey: SORT_PAGE, value: `1` })
+      changeUrl({ urlKey: CURRENT_PAGE, value: `1` })
       goToTop()
     }
   }
   const onClickPrevBtn = () => {
     if (page <= 1) return
-    changeUrl({ urlKey: SORT_PAGE, value: `${page - 1}` })
+    changeUrl({ urlKey: CURRENT_PAGE, value: `${page - 1}` })
     goToTop()
   }
   const onClickNextBtn = () => {
     if (page + 1 > totalPage) return
-    changeUrl({ urlKey: SORT_PAGE, value: `${page + 1}` })
+    changeUrl({ urlKey: CURRENT_PAGE, value: `${page + 1}` })
     goToTop()
   }
   const onClickNumBtn = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (page !== +e.currentTarget.id) {
-      changeUrl({ urlKey: SORT_PAGE, value: `${e.currentTarget.id}` })
+      changeUrl({ urlKey: CURRENT_PAGE, value: `${e.currentTarget.id}` })
       goToTop()
     }
   }
