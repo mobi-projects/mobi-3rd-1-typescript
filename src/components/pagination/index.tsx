@@ -8,6 +8,7 @@ import {
   ChevronsRight,
 } from "lucide-react"
 import { Button } from "../ui/button"
+import { goToTop } from "./pagination.func"
 /**
  * @notice
  * - props로 서버데이터의 길이값을 받아야합니다
@@ -22,24 +23,29 @@ export const PageNationBtn = () => {
   const onClickEndBtn = () => {
     if (page !== +totalPage) {
       changeUrl({ urlKey: SORT_PAGE, value: `${totalPage}` })
+      goToTop()
     }
   }
   const onClickStartBtn = () => {
     if (page !== 1) {
       changeUrl({ urlKey: SORT_PAGE, value: `1` })
+      goToTop()
     }
   }
   const onClickPrevBtn = () => {
     if (page <= 1) return
     changeUrl({ urlKey: SORT_PAGE, value: `${page - 1}` })
+    goToTop()
   }
   const onClickNextBtn = () => {
     if (page + 1 > totalPage) return
     changeUrl({ urlKey: SORT_PAGE, value: `${page + 1}` })
+    goToTop()
   }
   const onClickNumBtn = (e: React.MouseEvent<HTMLButtonElement>) => {
     if (page !== +e.currentTarget.id) {
       changeUrl({ urlKey: SORT_PAGE, value: `${e.currentTarget.id}` })
+      goToTop()
     }
   }
 
@@ -62,7 +68,7 @@ export const PageNationBtn = () => {
   }
   const ARROW_SIZE = "30px"
   return (
-    <div className="IPAD_PRO:gap-3 flex max-w-[35rem] items-center gap-[1px] px-2 py-3">
+    <div className="flex max-w-[35rem] items-center gap-[1px] px-2 py-3 IPAD_PRO:gap-3">
       <ChevronsLeft size={ARROW_SIZE} onClick={onClickStartBtn} />
       <ChevronLeft size={ARROW_SIZE} onClick={onClickPrevBtn} />
       <>{creatNumberBtn()}</>
