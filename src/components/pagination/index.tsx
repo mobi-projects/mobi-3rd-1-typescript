@@ -49,29 +49,32 @@ export const PageNationBtn = () => {
     }
   }
 
-  const creatNumberBtn = () => {
+  const PagiNationButtons = () => {
     const startNum =
       Math.floor((page - 1) / pagenationBtnLength) * pagenationBtnLength + 1
     const endNum = Math.min(startNum + pagenationBtnLength - 1, totalPage)
-    return Array.from({ length: endNum - startNum + 1 }, (_, idx) => (
-      <Button
-        variant={"outline"}
-        key={idx}
-        id={`${idx + startNum}`}
-        onClick={(e) => {
-          onClickNumBtn(e)
-        }}
-      >
-        {startNum + idx}
-      </Button>
-    ))
+    return Array.from({ length: endNum - startNum + 1 }, (_, idx) => {
+      const isClikced = page === idx + startNum ? "default" : "outline"
+      return (
+        <Button
+          variant={isClikced}
+          key={idx}
+          id={`${idx + startNum}`}
+          onClick={(e) => {
+            onClickNumBtn(e)
+          }}
+        >
+          {startNum + idx}
+        </Button>
+      )
+    })
   }
   const ARROW_SIZE = "30px"
   return (
     <div className="flex max-w-[35rem] items-center gap-[1px] px-2 py-3 IPAD_PRO:gap-3">
       <ChevronsLeft size={ARROW_SIZE} onClick={onClickStartBtn} />
       <ChevronLeft size={ARROW_SIZE} onClick={onClickPrevBtn} />
-      <>{creatNumberBtn()}</>
+      <PagiNationButtons />
       <ChevronRight size={ARROW_SIZE} onClick={onClickNextBtn} />
       <ChevronsRight size={ARROW_SIZE} onClick={onClickEndBtn} />
     </div>
