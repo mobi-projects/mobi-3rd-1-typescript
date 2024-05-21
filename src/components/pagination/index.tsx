@@ -63,16 +63,17 @@ export const PageNationBtn = () => {
     const endNum = Math.min(startNum + pagenationBtnLength - 1, totalPage)
     const buttonLength = endNum - startNum + 1
     return Array.from({ length: buttonLength }, (_, idx) => {
+      const buttonNumber = idx + startNum
       return (
         <Button
           variant={isClickedButton({
-            buttonNumber: idx + startNum,
+            buttonNumber: buttonNumber,
             curPage: page,
           })}
           key={idx}
-          onClick={() => onClickNumBtn({ buttonNumber: idx + startNum })}
+          onClick={() => onClickNumBtn({ buttonNumber: buttonNumber })}
         >
-          {startNum + idx}
+          {buttonNumber}
         </Button>
       )
     })
