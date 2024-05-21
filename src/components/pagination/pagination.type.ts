@@ -7,3 +7,7 @@ export type OnClickNumBtnFT = ({
 }: {
   buttonNumber: number
 }) => void
+export type IsClickedButtonFT = ({
+  curPage,
+  buttonNumber,
+}: Record<"curPage" | "buttonNumber", number>) => "default" | "outline"

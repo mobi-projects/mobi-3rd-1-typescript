@@ -8,7 +8,7 @@ import {
 import { Button } from "../ui/button"
 import { goToTop } from "./pagination.func"
 import { CURRENT_PAGE, ITEM_TOTAL } from "@/constants"
-import type { OnClickNumBtnFT } from "./pagination.type"
+import type { IsClickedButtonFT, OnClickNumBtnFT } from "./pagination.type"
 /**
  * @notice
  * - props로 서버데이터의 길이값을 받아야합니다
@@ -50,17 +50,26 @@ export const PageNationBtn = () => {
     }
   }
 
+  const isClickedButton: IsClickedButtonFT = ({ curPage, buttonNumber }) => {
+    let result = false
+    if (curPage === buttonNumber) {
+      result = true
+    }
+    return result ? "default" : "outline"
+  }
   const PagiNationButtons = () => {
     const startNum =
       Math.floor((page - 1) / pagenationBtnLength) * pagenationBtnLength + 1
     const endNum = Math.min(startNum + pagenationBtnLength - 1, totalPage)
-    return Array.from({ length: endNum - startNum + 1 }, (_, idx) => {
-      const isClikced = page === idx + startNum ? "default" : "outline"
+    const buttonLength = endNum - startNum + 1
+    return Array.from({ length: buttonLength }, (_, idx) => {
       return (
         <Button
-          variant={isClikced}
+          variant={isClickedButton({
+            buttonNumber: idx + startNum,
+            curPage: page,
+          })}
           key={idx}
-          id={`${idx + startNum}`}
           onClick={() => onClickNumBtn({ buttonNumber: idx + startNum })}
         >
           {startNum + idx}
