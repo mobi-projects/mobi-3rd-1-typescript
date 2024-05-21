@@ -1,9 +1,9 @@
 import { useSearchParams } from "react-router-dom"
 
-import type { ChangeUrlFT, usePaginationPorps } from "./pagination.type"
+import type { ChangeUrlFT, UsePaginationPT } from "./pagination.type"
 import { CURRENT_PAGE, ITEM_PERPAGE } from "@/constants"
 
-export const usePagination: usePaginationPorps = ({ totalPageLength }) => {
+export const usePagination = ({ totalPageLength }: UsePaginationPT) => {
   const [urlParams, setUrlParams] = useSearchParams()
 
   const page = +(urlParams?.get(CURRENT_PAGE) ?? 1)
