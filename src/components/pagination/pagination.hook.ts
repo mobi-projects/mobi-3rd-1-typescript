@@ -1,20 +1,14 @@
-import { SORT_PAGE, SORT_PERPAGE } from "@/constants/url-keys"
 import { useSearchParams } from "react-router-dom"
 
-import type { ChangeUrlFT, usePaginationPorps } from "./pagination.type"
+import type { ChangeUrlFT, UsePaginationPT } from "./pagination.type"
+import { CURRENT_PAGE, ITEM_PERPAGE } from "@/constants"
 
-/**
- * @notice
- * - 서버데이터의 전체 길이를 받아야합니다.
- * - pagenationBtnLength을 사용해서 한번에 몇개의 버튼을 보여줄지 정해야하는데 아직 설계가 없어서 일단 5개로 설정해두었고 추후에 props로 설정하게 바뀔수있습니다.
- */
-export const usePagination: usePaginationPorps = ({ totalPageLength }) => {
+export const usePagination = ({ totalPageLength }: UsePaginationPT) => {
   const [urlParams, setUrlParams] = useSearchParams()
 
-  const perPage = +(urlParams?.get(SORT_PERPAGE) ?? 20)
-  const page = +(urlParams?.get(SORT_PAGE) ?? 1)
+  const page = +(urlParams?.get(CURRENT_PAGE) ?? 1)
   const pagenationBtnLength = 5
-  const totalPage = Math.ceil(totalPageLength / perPage)
+  const totalPage = Math.ceil(totalPageLength / ITEM_PERPAGE)
 
   /**
    * @param urlkey - 주소의 어떤값을 변경할건지 입력받습니다.

@@ -1,7 +1,6 @@
 export * from "./button"
 export * from "./deferable-img"
 export * from "./dialog"
-export * from "./dropdown"
 export * from "./pagination"
 
 /** [공용컴포넌트 관리 폴더]

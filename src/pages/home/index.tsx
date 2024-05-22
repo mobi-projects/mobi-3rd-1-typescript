@@ -1,12 +1,12 @@
 import { PageNationBtn } from "@/components"
 import { usePagination } from "@/components/pagination/pagination.hook"
-import { PATH_DETAIL } from "@/constants"
+import { ITEM_TOTAL, PATH_DETAIL } from "@/constants"
 import { useNavigate } from "react-router-dom"
 import { CantFoundISBN13, Card } from "./components"
-import { BOOK_LIST_TOT } from "./home.constant"
+
 import { useBookList } from "./home.hook"
 export const Home = () => {
-  const { page } = usePagination({ totalPageLength: BOOK_LIST_TOT })
+  const { page } = usePagination({ totalPageLength: ITEM_TOTAL })
   const { data, isLoading } = useBookList({ page })
   const navigate = useNavigate()
   if (isLoading) return <h1>로딩중~~~~!</h1>

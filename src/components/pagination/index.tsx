@@ -1,5 +1,3 @@
-import { SORT_PAGE } from "@/constants/url-keys"
-
 import { usePagination } from "./pagination.hook"
 import {
   ChevronLeft,
@@ -8,6 +6,9 @@ import {
   ChevronsRight,
 } from "lucide-react"
 import { Button } from "../ui/button"
+import { goToTop } from "./pagination.func"
+import { CURRENT_PAGE, ITEM_TOTAL } from "@/constants"
+import type { IsClickedButtonFT, OnClickNumBtnFT } from "./pagination.type"
 /**
  * @notice
  * - props로 서버데이터의 길이값을 받아야합니다
@@ -16,56 +17,73 @@ import { Button } from "../ui/button"
  */
 export const PageNationBtn = () => {
   const { page, pagenationBtnLength, totalPage, changeUrl } = usePagination({
-    totalPageLength: 333,
+    totalPageLength: ITEM_TOTAL,
   })
 
   const onClickEndBtn = () => {
     if (page !== +totalPage) {
-      changeUrl({ urlKey: SORT_PAGE, value: `${totalPage}` })
+      changeUrl({ urlKey: CURRENT_PAGE, value: `${totalPage}` })
+      goToTop()
     }
   }
   const onClickStartBtn = () => {
     if (page !== 1) {
-      changeUrl({ urlKey: SORT_PAGE, value: `1` })
+      changeUrl({ urlKey: CURRENT_PAGE, value: `1` })
+      goToTop()
     }
   }
   const onClickPrevBtn = () => {
     if (page <= 1) return
-    changeUrl({ urlKey: SORT_PAGE, value: `${page - 1}` })
+    changeUrl({ urlKey: CURRENT_PAGE, value: `${page - 1}` })
+    goToTop()
   }
   const onClickNextBtn = () => {
     if (page + 1 > totalPage) return
-    changeUrl({ urlKey: SORT_PAGE, value: `${page + 1}` })
+    changeUrl({ urlKey: CURRENT_PAGE, value: `${page + 1}` })
+    goToTop()
   }
-  const onClickNumBtn = (e: React.MouseEvent<HTMLButtonElement>) => {
-    if (page !== +e.currentTarget.id) {
-      changeUrl({ urlKey: SORT_PAGE, value: `${e.currentTarget.id}` })
+
+  const onClickNumBtn: OnClickNumBtnFT = ({ buttonNumber }) => {
+    if (page !== buttonNumber) {
+      changeUrl({ urlKey: CURRENT_PAGE, value: `${buttonNumber}` })
+      goToTop()
     }
   }
 
-  const creatNumberBtn = () => {
+  const isClickedButton: IsClickedButtonFT = ({ curPage, buttonNumber }) => {
+    let result = false
+    if (curPage === buttonNumber) {
+      result = true
+    }
+    return result ? "default" : "outline"
+  }
+  const PagiNationButtons = () => {
     const startNum =
       Math.floor((page - 1) / pagenationBtnLength) * pagenationBtnLength + 1
     const endNum = Math.min(startNum + pagenationBtnLength - 1, totalPage)
-    return Array.from({ length: endNum - startNum + 1 }, (_, idx) => (
-      <Button
-        variant={"outline"}
-        key={idx}
-        id={`${idx + startNum}`}
-        onClick={(e) => {
-          onClickNumBtn(e)
-        }}
-      >
-        {startNum + idx}
-      </Button>
-    ))
+    const buttonLength = endNum - startNum + 1
+    return Array.from({ length: buttonLength }, (_, idx) => {
+      const buttonNumber = idx + startNum
+      return (
+        <Button
+          variant={isClickedButton({
+            buttonNumber: buttonNumber,
+            curPage: page,
+          })}
+          key={idx}
+          onClick={() => onClickNumBtn({ buttonNumber: buttonNumber })}
+        >
+          {buttonNumber}
+        </Button>
+      )
+    })
   }
   const ARROW_SIZE = "30px"
   return (
-    <div className="IPAD_PRO:gap-3 flex max-w-[35rem] items-center gap-[1px] px-2 py-3">
+    <div className="flex max-w-[35rem] items-center gap-[1px] px-2 py-3 IPAD_PRO:gap-3">
       <ChevronsLeft size={ARROW_SIZE} onClick={onClickStartBtn} />
       <ChevronLeft size={ARROW_SIZE} onClick={onClickPrevBtn} />
-      <>{creatNumberBtn()}</>
+      <PagiNationButtons />
       <ChevronRight size={ARROW_SIZE} onClick={onClickNextBtn} />
       <ChevronsRight size={ARROW_SIZE} onClick={onClickEndBtn} />
     </div>
