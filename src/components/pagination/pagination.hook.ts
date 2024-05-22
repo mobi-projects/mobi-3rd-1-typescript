@@ -1,8 +1,13 @@
 import { useSearchParams } from "react-router-dom"
-
-import type { ChangeParamsValueFT, GetParamValue } from "./pagination.type"
 import { CURRENT_PAGE, ITEM_PERPAGE, ITEM_TOTAL } from "@/constants"
 import { isNull } from "@/funcs"
+import { goToTop } from "./pagination.func"
+
+import type {
+  ChangeParamsValueFT,
+  GetParamValue,
+  OnClickNumBtnFT,
+} from "./pagination.type"
 
 export const useHandleUrlParams = () => {
   const [urlParams, setUrlParams] = useSearchParams()
@@ -28,7 +33,7 @@ export const useHandleUrlParams = () => {
   return { changeParamValue, getParamValue }
 }
 
-export const usePagination = () => {
+export const usePaginationInfo = () => {
   const { getParamValue } = useHandleUrlParams()
   const page = +getParamValue({ urlKey: CURRENT_PAGE })
   const defaultBtnLength = 5
@@ -39,4 +44,44 @@ export const usePagination = () => {
   const buttonLength = endNum - startNum + 1
 
   return { page, buttonLength, totalPage, startNum, endNum }
+}
+
+export const usePaginationEvent = () => {
+  const { changeParamValue } = useHandleUrlParams()
+  const { page, totalPage } = usePaginationInfo()
+  const onClickEndBtn = () => {
+    if (page !== +totalPage) {
+      changeParamValue({ urlKey: CURRENT_PAGE, value: `${totalPage}` })
+      goToTop()
+    }
+  }
+  const onClickStartBtn = () => {
+    if (page !== 1) {
+      changeParamValue({ urlKey: CURRENT_PAGE, value: `1` })
+      goToTop()
+    }
+  }
+  const onClickPrevBtn = () => {
+    if (page <= 1) return
+    changeParamValue({ urlKey: CURRENT_PAGE, value: `${page - 1}` })
+    goToTop()
+  }
+  const onClickNextBtn = () => {
+    if (page + 1 > totalPage) return
+    changeParamValue({ urlKey: CURRENT_PAGE, value: `${page + 1}` })
+    goToTop()
+  }
+  const onClickNumBtn: OnClickNumBtnFT = ({ buttonNumber }) => {
+    if (page !== buttonNumber) {
+      changeParamValue({ urlKey: CURRENT_PAGE, value: `${buttonNumber}` })
+      goToTop()
+    }
+  }
+  return {
+    onClickEndBtn,
+    onClickStartBtn,
+    onClickPrevBtn,
+    onClickNextBtn,
+    onClickNumBtn,
+  }
 }
