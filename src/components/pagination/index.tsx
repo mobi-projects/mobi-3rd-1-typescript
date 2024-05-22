@@ -8,7 +8,11 @@ import {
 import { Button } from "../ui/button"
 import { goToTop } from "./pagination.func"
 import { CURRENT_PAGE, ITEM_TOTAL } from "@/constants"
-import type { IsClickedButtonFT, OnClickNumBtnFT } from "./pagination.type"
+import type {
+  ArrowIconPT,
+  IsClickedButtonFT,
+  OnClickNumBtnFT,
+} from "./pagination.type"
 /**
  * @notice
  * - props로 서버데이터의 길이값을 받아야합니다
@@ -78,14 +82,18 @@ export const PageNationBtn = () => {
       )
     })
   }
-  const ARROW_SIZE = "30px"
+
   return (
-    <div className="flex max-w-[35rem] items-center gap-[1px] px-2 py-3 IPAD_PRO:gap-3">
-      <ChevronsLeft size={ARROW_SIZE} onClick={onClickStartBtn} />
-      <ChevronLeft size={ARROW_SIZE} onClick={onClickPrevBtn} />
+    <div className="flex max-w-[35rem] items-center gap-[1px] px-2 py-3 ">
+      <ArrowIcon icon={ChevronsLeft} clickCallback={onClickStartBtn} />
+      <ArrowIcon icon={ChevronLeft} clickCallback={onClickPrevBtn} />
       <PagiNationButtons />
-      <ChevronRight size={ARROW_SIZE} onClick={onClickNextBtn} />
-      <ChevronsRight size={ARROW_SIZE} onClick={onClickEndBtn} />
+      <ArrowIcon icon={ChevronRight} clickCallback={onClickNextBtn} />
+      <ArrowIcon icon={ChevronsRight} clickCallback={onClickEndBtn} />
     </div>
   )
+}
+
+const ArrowIcon = ({ icon: Icon, clickCallback }: ArrowIconPT) => {
+  return <Icon onClick={clickCallback} size={"30px"} />
 }
