@@ -1,4 +1,4 @@
-import { PageNationBtn } from "@/components"
+import { PageNavigation } from "@/components"
 import { usePaginationInfo } from "@/components/pagination/pagination.hook"
 import { PATH_DETAIL } from "@/constants"
 import { useNavigate } from "react-router-dom"
@@ -33,7 +33,7 @@ export const Home = () => {
             )
           })}
         </div>
-        <PageNationBtn />
+        <PageNavigation />
       </div>
     </div>
   )
