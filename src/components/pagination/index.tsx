@@ -13,7 +13,7 @@ export const PageNationBtn = () => {
   const { onClickEndBtn, onClickNextBtn, onClickPrevBtn, onClickStartBtn } =
     usePaginationEvent()
   return (
-    <div className="flex max-w-[35rem] items-center gap-[1px] px-2 py-3 ">
+    <div className="flex max-w-[35rem]  items-center gap-[1px] px-2 py-3 ">
       <ArrowIcon icon={ChevronsLeft} clickCallback={onClickStartBtn} />
       <ArrowIcon icon={ChevronLeft} clickCallback={onClickPrevBtn} />
       <PagiNationButtons />

@@ -48,7 +48,9 @@ export const usePaginationInfo = () => {
 
 export const usePaginationEvent = () => {
   const { changeParamValue } = useHandleUrlParams()
-  const { page, totalPage } = usePaginationInfo()
+  const { page, totalPage, startNum, endNum, buttonLength } =
+    usePaginationInfo()
+    
   const onClickEndBtn = () => {
     if (page !== +totalPage) {
       changeParamValue({ urlKey: CURRENT_PAGE, value: `${totalPage}` })
@@ -62,13 +64,19 @@ export const usePaginationEvent = () => {
     }
   }
   const onClickPrevBtn = () => {
-    if (page <= 1) return
-    changeParamValue({ urlKey: CURRENT_PAGE, value: `${page - 1}` })
+    if (page <= 1 || endNum <= buttonLength) return
+    changeParamValue({
+      urlKey: CURRENT_PAGE,
+      value: `${endNum - buttonLength}`,
+    })
     goToTop()
   }
   const onClickNextBtn = () => {
-    if (page + 1 > totalPage) return
-    changeParamValue({ urlKey: CURRENT_PAGE, value: `${page + 1}` })
+    if (page + 1 > totalPage || startNum + buttonLength > totalPage) return
+    changeParamValue({
+      urlKey: CURRENT_PAGE,
+      value: `${startNum + buttonLength}`,
+    })
     goToTop()
   }
   const onClickNumBtn: OnClickNumBtnFT = ({ buttonNumber }) => {
