@@ -1,15 +1,23 @@
 import { useDialog } from "@/components/dialog/dialog.hook"
 import {
+  AUTH_TOKEN,
   MUTATION_KEY_SIGN_IN,
   MUTATION_KEY_SIGN_UP,
   PATH_HOME,
   QUERY_KEY_USER,
 } from "@/constants"
+import { saveToLocalStorage } from "@/funcs"
 import { yupResolver } from "@hookform/resolvers/yup"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { useForm } from "react-hook-form"
 import { useNavigate } from "react-router-dom"
-import { postSignUp, postUserSignIn } from "./sign.func"
+import {
+  convertSignInResToUser,
+  createSignInReqBody,
+  extractAccessToken,
+  postSignUp,
+  postUserSignIn,
+} from "./sign.func"
 import type { SignFormType, SignUpFormType } from "./sign.type"
 import { signInSchema, signUpSchema } from "./sign.yup-schema"
 
@@ -31,15 +39,20 @@ export const useMutationSignIn = () => {
   const { onAlert } = useDialog()
   const { mutate: signIn, ...rest } = useMutation({
     mutationKey: [MUTATION_KEY_SIGN_IN],
-    mutationFn: ({ email, password }: SignFormType) =>
-      postUserSignIn({ email, password }),
-    onSuccess: (data) => {
-      const user = { ...data }
-      onAlert({ children: `${user.nickname} 님, 환영합니다.` })
+    mutationFn: ({ email, password }: SignFormType) => {
+      const reqBody = createSignInReqBody({ email, password })
+      return postUserSignIn({ reqBody })
+    },
+    onSuccess: (response) => {
+      const accessToken = extractAccessToken({ response })
+      saveToLocalStorage({ key: AUTH_TOKEN, value: accessToken })
+
+      const user = convertSignInResToUser({ response })
       queryClient.setQueryData([QUERY_KEY_USER], user)
-      navigate(PATH_HOME)
+      onAlert({ children: `${user.nickname} 님, 환영합니다.` })
     },
     onError: (error) => onAlert({ children: error.message }),
+    onSettled: () => navigate(PATH_HOME),
   })
   return { signIn, ...rest }
 }
